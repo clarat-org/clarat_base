@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'localeapp' # manual translations (yaml-files)
 
   # Background processing
-  s.add_dependency 'sidekiq', '~> 3.5.0'
+  s.add_dependency 'sidekiq', '~> 4.1.2'
   s.add_dependency 'sinatra', '>= 1.3.0' # for sidekiq's web interface
   s.add_dependency 'sidetiq', '~> 0.7.0' # Sidekiq scheduling
 
