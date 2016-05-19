@@ -11,8 +11,8 @@ module ClaratBase
     require 'redcarpet'
     require 'algoliasearch-rails'
     require 'sidekiq'
-    require 'sinatra'
-    require 'sidetiq'
+    # require 'sinatra'
+    # require 'sidetiq'
     require 'easy_translate'
 
     # Custom directories with classes and modules you want to be autoloadable.
