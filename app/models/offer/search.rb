@@ -50,6 +50,7 @@ class Offer
             attribute(:_tags) { _tags(locale) }
             attribute(:_stamp_family) { _stamp_family(locale) }
             attribute(:_stamp_refugees) { _stamp_refugees(locale) }
+            attribute(:category_names)  { category_names(locale) }
             add_attribute(*attributes)
             add_attribute(*facets)
             add_attribute :_geoloc
@@ -68,6 +69,7 @@ class Offer
             attribute(:_tags) { _tags(locale) }
             attribute(:_stamp_family) { _stamp_family(locale) }
             attribute(:_stamp_refugees) { _stamp_refugees(locale) }
+            attribute(:category_names)  { category_names(locale) }
             add_attribute(*attributes)
             add_attribute :area_minlat, :area_maxlat, :area_minlong,
                           :area_maxlong
@@ -119,9 +121,9 @@ class Offer
         end
       end
 
-      # additional searchable string made from categories
-      def category_names
-        _tags.join ' '
+      # additional searchable string made from categories (localized for attribute)
+      def category_names locale = :de
+        _tags(locale).join ' '
       end
 
       # additional searchable string made from keywords
