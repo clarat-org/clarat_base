@@ -387,6 +387,14 @@ describe Offer do
 
         I18n.locale = old_locale
       end
+
+      it 'should always get de translation, others only when not initialized' do
+        new_offer = FactoryGirl.create(:offer)
+        new_offer.translations.count.must_equal 1
+        new_offer.update_columns aasm_state: 'completed'
+        OfferObserver.send(:new).after_save(new_offer)
+        new_offer.translations.count.must_equal I18n.available_locales.count
+      end
     end
 
     describe 'State Machine' do

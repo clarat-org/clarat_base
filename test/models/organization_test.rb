@@ -282,6 +282,16 @@ describe Organization do
     end
   end
 
+  describe 'translation' do
+    it 'should always get de translation, others only when not initialized' do
+      new_orga = FactoryGirl.create(:organization)
+      new_orga.translations.count.must_equal 1 # only :de
+      new_orga.update_columns aasm_state: 'completed'
+      OrganizationObserver.send(:new).after_save(new_orga)
+      new_orga.translations.count.must_equal I18n.available_locales.count
+    end
+  end
+
   describe '#homepage' do
     it 'should return the own website of the orga' do
       own_website = orga.websites.create! host: 'own', url: 'http://foo.bar'

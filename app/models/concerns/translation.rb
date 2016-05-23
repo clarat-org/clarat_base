@@ -37,7 +37,7 @@ module Translation
       I18n.available_locales.each do |locale|
         if locale == :de # German translation is needed and thus done right away
           TranslationGenerationWorker.new.perform(locale, self.class.name, id)
-        else
+        elsif no_state_or_not_initialized?
           TranslationGenerationWorker.perform_async(locale, self.class.name, id)
         end
       end
@@ -78,6 +78,10 @@ module Translation
       define_method :translated_fields do
         fields
       end
+    end
+
+    def no_state_or_not_initialized?
+      self.respond_to?(:aasm_state) == false || self.aasm_state != 'initialized'
     end
   end
 end
