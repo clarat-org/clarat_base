@@ -93,7 +93,6 @@ class Offer
           transitions from: :approved, to: :under_construction_post
           transitions from: :paused, to: :under_construction_post
           transitions from: :expired, to: :under_construction_post
-          # TODO: this is tricky
           transitions from: :internal_feedback, to: :under_construction_post
           transitions from: :external_feedback, to: :under_construction_post
           transitions from: :organization_deactivated, to: :under_construction_post

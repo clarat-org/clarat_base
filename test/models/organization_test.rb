@@ -275,7 +275,6 @@ describe Organization do
       end
 
       it 'should raise an error when deactivation fails for an offer' do
-        offer.update_column :aasm_state, :dozing
         Offer.any_instance.expects(:website_under_construction!)
              .returns(false)
 
@@ -292,7 +291,8 @@ describe Organization do
       end
 
       it 'should raise an error when deactivation fails for an offer' do
-        offer.update_column :aasm_state, :dozing
+        Offer.any_instance.expects(:website_under_construction!)
+             .returns(false)
 
         assert_raise(RuntimeError) { orga.deactivate_offers_to_under_construction! }
       end

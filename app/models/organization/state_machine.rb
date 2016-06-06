@@ -59,7 +59,6 @@ class Organization
           transitions from: :completed, to: :under_construction_pre
           # post approve
           transitions from: :approved, to: :under_construction_post
-          # TODO: this might be interesting...
           transitions from: :internal_feedback, to: :under_construction_post
           transitions from: :external_feedback, to: :under_construction_post
         end
@@ -83,15 +82,21 @@ class Organization
         end
       end
 
-      # TODO
+      # When an organization switches to a website_under_construction state, the
+      # associated offers (in states: initialized, completed, approved or
+      # organization_deactivated) also transitions to under_construction
       def deactivate_offers_to_under_construction!
-        offers.find_each do |offer|
+        allowed_states = %w(initialized completed approved
+                            organization_deactivated)
+        offers.select { |o| allowed_states.include? o.aasm_state }.each do |offer|
           next if offer.website_under_construction!
           raise "#deactivate_offer_to_under_construction failed for #{offer.id}"
         end
       end
 
-      # TODO
+      # When an organization switches from an under_construction state to
+      # approved, also reactivate all it's associated under_construction offers
+      # (if possible)
       def reactivate_offers_from_under_construction!
         # pre-approve offers => re-initialize
         offers.where(aasm_state: 'under_construction_pre')
@@ -99,8 +104,6 @@ class Organization
         # post-approved offers => approve (if possible)
         offers.where(aasm_state: 'under_construction_post').find_each do |o|
           o.approve! if o.may_approve?
-          # next if o.approved?
-          # raise "#reactivate_offer_from_under_construction failed for #{offer.id}"
         end
       end
     end
