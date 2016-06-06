@@ -258,6 +258,55 @@ describe Organization do
       end
     end
 
+    describe 'deactivate_offers_to_under_construction!' do
+      let(:offer) { offers(:basic) }
+      it 'should deactivate an offer belonging to this organization' do
+        orga.offers.first.must_be :approved?
+        orga.website_under_construction!
+        orga.offers.first.must_be :under_construction_post?
+      end
+
+      it 'should should work from deactivated state with offers' do
+        orga.offers.first.must_be :approved?
+        orga.deactivate_internal!
+        orga.offers.first.must_be :organization_deactivated?
+        orga.website_under_construction!
+        orga.offers.first.must_be :under_construction_post?
+      end
+
+      it 'should raise an error when deactivation fails for an offer' do
+        offer.update_column :aasm_state, :dozing
+        Offer.any_instance.expects(:website_under_construction!)
+             .returns(false)
+
+        assert_raise(RuntimeError) { orga.deactivate_offers_to_under_construction! }
+      end
+    end
+
+    describe 'reactivate_offers_from_under_construction! pre approve' do
+      let(:offer) { offers(:basic) }
+      it 'should reactivate associated under_construction offers' do
+        offer.update_column :aasm_state, :under_construction_pre
+        orga.reactivate_offers_from_under_construction!
+        offer.reload.must_be :initialized?
+      end
+
+      it 'should raise an error when deactivation fails for an offer' do
+        offer.update_column :aasm_state, :dozing
+
+        assert_raise(RuntimeError) { orga.deactivate_offers_to_under_construction! }
+      end
+    end
+
+    describe 'reactivate_offers_from_under_construction! post approve' do
+      let(:offer) { offers(:basic) }
+      it 'should reactivate associated under_construction offers' do
+        offer.update_column :aasm_state, :under_construction_post
+        orga.reactivate_offers_from_under_construction!
+        offer.reload.must_be :approved?
+      end
+    end
+
     describe '#different_actor?' do
       it 'should return true when created_by differs from current_actor' do
         orga.created_by = 99

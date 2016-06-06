@@ -12,18 +12,23 @@ class Offer
         state :completed
         state :approved
 
+        # Special states object might enter before it is approved
+        state :dozing # For uncompleted offers that we want to track
+        state :under_construction_pre # Website under construction pre approve
+
         # Special states object might enter after it was approved
         state :paused # I.e. Seasonal offer is in off-season
         state :expired # Happens automatically after a pre-set amount of time
         state :internal_feedback # There was an issue (internal)
         state :external_feedback # There was an issue (external)
         state :organization_deactivated # An associated orga was deactivated
-        state :dozing # For uncompleted offers that we want to track
+        state :under_construction_post # Website under construction post approve
 
         ## Transitions
 
         event :reinitialize do
           transitions from: :dozing, to: :initialized
+          transitions from: :under_construction_pre, to: :initialized
         end
 
         event :complete, before: :set_completed_information,
@@ -40,6 +45,7 @@ class Offer
           transitions from: :external_feedback, to: :approved
           transitions from: :organization_deactivated, to: :approved,
                       guard: :all_organizations_approved?
+          transitions from: :under_construction_post, to: :approved
         end
 
         event :pause do
@@ -77,6 +83,20 @@ class Offer
 
         event :doze do
           transitions from: :initialized, to: :dozing
+        end
+
+        event :website_under_construction do
+          # pre approve
+          transitions from: :initialized, to: :under_construction_pre
+          transitions from: :completed, to: :under_construction_pre
+          # post approve
+          transitions from: :approved, to: :under_construction_post
+          transitions from: :paused, to: :under_construction_post
+          transitions from: :expired, to: :under_construction_post
+          # TODO: this is tricky
+          transitions from: :internal_feedback, to: :under_construction_post
+          transitions from: :external_feedback, to: :under_construction_post
+          transitions from: :organization_deactivated, to: :under_construction_post
         end
       end
 
