@@ -14,7 +14,7 @@ class Offer
       validate :at_least_one_section_filter_of_each_category_must_be_present,
                on: :update
       validate :no_more_than_10_next_steps
-      validate :split_base_id_if_version_greater_7
+      validate :split_base_id_if_version_greater_or_equal_8
 
       private
 
@@ -121,8 +121,8 @@ class Offer
         fail_validation :next_steps, 'no_more_than_10_next_steps'
       end
 
-      def split_base_id_if_version_greater_7
-        return if !logic_version || logic_version.version < 7 || split_base_id
+      def split_base_id_if_version_greater_or_equal_8
+        return if !logic_version || logic_version.version < 8 || split_base_id
         fail_validation :split_base, 'is_needed'
       end
     end

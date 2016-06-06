@@ -158,13 +158,13 @@ describe Offer do
         basicOffer.valid?.must_equal true
       end
 
-      it 'should validate that split_base is assigned with version >= 7' do
-        offer.logic_version = LogicVersion.create(name: 'chunky', version: 6)
+      it 'should validate that split_base is assigned with version >= 8' do
+        offer.logic_version = LogicVersion.create(name: 'chunky', version: 7)
         offer.split_base_id = nil
         offer.valid?
         offer.errors.messages[:split_base].must_be :nil?
 
-        offer.logic_version = LogicVersion.create(name: 'bacon', version: 7)
+        offer.logic_version = LogicVersion.create(name: 'bacon', version: 8)
         offer.valid?
         offer.errors.messages[:split_base].wont_be :nil?
 
