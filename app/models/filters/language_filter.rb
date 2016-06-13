@@ -8,9 +8,9 @@ class LanguageFilter < Filter
   # sorted by german display name
   REMAINING_IDENTIFIER = %w(sqi amh aze ban ben ber bos bul zho 639 fin ell heb
                             hin ita kik kin kor hrv kur lav lit luo ltz mkd hbs
-                            568 nor fas por rom ron srp skr som snk slo spa swa
-                            swe tgk tgl tam tel tha cze tir tuk 326 hun urd uzb
-                            vie bel wol zza mul).freeze
+                            568 nor pus fas por rom ron srp skr som snk slo spa
+                            swa swe tgk tgl tam tel tha cze tir tuk twi 326 hun
+                            urd uzb vie bel wol zza mul).freeze
   IDENTIFIER = FIXED_IDENTIFIER + REMAINING_IDENTIFIER
   enumerize :identifier, in: LanguageFilter::IDENTIFIER
 end
