@@ -8,6 +8,7 @@ describe LogicVersion do
     it { subject.must_respond_to :id }
     it { subject.must_respond_to :version }
     it { subject.must_respond_to :name }
+    it { subject.must_respond_to :description }
   end
 
   describe 'validations' do
