@@ -13,6 +13,7 @@ describe Website do
     it { subject.must_respond_to :url }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
+    it { subject.must_respond_to :unreachable }
   end
 
   describe 'validations' do
