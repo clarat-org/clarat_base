@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819081453) do
+ActiveRecord::Schema.define(version: 20160819135238) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name",       null: false
@@ -65,6 +65,12 @@ ActiveRecord::Schema.define(version: 20160819081453) do
 
   add_index "category_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "category_anc_desc_idx", unique: true
   add_index "category_hierarchies", ["descendant_id"], name: "category_desc_idx"
+
+  create_table "cities", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contact_people", force: :cascade do |t|
     t.integer  "organization_id",                              null: false
@@ -191,7 +197,6 @@ ActiveRecord::Schema.define(version: 20160819081453) do
     t.string   "street",                          null: false
     t.text     "addition"
     t.string   "zip",                             null: false
-    t.string   "city",                            null: false
     t.boolean  "hq"
     t.float    "latitude"
     t.float    "longitude"
@@ -203,8 +208,10 @@ ActiveRecord::Schema.define(version: 20160819081453) do
     t.string   "display_name",                    null: false
     t.boolean  "visible",          default: true
     t.boolean  "in_germany",       default: true
+    t.integer  "city_id"
   end
 
+  add_index "locations", ["city_id"], name: "index_locations_on_city_id"
   add_index "locations", ["created_at"], name: "index_locations_on_created_at"
   add_index "locations", ["federal_state_id"], name: "index_locations_on_federal_state_id"
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id"

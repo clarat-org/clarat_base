@@ -11,12 +11,12 @@ describe Location do
     it { subject.must_respond_to :street }
     it { subject.must_respond_to :addition }
     it { subject.must_respond_to :zip }
-    it { subject.must_respond_to :city }
     it { subject.must_respond_to :hq }
     it { subject.must_respond_to :latitude }
     it { subject.must_respond_to :longitude }
     it { subject.must_respond_to :organization_id }
     it { subject.must_respond_to :federal_state_id }
+    it { subject.must_respond_to :city_id }
     it { subject.must_respond_to :name }
     it { subject.must_respond_to :display_name }
     it { subject.must_respond_to :created_at }
@@ -31,7 +31,7 @@ describe Location do
       it { subject.must validate_presence_of :street }
       it { subject.must validate_presence_of :zip }
       it { subject.must validate_length_of(:zip).is_equal_to 5 }
-      it { subject.must validate_presence_of :city }
+      it { subject.must validate_presence_of :city_id }
       it { subject.must validate_presence_of :organization_id }
       it { subject.must validate_presence_of :federal_state_id }
     end
@@ -40,7 +40,7 @@ describe Location do
       before do
         # valid location in germany
         loc.assign_attributes street: 'street 1',
-                              city: 'city',
+                              city_id: 1,         # fixture City
                               organization_id: 1, # fixture Orga
                               federal_state_id: 1 # fixture federal_state
       end
@@ -73,34 +73,34 @@ describe Location do
     describe '#generate_display_name' do
       before do
         loc.assign_attributes street: 'street',
-                              city: 'city',
                               zip: 'zip',
-                              organization_id: 1 # fixture Orga
+                              city_id: 1,         # fixture City
+                              organization_id: 1  # fixture Orga
       end
 
       it 'should show the basic info if nothing else exists' do
         loc.display_name.must_be_nil
         loc.generate_display_name
-        loc.display_name.must_equal 'foobar | street zip city'
+        loc.display_name.must_equal 'foobar | street zip Berlin'
       end
 
       it 'should show the location name if one exists' do
         loc.name = 'name'
         loc.generate_display_name
-        loc.display_name.must_equal 'foobar, name | street zip city'
+        loc.display_name.must_equal 'foobar, name | street zip Berlin'
       end
 
       it 'should show the addition if one exists' do
         loc.addition = 'addition'
         loc.generate_display_name
-        loc.display_name.must_equal 'foobar | street, addition, zip city'
+        loc.display_name.must_equal 'foobar | street, addition, zip Berlin'
       end
 
       it 'should show name & addition if both exist' do
         loc.name = 'name'
         loc.addition = 'addition'
         loc.generate_display_name
-        loc.display_name.must_equal 'foobar, name | street, addition, zip city'
+        loc.display_name.must_equal 'foobar, name | street, addition, zip Berlin'
       end
     end
 
@@ -108,8 +108,8 @@ describe Location do
     describe '#full_address' do
       it 'should return address and federal state name' do
         loc.assign_attributes street: 'street',
-                              city: 'city',
                               zip: 'zip',
+                              city: City.new(name: 'city'),
                               federal_state: FederalState.new(name: 'state')
 
         loc.send(:full_address).must_equal 'street, zip city state'

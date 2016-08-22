@@ -6,6 +6,7 @@ class Location < ActiveRecord::Base
   # Associtations
   belongs_to :organization, inverse_of: :locations, counter_cache: true
   belongs_to :federal_state, inverse_of: :locations
+  belongs_to :city, inverse_of: :locations
   has_many :offers, inverse_of: :location
 
   # Validations
@@ -15,9 +16,9 @@ class Location < ActiveRecord::Base
   validates :addition, length: { maximum: 255 }
   validates :zip, presence: true, length: { is: 5 },
                   if: -> (location) { location.in_germany }
-  validates :city, presence: true
   validates :display_name, presence: true
 
+  validates :city_id, presence: true
   validates :organization_id, presence: true
   validates :federal_state_id, presence: true,
                                if: -> (location) { location.in_germany }
@@ -31,6 +32,7 @@ class Location < ActiveRecord::Base
   # Methods
 
   delegate :name, to: :federal_state, prefix: true
+  delegate :name, to: :city, prefix: true, allow_nil: true
   delegate :name, to: :organization, prefix: true, allow_nil: true
 
   before_validation :generate_display_name
@@ -39,11 +41,11 @@ class Location < ActiveRecord::Base
     display += ", #{name}" unless name.blank?
     display += " | #{street}"
     display += ", #{addition}," unless addition.blank?
-    self.display_name = display + " #{zip} #{city}"
+    self.display_name = display + " #{zip} #{city_name}"
   end
 
   def address
-    "#{street}, #{zip} #{city}"
+    "#{street}, #{zip} #{city_name}"
   end
 
   private
