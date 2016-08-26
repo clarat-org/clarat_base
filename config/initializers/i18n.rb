@@ -1,6 +1,6 @@
 Rails.application.configure do
   I18n.config.enforce_available_locales = false
-  I18n.available_locales = [:de, :en, :pl, :ru, :ar, :tr, :fr] #
+  I18n.available_locales = [:de, :en, :ar, :fa, :tr, :pl, :ru, :fr]
 
   # Fallbacks
   config.i18n.fallbacks = [:en]

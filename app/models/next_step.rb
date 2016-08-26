@@ -12,6 +12,7 @@ class NextStep < ActiveRecord::Base
   validates :text_pl, length: { maximum: 255 }
   validates :text_tr, length: { maximum: 255 }
   validates :text_ru, length: { maximum: 255 }
+  validates :text_fa, length: { maximum: 255 }
 
   # Methods
 

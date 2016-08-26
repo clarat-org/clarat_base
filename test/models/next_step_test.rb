@@ -23,6 +23,7 @@ describe NextStep do
     it { subject.must validate_length_of(:text_tr).is_at_most 255 }
     it { subject.must validate_length_of(:text_pl).is_at_most 255 }
     it { subject.must validate_length_of(:text_ru).is_at_most 255 }
+    it { subject.must validate_length_of(:text_fa).is_at_most 255 }
   end
 
   describe 'methods' do

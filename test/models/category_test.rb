@@ -14,6 +14,7 @@ describe Category do
     it { subject.must_respond_to :name_fr }
     it { subject.must_respond_to :name_pl }
     it { subject.must_respond_to :name_ru }
+    it { subject.must_respond_to :name_fa }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
   end

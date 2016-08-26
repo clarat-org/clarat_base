@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819135238) do
+ActiveRecord::Schema.define(version: 20160826130459) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name",       null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160819135238) do
     t.string   "name_pl"
     t.string   "name_tr"
     t.string   "name_ru"
+    t.string   "name_fa"
   end
 
   add_index "categories", ["name_de"], name: "index_categories_on_name_de"
@@ -232,6 +233,7 @@ ActiveRecord::Schema.define(version: 20160819135238) do
     t.string   "text_ru"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "text_fa"
   end
 
   add_index "next_steps", ["text_de"], name: "index_next_steps_on_text_de"
