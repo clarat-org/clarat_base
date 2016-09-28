@@ -13,6 +13,15 @@
 
 ActiveRecord::Schema.define(version: 20160826130459) do
 
+  create_table "absences", force: :cascade do |t|
+    t.date    "starts_at",                null: false
+    t.date    "ends_at",                  null: false
+    t.integer "user_id",                  null: false
+    t.boolean "sync",      default: true
+  end
+
+  add_index "absences", ["user_id"], name: "index_absences_on_user_id"
+
   create_table "areas", force: :cascade do |t|
     t.string   "name",       null: false
     t.float    "minlat",     null: false
@@ -405,6 +414,19 @@ ActiveRecord::Schema.define(version: 20160826130459) do
   add_index "organizations", ["approved_at"], name: "index_organizations_on_approved_at"
   add_index "organizations", ["created_at"], name: "index_organizations_on_created_at"
 
+  create_table "productivity_goals", force: :cascade do |t|
+    t.string  "title",              null: false
+    t.date    "starts_at",          null: false
+    t.date    "ends_at",            null: false
+    t.string  "target_model",       null: false
+    t.integer "target_count",       null: false
+    t.string  "target_field_name",  null: false
+    t.string  "target_field_value", null: false
+    t.integer "user_team_id",       null: false
+  end
+
+  add_index "productivity_goals", ["user_team_id"], name: "index_productivity_goals_on_user_team_id"
+
   create_table "search_locations", force: :cascade do |t|
     t.string   "query",                 null: false
     t.float    "latitude",              null: false
@@ -454,13 +476,20 @@ ActiveRecord::Schema.define(version: 20160826130459) do
   add_index "split_bases", ["solution_category_id"], name: "index_split_bases_on_solution_category_id"
 
   create_table "statistics", force: :cascade do |t|
-    t.string  "topic",   limit: 40, null: false
+    t.string  "topic",             limit: 40
     t.integer "user_id"
-    t.date    "x",                  null: false
-    t.integer "y",                  null: false
+    t.date    "date",                                           null: false
+    t.float   "count",                        default: 0.0,     null: false
+    t.integer "user_team_id"
+    t.string  "model"
+    t.string  "field_name"
+    t.string  "field_start_value"
+    t.string  "field_end_value"
+    t.string  "time_frame",                   default: "daily"
   end
 
   add_index "statistics", ["user_id"], name: "index_statistics_on_user_id"
+  add_index "statistics", ["user_team_id"], name: "index_statistics_on_user_team_id"
 
   create_table "subscriptions", force: :cascade do |t|
     t.string   "email"
@@ -468,11 +497,33 @@ ActiveRecord::Schema.define(version: 20160826130459) do
     t.datetime "updated_at"
   end
 
+  create_table "time_allocations", force: :cascade do |t|
+    t.integer "user_id",                    null: false
+    t.integer "year",             limit: 4, null: false
+    t.integer "week_number",      limit: 2, null: false
+    t.integer "desired_wa_hours", limit: 3, null: false
+    t.integer "actual_wa_hours",  limit: 3
+  end
+
+  add_index "time_allocations", ["user_id"], name: "index_time_allocations_on_user_id"
+
   create_table "update_requests", force: :cascade do |t|
     t.string   "search_location", null: false
     t.string   "email",           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_team_users", force: :cascade do |t|
+    t.integer "user_team_id"
+    t.integer "user_id"
+  end
+
+  add_index "user_team_users", ["user_id"], name: "index_user_team_users_on_user_id"
+  add_index "user_team_users", ["user_team_id"], name: "index_user_team_users_on_user_team_id"
+
+  create_table "user_teams", force: :cascade do |t|
+    t.string "name", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -486,8 +537,10 @@ ActiveRecord::Schema.define(version: 20160826130459) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
+    t.integer  "current_team_id"
   end
 
+  add_index "users", ["current_team_id"], name: "index_users_on_current_team_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
   create_table "versions", force: :cascade do |t|

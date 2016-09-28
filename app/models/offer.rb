@@ -21,7 +21,7 @@ class Offer < ActiveRecord::Base
   EXCLUSIVE_GENDERS = %w(boys_only girls_only).freeze
   BENEFICIARY_GENDERS = %w(female male).freeze
   STAMP_SECOND_PART_GENDERS = %w(female male neutral).freeze
-  # ^ nil = inclusive to any gender
+  # ^ nil means inclusive to any gender
 
   enumerize :encounter, in: ENCOUNTERS
   enumerize :exclusive_gender, in: EXCLUSIVE_GENDERS
