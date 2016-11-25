@@ -38,8 +38,6 @@ module Translation
       end
     end
 
-    protected
-
     # empty stump for state_machine - should be overwritten
     def generate_translations!
       true
