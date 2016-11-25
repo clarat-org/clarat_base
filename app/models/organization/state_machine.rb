@@ -31,7 +31,7 @@ class Organization
           transitions from: :under_construction_pre, to: :initialized
         end
 
-        event :complete, success: :generate_translations! do
+        event :complete do
           transitions from: :initialized, to: :completed
         end
 
@@ -40,7 +40,8 @@ class Organization
           transitions from: :completed, to: :approval_process # , guard: :different_actor?
         end
 
-        event :approve, before: :set_approved_information do
+        event :approve, before: :set_approved_information,
+                        success: :generate_translations! do
           # TODO: reactivate guard!!!
           transitions from: :approval_process, to: :approved # , guard: :different_actor?
           transitions from: :internal_feedback, to: :approved

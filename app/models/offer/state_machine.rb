@@ -43,8 +43,7 @@ class Offer
           transitions from: :checkup_process, to: :dozing
         end
 
-        event :complete, before: :set_completed_information,
-                         success: :generate_translations! do
+        event :complete, before: :set_completed_information do
           transitions from: :initialized, to: :completed
           transitions from: :checkup_process, to: :completed
         end
@@ -54,7 +53,8 @@ class Offer
           transitions from: :completed, to: :approval_process # , guard: :different_actor?
         end
 
-        event :approve, before: :set_approved_information do
+        event :approve, before: :set_approved_information,
+                        success: :generate_translations! do
           transitions from: :approval_process, to: :seasonal_pending,
                       guard: :seasonal_offer_not_yet_to_be_approved?
           transitions from: :checkup_process, to: :seasonal_pending,
