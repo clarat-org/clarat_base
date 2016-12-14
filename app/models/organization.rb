@@ -10,6 +10,7 @@ class Organization < ActiveRecord::Base
 
   # Associtations
   has_many :locations
+  has_many :divisions
   has_many :hyperlinks, as: :linkable, dependent: :destroy
   has_many :websites, through: :hyperlinks
   has_many :organization_offers, dependent: :destroy

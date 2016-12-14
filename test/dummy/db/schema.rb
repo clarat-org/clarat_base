@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031110918) do
+ActiveRecord::Schema.define(version: 20161208132350) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20161031110918) do
   end
 
   create_table "assignments", force: :cascade do |t|
-    t.string   "assignable_type",       limit: 32,                    null: false
     t.integer  "assignable_id",                                       null: false
+    t.string   "assignable_type",       limit: 32,                    null: false
     t.string   "assignable_field_type", limit: 64,   default: "",     null: false
     t.integer  "creator_id"
     t.integer  "creator_team_id"
@@ -154,6 +154,15 @@ ActiveRecord::Schema.define(version: 20161031110918) do
     t.text     "explanation",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "divisions", force: :cascade do |t|
+    t.string   "name",              null: false
+    t.text     "description"
+    t.integer  "organization_id",   null: false
+    t.integer  "section_filter_id", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "emails", force: :cascade do |t|
