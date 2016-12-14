@@ -2,8 +2,9 @@
 class City < ActiveRecord::Base
   # Associations
   has_many :locations, inverse_of: :city
-  has_many :offers, through: :locations
-  has_many :organizations, -> { uniq }, through: :locations
+  has_many :offers, through: :locations, inverse_of: :city
+  has_many :organizations, -> { uniq }, through: :locations,
+                                        inverse_of: :cities
 
   # Validations
   validates :name, uniqueness: true, presence: true
