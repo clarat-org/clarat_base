@@ -9,5 +9,7 @@ class AddDivisions < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :divisions, [:organization_id],
+              name: 'index_divisions_on_organization_id', using: :btree
   end
 end

@@ -165,6 +165,8 @@ ActiveRecord::Schema.define(version: 20161208132350) do
     t.datetime "updated_at",        null: false
   end
 
+  add_index "divisions", ["organization_id"], name: "index_divisions_on_organization_id"
+
   create_table "emails", force: :cascade do |t|
     t.string   "address",       limit: 64,                        null: false
     t.string   "aasm_state",    limit: 32, default: "uninformed", null: false
