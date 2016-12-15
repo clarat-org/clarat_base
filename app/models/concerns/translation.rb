@@ -40,7 +40,7 @@ module Translation
 
     # empty stump for state_machine - should be overwritten
     def generate_translations!
-      true
+      raise 'implement #generate_translations!'
     end
 
     private

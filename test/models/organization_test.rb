@@ -321,13 +321,25 @@ describe Organization do
 
     describe 'reactivate_offers!' do
       let(:offer) { offers(:basic) }
+      it 'should raise a RuntimeError with stump translation-method' do
+        offer.update_column :aasm_state, :organization_deactivated
+        assert_raise(RuntimeError) { orga.reactivate_offers! }
+        offer.reload.must_be :organization_deactivated?
+      end
+
       it 'should reactivate an associated organization_deactivated offer' do
+        # stub for translation-method stump to test functionality
+        Organization.any_instance.stubs(:generate_translations!).returns true
+        Offer.any_instance.stubs(:generate_translations!).returns true
         offer.update_column :aasm_state, :organization_deactivated
         orga.reactivate_offers!
         offer.reload.must_be :approved?
       end
 
       it 'should approve the orga and its offers when the event is used' do
+        # stub for translation-method stump to test functionality
+        Organization.any_instance.stubs(:generate_translations!).returns true
+        Offer.any_instance.stubs(:generate_translations!).returns true
         orga.update_column :aasm_state, :internal_feedback
         offer.update_column :aasm_state, :organization_deactivated
         orga.approve_with_deactivated_offers!
@@ -349,6 +361,9 @@ describe Organization do
       let(:offer) { offers(:basic) }
       it 'should deactivate an offer belonging to this organization and \
           re-activate it properly' do
+        # stub for translation-method stump to test functionality
+        Organization.any_instance.stubs(:generate_translations!).returns true
+        Offer.any_instance.stubs(:generate_translations!).returns true
         orga.offers.first.must_be :approved?
         orga.website_under_construction!
         orga.offers.first.must_be :under_construction_post?
@@ -396,53 +411,6 @@ describe Organization do
       end
     end
   end
-
-  # describe 'translation' do
-  #   it 'should always get de translation, others only on completion and change' do
-  #     new_orga = FactoryGirl.create(:organization)
-  #     new_orga.translations.count.must_equal 1 # only :de
-  #     new_orga.translations.first.locale.must_equal 'de'
-  #     new_orga.aasm_state.must_equal 'initialized'
-  #
-  #     # Changing things on an initialized offer doesn't change translations
-  #     new_orga.reload.description_ar.must_equal nil
-  #     new_orga.description = 'changing description, wont update translation'
-  #     new_orga.save!
-  #     new_orga.translations.count.must_equal 1
-  #     new_orga.reload.description_ar.must_equal nil
-  #
-  #     # Completion generates all translations initially
-  #     new_orga.complete!
-  #     new_orga.translations.count.must_equal I18n.available_locales.count
-  #
-  #     # Now changes to the model change the corresponding translated fields
-  #     EasyTranslate.translated_with 'CHANGED' do
-  #       new_orga.description_ar.must_equal 'GET READY FOR CANADA'
-  #       new_orga.description = 'changing description, should update translation'
-  #       new_orga.save!
-  #       new_orga.reload.description_ar.must_equal 'CHANGED'
-  #     end
-  #   end
-  #
-  #   it 'should update an existing translation only when the field changed' do
-  #     # Setup
-  #     new_orga = FactoryGirl.create(:organization)
-  #     new_orga.complete!
-  #     new_orga.translations.count.must_equal I18n.available_locales.count
-  #
-  #     # Now changes to the model change the corresponding translated fields
-  #     EasyTranslate.translated_with 'CHANGED' do
-  #       new_orga.description_ar.must_equal 'GET READY FOR CANADA'
-  #       # changing untranslated field => translations must stay the same
-  #       new_orga.mailings = 'enabled'
-  #       new_orga.save!
-  #       new_orga.reload.description_ar.must_equal 'GET READY FOR CANADA'
-  #       new_orga.description = 'changing descr, should update translation'
-  #       new_orga.save!
-  #       new_orga.reload.description_ar.must_equal 'CHANGED'
-  #     end
-  #   end
-  # end
 
   describe '#homepage' do
     it 'should return the own website of the orga' do
