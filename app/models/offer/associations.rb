@@ -38,6 +38,7 @@ class Offer
       # but there can also be offers without locations
       has_many :hyperlinks, as: :linkable, dependent: :destroy
       has_many :websites, through: :hyperlinks
+      has_one :city, through: :location
     end
   end
 end

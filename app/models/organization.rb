@@ -23,6 +23,8 @@ class Organization < ActiveRecord::Base
   has_and_belongs_to_many :umbrella_filters,
                           association_foreign_key: 'filter_id',
                           join_table: 'filters_organizations'
+  has_many :cities, -> { uniq }, through: :locations,
+                                 inverse_of: :organizations
 
   # Enumerization
   extend Enumerize

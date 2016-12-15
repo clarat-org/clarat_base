@@ -38,6 +38,11 @@ module Translation
       end
     end
 
+    # empty stump for state_machine - should be overwritten
+    def generate_translations!
+      raise 'implement #generate_translations!'
+    end
+
     private
 
     # :name -> translated #name getter in currently set locale
