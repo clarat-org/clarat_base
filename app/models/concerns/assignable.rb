@@ -3,7 +3,7 @@ module Assignable
 
   included do
     # Associations
-    has_many :assignments, as: :assignable, inverse_of: :assignable
+    has_many :assignments, as: :assignable, dependent: :destroy
     accepts_nested_attributes_for :assignments
 
     # Methods

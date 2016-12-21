@@ -5,7 +5,7 @@ class Assignment < ActiveRecord::Base
   # Concerns
 
   # Associations
-  belongs_to :assignable, polymorphic: true, inverse_of: :assignments # ???
+  belongs_to :assignable, polymorphic: true
 
   # Creator
   belongs_to :creator, class_name: 'User', inverse_of: :created_assignments
