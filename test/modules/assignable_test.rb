@@ -11,6 +11,22 @@ describe Assignable do
       subject.assignments.count.must_equal 1
       subject.assignments.first.must_equal assignment
     end
+
+    it 'must destroy associated assignments when assignable is destroyed' do
+      subject.assignments.count.must_equal 1
+      new_assignment = subject.create_new_assignment!(1, 1, 2, 2, 'TestMessage')
+      subject.assignments.count.must_equal 2
+      # check if data is persisted
+      subject.persisted?.must_equal true
+      assignment.persisted?.must_equal true
+      new_assignment.persisted?.must_equal true
+      # destroy offer => destroys all translations => destroys all assignments
+      subject.offer.destroy!
+      # record lookups fail => everything is destroyed
+      assert_raises(ActiveRecord::RecordNotFound) { subject.reload }
+      assert_raises(ActiveRecord::RecordNotFound) { assignment.reload }
+      assert_raises(ActiveRecord::RecordNotFound) { new_assignment.reload }
+    end
   end
 
   describe 'methods' do
