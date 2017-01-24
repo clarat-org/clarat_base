@@ -6,8 +6,21 @@ pl:
         of_child: wiek dziecka
         suffix: lata
         to: do
+      status:
+        asylum_procedure: 
+        before_asylum_application: 
+        deportation_decision: 
+        residence_permit: 
+        toleration_decision: 
       target_audience:
-        family_acquaintances: dla znajomych i rodziny
+        OLD_family_pregnant_woman: dla kobiet w ciąży
+        OLD_refugees_adolescents: dla młodocianych uchodźców
+        OLD_refugees_children: dla uchodźców-dzieci
+        OLD_refugees_children_and_adolescents: dla uchodźców-dzieci i młodocianych uchodźców
+        OLD_refugees_families: dla uchodźców-rodzin
+        OLD_refugees_general: dla uchodźców
+        OLD_refugees_parents: dla uchodźców-rodziców
+        OLD_refugees_umf: dla niepełnoletnich uchodźców bez opieki
         family_children:
           adolescents: dla młodzieży
           and_adolescents: dla dzieci i młodzieży
@@ -61,17 +74,62 @@ pl:
             female: dla przyszłych rodziców i ich córek
             male: dla przyszłych rodziców i ich synów
             neutral: dla przyszłych rodziców i ich dzieci
-        family_pregnant_woman: dla kobiet w ciąży
-        refugees_adolescents: dla młodocianych uchodźców
+        family_relatives: dla krewnych
         refugees_asylum_procedure: dla uchodźców przechodzących procedury azylowe
-        refugees_children: dla uchodźców-dzieci
-        refugees_children_and_adolescents: dla uchodźców-dzieci i młodocianych uchodźców
+        refugees_children:
+          adolescents: dla młodocianych uchodźców
+          and_adolescents: dla uchodźców-dzieci i młodocianych uchodźców
+          default: dla uchodźców-dzieci
+          female: 
+          male: 
         refugees_deportation_decision: dla uchodźców z deportacją
-        refugees_families: dla uchodźców-rodzin
-        refugees_general: dla uchodźców
-        refugees_parents: dla uchodźców-rodziców
+        refugees_families:
+          default: dla uchodźców-rodzin
+          female:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          male:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          neutral:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+        refugees_general:
+          female:
+            default: 
+            special: 
+          male:
+            default: 
+            special: 
+          neutral: dla uchodźców
+        refugees_parents:
+          female:
+            female: 
+            male: 
+            neutral: 
+          male:
+            female: 
+            male: 
+            neutral: 
+          neutral:
+            female: 
+            male: 
+            neutral: dla uchodźców-rodziców
+        refugees_parents_to_be:
+          female: 
+          male: 
+          neutral: 
         refugees_pre_asylum_procedure: dla uchodźców przed przyznaniem azylu
         refugees_residence_permit: dla uchodźców z prawem pobytu
         refugees_toleration_decision: dla uchodźców z pobytem tolerowanym
         refugees_ujf: dla młodych uchodźców bez opieki
-        refugees_umf: dla niepełnoletnich uchodźców bez opieki
+        refugees_umf:
+          female: 
+          male: 
+          neutral: dla niepełnoletnich uchodźców bez opieki

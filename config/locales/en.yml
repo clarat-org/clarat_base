@@ -6,8 +6,21 @@ en:
         of_child: 'age of child:'
         suffix: years
         to: up to
+      status:
+        asylum_procedure: during the asylum procedure
+        before_asylum_application: before the asylum procedure
+        deportation_decision: with deportation notice
+        residence_permit: with a residence permit
+        toleration_decision: with temporary suspension of deportation
       target_audience:
-        family_acquaintances: for acquaintances and relatives
+        OLD_family_pregnant_woman: for pregnant women
+        OLD_refugees_adolescents: for adolescent refugees
+        OLD_refugees_children: for refugee children
+        OLD_refugees_children_and_adolescents: for refugee children and adolescents
+        OLD_refugees_families: for refugee families
+        OLD_refugees_general: for refugees
+        OLD_refugees_parents: for refugee parents
+        OLD_refugees_umf: for unaccompanied minor refugees
         family_children:
           adolescents: for adolescents
           and_adolescents: for children and adolescents
@@ -61,17 +74,62 @@ en:
             female: for parents to be and their daughters
             male: for parents to be and their sons
             neutral: for parents to be and their children
-        family_pregnant_woman: for pregnant women
-        refugees_adolescents: for adolescent refugees
+        family_relatives: for relatives
         refugees_asylum_procedure: for refugees during the asylum procedure
-        refugees_children: for refugee children
-        refugees_children_and_adolescents: for refugee children and adolescents
+        refugees_children:
+          adolescents: for adolescent refugees
+          and_adolescents: for refugee children and adolescents
+          default: for refugee children
+          female: 
+          male: 
         refugees_deportation_decision: for refugees with deportation notice
-        refugees_families: for refugee families
-        refugees_general: for refugees
-        refugees_parents: for refugee parents
+        refugees_families:
+          default: for refugee families
+          female:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          male:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          neutral:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+        refugees_general:
+          female:
+            default: 
+            special: 
+          male:
+            default: 
+            special: 
+          neutral: for refugees
+        refugees_parents:
+          female:
+            female: 
+            male: 
+            neutral: 
+          male:
+            female: 
+            male: 
+            neutral: 
+          neutral:
+            female: 
+            male: 
+            neutral: for refugee parents
+        refugees_parents_to_be:
+          female: 
+          male: 
+          neutral: 
         refugees_pre_asylum_procedure: for refugees before the asylum procedure
         refugees_residence_permit: for refugees with a residence permit
         refugees_toleration_decision: for refugees with temporary suspension of deportation
         refugees_ujf: for unaccompanied young refugees
-        refugees_umf: for unaccompanied minor refugees
+        refugees_umf:
+          female: 
+          male: 
+          neutral: for unaccompanied minor refugees

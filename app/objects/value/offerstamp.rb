@@ -1,3 +1,6 @@
+# This module represents the entire offer state machine and should stay
+# together
+# rubocop:disable Metrics/ClassLength
 class Offerstamp
   def self.generate_stamp offer, current_section, locale
     # filter target_audience array to only include those of the current_section
@@ -15,15 +18,21 @@ class Offerstamp
 
   def self.generate_offer_stamp current_section, offer, ta, locale
     locale_entry = 'offer.stamp.target_audience.' + ta.to_s
+    target_audiences_with_advanced_logic =
+      %w(family_children family_parents family_nuclear_family
+         family_parents_to_be refugees_children refugees_parents_to_be
+         refugees_umf refugees_parents refugees_families refugees_general)
 
-    if ta == 'family_children' || ta == 'family_parents' ||
-       ta == 'family_nuclear_family' || ta == 'family_parents_to_be'
+    if target_audiences_with_advanced_logic.include?(ta)
       locale_entry += send("stamp_#{ta}", offer)
     end
     stamp = I18n.t(locale_entry, locale: locale)
 
-    stamp_add_age offer, ta, stamp, current_section, locale
+    stamp = stamp_add_age offer, ta, stamp, current_section, locale
+    stamp_add_residence_status offer, stamp, locale, current_section
   end
+
+  # --------- FAMILY
 
   def self.stamp_family_children offer
     if !offer.gender_first_part_of_stamp.nil?
@@ -77,6 +86,65 @@ class Offerstamp
     end
   end
 
+  # --------- REFUGEES
+
+  def self.stamp_refugees_children offer
+    if !offer.gender_first_part_of_stamp.nil?
+      ".#{offer.gender_first_part_of_stamp}"
+    elsif offer.age_from >= 14 && offer.age_to >= 14
+      '.adolescents'
+    elsif offer.age_from < 14 && offer.age_to >= 14
+      '.and_adolescents'
+    else
+      '.default'
+    end
+  end
+
+  def self.stamp_refugees_umf offer
+    offer.gender_first_part_of_stamp.nil? ? '.neutral' : '.' + offer.gender_first_part_of_stamp
+  end
+
+  # follows the same logic as self.stamp_refugees_umf
+  def self.stamp_refugees_parents_to_be offer
+    stamp_refugees_umf(offer)
+  end
+
+  def self.stamp_refugees_parents offer
+    locale_entry = offer.gender_first_part_of_stamp.nil? ? '.neutral' : '.' + offer.gender_first_part_of_stamp
+    locale_entry += offer.gender_second_part_of_stamp.nil? ? '.neutral' : '.' + offer.gender_second_part_of_stamp
+    locale_entry
+  end
+
+  def self.stamp_refugees_families offer
+    if offer.gender_first_part_of_stamp.nil? &&
+       offer.gender_second_part_of_stamp.nil?
+      '.default'
+    else
+      locale_entry = '.' + (offer.gender_first_part_of_stamp.nil? ? 'neutral' : offer.gender_first_part_of_stamp)
+      locale_entry + stamp_family_nuclear_family_gender_second_part(offer)
+    end
+  end
+
+  def self.stamp_refugees_general offer
+    locale_entry = offer.gender_first_part_of_stamp.nil? ? '.neutral' : '.' + offer.gender_first_part_of_stamp
+    if offer.gender_first_part_of_stamp == 'male' || offer.gender_first_part_of_stamp == 'female'
+      locale_entry += offer.age_from >= 18 ? '.default' : '.special'
+    end
+    locale_entry
+  end
+
+  #  TODO: formatting, account for different languages...
+  def self.stamp_add_residence_status offer, stamp, locale, current_section
+    if current_section == 'refugees' && offer.residence_status.blank? == false
+      locale_entry = "offer.stamp.status.#{offer.residence_status}"
+      stamp + ' ' + I18n.t(locale_entry, locale: locale)
+    else
+      stamp
+    end
+  end
+
+  # --------- GENERAL (AGE)
+
   def self.stamp_add_age offer, ta, stamp, current_section, locale
     append_age = offer.age_visible && stamp_append_age?(offer, ta)
     child_age = stamp_child_age? offer, ta
@@ -94,13 +162,14 @@ class Offerstamp
   end
 
   def self.stamp_append_age? offer, ta
-    ta != 'family_everyone' && ta != 'refugees_families' &&
+    ta != 'family_everyone' &&
       !(ta == 'family_nuclear_family' && offer.gender_first_part_of_stamp.nil? &&
         offer.gender_second_part_of_stamp.nil?)
   end
 
   def self.stamp_child_age? offer, ta
-    ta == 'family_parents' && !offer.gender_second_part_of_stamp.nil? &&
+    %w(family_parents family_relatives refugees_parents).include?(ta) &&
+      !offer.gender_second_part_of_stamp.nil? &&
       offer.gender_second_part_of_stamp == 'neutral'
   end
 
@@ -116,6 +185,7 @@ class Offerstamp
       else
         "#{from} - #{to}"
       end
-    " (#{age_string} #{I18n.t('offer.stamp.age.suffix', locale: locale)})"
+    " (#{age_string} #{I18n.t('offer.stamp.age.suffix', locale: locale, count: to)})"
   end
 end
+# rubocop:enable Metrics/ClassLength

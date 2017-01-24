@@ -3,15 +3,28 @@ tr:
     stamp:
       age:
         from: itibaren
-        of_child: "Çocuğun yaşı"
+        of_child: Çocuğun yaşı
         suffix: Yaş
         to: kadar
+      status:
+        asylum_procedure: 
+        before_asylum_application: 
+        deportation_decision: 
+        residence_permit: 
+        toleration_decision: 
       target_audience:
-        family_acquaintances: Tanıdık ve akrabalar için
+        OLD_family_pregnant_woman: Hamileler
+        OLD_refugees_adolescents: Kaçan gençler için
+        OLD_refugees_children: Kaçan çocuklar için
+        OLD_refugees_children_and_adolescents: Kaçan çocuk ve gençler için
+        OLD_refugees_families: Kaçan aileler için
+        OLD_refugees_general: Mülteciler için
+        OLD_refugees_parents: Kaçan ebeveynler için
+        OLD_refugees_umf: sahipsiz, reşit olmayan mülteciler için
         family_children:
           adolescents: Gençler için
-          and_adolescents: "Çocuk ve gençler için"
-          default: "Çocuklar için"
+          and_adolescents: Çocuk ve gençler için
+          default: Çocuklar için
           female: Kızlar için
           male: Erkekler için
         family_everyone: herkes için
@@ -30,7 +43,7 @@ tr:
           neutral:
             female: Kızları olan aileler için
             male: Oğulları olan aileler için
-            neutral: "Çocuklu aileler için"
+            neutral: Çocuklu aileler için
             with_baby: Bebekleri olan aileler için
         family_parents:
           female:
@@ -61,17 +74,62 @@ tr:
             female: Ebeveyn adayları ve kızları için
             male: Ebeveyn adayları ve oğulları için
             neutral: Ebeveyn adayları ve çocukları için
-        family_pregnant_woman: Hamileler
-        refugees_adolescents: Kaçan gençler için
-        refugees_asylum_procedure: "İltica işleminde bulunan mülteciler için"
-        refugees_children: Kaçan çocuklar için
-        refugees_children_and_adolescents: Kaçan çocuk ve gençler için
-        refugees_deportation_decision: "Ülkeden sürülme bilgisi alan mülteciler için"
-        refugees_families: Kaçan aileler için
-        refugees_general: Mülteciler için
-        refugees_parents: Kaçan ebeveynler için
-        refugees_pre_asylum_procedure: "İltica başvurusu yapacak mülteciler için"
-        refugees_residence_permit: "İkametgahı olan mülteciler için"
+        family_relatives: Yakınları için
+        refugees_asylum_procedure: İltica işleminde bulunan mülteciler için
+        refugees_children:
+          adolescents: Kaçan gençler için
+          and_adolescents: Kaçan çocuk ve gençler için
+          default: Kaçan çocuklar için
+          female: 
+          male: 
+        refugees_deportation_decision: Ülkeden sürülme bilgisi alan mülteciler için
+        refugees_families:
+          default: Kaçan aileler için
+          female:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          male:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          neutral:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+        refugees_general:
+          female:
+            default: 
+            special: 
+          male:
+            default: 
+            special: 
+          neutral: Mülteciler için
+        refugees_parents:
+          female:
+            female: 
+            male: 
+            neutral: 
+          male:
+            female: 
+            male: 
+            neutral: 
+          neutral:
+            female: 
+            male: 
+            neutral: Kaçan ebeveynler için
+        refugees_parents_to_be:
+          female: 
+          male: 
+          neutral: 
+        refugees_pre_asylum_procedure: İltica başvurusu yapacak mülteciler için
+        refugees_residence_permit: İkametgahı olan mülteciler için
         refugees_toleration_decision: Geçici olarak kabul edilen mülteciler için
         refugees_ujf: sahipsiz genç mülteciler için
-        refugees_umf: sahipsiz, reşit olmayan mülteciler için
+        refugees_umf:
+          female: 
+          male: 
+          neutral: sahipsiz, reşit olmayan mülteciler için

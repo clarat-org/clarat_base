@@ -2,12 +2,25 @@ fr:
   offer:
     stamp:
       age:
-        from: "à partir de"
-        of_child: "âge de l'enfant:"
+        from: à partir de
+        of_child: 'âge de l''enfant:'
         suffix: ans
         to: jusqu'à
+      status:
+        asylum_procedure: dans une procédure de demande d'asile
+        before_asylum_application: avant la demande d'asile
+        deportation_decision: avant la décision d'expulsion
+        residence_permit: avec un permis de séjour
+        toleration_decision: avec un certificat de tolérance
       target_audience:
-        family_acquaintances: pour des connaissances et de la parenté
+        OLD_family_pregnant_woman: NOTRANSLATE
+        OLD_refugees_adolescents: pour des enfants réfugiés
+        OLD_refugees_children: pour des enfants réfugiés
+        OLD_refugees_children_and_adolescents: 'pour des enfants et des ados réfugiés '
+        OLD_refugees_families: pour des familles réfugiées
+        OLD_refugees_general: pour des réfugiés
+        OLD_refugees_parents: pour des parents réfugiés
+        OLD_refugees_umf: pour des réfugiés mineurs non-accompagnés
         family_children:
           adolescents: pour des ados
           and_adolescents: pour des enfants et des ados
@@ -61,17 +74,62 @@ fr:
             female: pour de futurs parents et leurs filles
             male: pour de futurs parents et leurs fils
             neutral: pour de futurs parents et leurs enfants
-        family_pregnant_woman: NOTRANSLATE
-        refugees_adolescents: pour des enfants réfugiés
+        family_relatives: pour les proches
         refugees_asylum_procedure: pour des réfugiés dans une procédure de demande d'asile
-        refugees_children: pour des enfants réfugiés
-        refugees_children_and_adolescents: 'pour des enfants et des ados réfugiés '
+        refugees_children:
+          adolescents: pour des enfants réfugiés
+          and_adolescents: pour des enfants et des ados réfugiés
+          default: pour des enfants réfugiés
+          female: 
+          male: 
         refugees_deportation_decision: pour des réfugiés avant la décision d'expulsion
-        refugees_families: pour des familles réfugiées
-        refugees_general: pour des réfugiés
-        refugees_parents: pour des parents réfugiés
+        refugees_families:
+          default: pour des familles réfugiées
+          female:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          male:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+          neutral:
+            female: 
+            male: 
+            neutral: 
+            with_baby: 
+        refugees_general:
+          female:
+            default: 
+            special: 
+          male:
+            default: 
+            special: 
+          neutral: pour des réfugiés
+        refugees_parents:
+          female:
+            female: 
+            male: 
+            neutral: 
+          male:
+            female: 
+            male: 
+            neutral: 
+          neutral:
+            female: 
+            male: 
+            neutral: pour des parents réfugiés
+        refugees_parents_to_be:
+          female: 
+          male: 
+          neutral: 
         refugees_pre_asylum_procedure: pour des réfugiés  avant la demande d'asile
         refugees_residence_permit: pour des réfugiés avec un permis de séjour
         refugees_toleration_decision: pour des réfugiés avec un certificat de tolérance
         refugees_ujf: pour de jeunes réfugiés non-accompagnés
-        refugees_umf: pour des réfugiés mineurs non-accompagnés
+        refugees_umf:
+          female: 
+          male: 
+          neutral: pour des réfugiés mineurs non-accompagnés

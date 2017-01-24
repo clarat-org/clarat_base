@@ -33,6 +33,7 @@ describe Offer do
     it { subject.must_respond_to :starts_at }
     it { subject.must_respond_to :completed_at }
     it { subject.must_respond_to :completed_by }
+    it { subject.must_respond_to :residence_status }
   end
 
   describe 'validations' do
@@ -845,74 +846,224 @@ describe Offer do
 
       it 'should behave correctly for the remaining family target audiences' do
         basicOffer.target_audience_filters =
-          [TargetAudienceFilter.find_by(identifier: 'family_acquaintances')]
-        basicOffer.stamp_family(:de).must_equal 'für Bekannte und Verwandte'
+          [TargetAudienceFilter.find_by(identifier: 'family_relatives')]
+        basicOffer.stamp_family(:de).must_equal 'für Angehörige'
+
+        basicOffer.age_visible = true
+        basicOffer.gender_second_part_of_stamp = 'neutral'
+        basicOffer.age_from = 1
+        basicOffer.age_to = 2
+        basicOffer.stamp_family(:de).must_equal 'für Angehörige (Alter des Kindes: 1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = nil
+        basicOffer.stamp_family(:de).must_equal 'für Angehörige (1 - 2 Jahre)'
 
         basicOffer.target_audience_filters =
           [TargetAudienceFilter.find_by(identifier: 'family_everyone')]
         basicOffer.stamp_family(:de).must_equal 'für alle'
       end
 
-      it 'should behave correctly for refugees target audiences' do
+      it 'should behave correctly for refugees_children target_audience' do
         basicOffer.target_audience_filters =
           [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_children')]
+        basicOffer.age_from = 1
+        basicOffer.age_to = 10
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Kinder'
         basicOffer.stamp_family(:de).must_equal ''
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_2', identifier: 'refugees_adolescents')]
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Jugendliche'
-
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_3', identifier: 'refugees_children_and_adolescents')]
+        basicOffer.age_to = 17
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Kinder und Jugendliche'
 
+        basicOffer.age_from = 15
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Jugendliche'
+
+        basicOffer.age_visible = true
+        basicOffer.age_from = 13
+        basicOffer.age_to = 17
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Kinder und Jugendliche (13 - 17 Jahre)'
+
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Jungen (13 - 17 Jahre)'
+
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mädchen (13 - 17 Jahre)'
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Kinder und Jugendliche (13 - 17 Jahre)'
+      end
+
+      it 'should behave correctly for refugees_umf target_audience' do
         basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_4', identifier: 'refugees_umf')]
+          [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_umf')]
+        basicOffer.stamp_refugees(:de).must_equal 'für unbegleitete minderjährige Flüchtlinge'
+        basicOffer.stamp_family(:de).must_equal ''
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
         basicOffer.stamp_refugees(:de).must_equal 'für unbegleitete minderjährige Flüchtlinge'
 
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für unbegleitete minderjährige Jungen'
+
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für unbegleitete minderjährige Mädchen'
+      end
+
+      it 'should behave correctly for refugees_parents_to_be target_audience' do
         basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_5', identifier: 'refugees_ujf')]
-        basicOffer.stamp_refugees(:de).must_equal 'für unbegleitete junge Flüchtlinge'
+          [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_parents_to_be')]
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete werdende Eltern'
+        basicOffer.stamp_family(:de).must_equal ''
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete werdende Eltern'
+
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Schwangere'
+
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete werdende Väter'
+      end
+
+      it 'should behave correctly for refugees_parents target_audience' do
+        basicOffer.target_audience_filters =
+          [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_parents')]
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern'
+        basicOffer.stamp_family(:de).must_equal ''
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern'
+
+        basicOffer.gender_second_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern'
 
         basicOffer.age_visible = true
         basicOffer.age_from = 1
         basicOffer.age_to = 2
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern (Alter des Kindes: 1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern von Töchtern (1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern von Söhnen (1 - 2 Jahre)'
+
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter von Söhnen (1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter von Töchtern (1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter (Alter des Kindes: 1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = nil
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter (1 - 2 Jahre)'
+
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter (1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter (Alter des Kindes: 1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter von Söhnen (1 - 2 Jahre)'
+
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter von Töchtern (1 - 2 Jahre)'
+      end
+
+      it 'should behave correctly for refugees_families target_audience' do
         basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_6', identifier: 'refugees_families')]
+          [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_families')]
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien'
+        basicOffer.stamp_family(:de).must_equal ''
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien'
 
+        basicOffer.age_visible = true
+        basicOffer.gender_second_part_of_stamp = 'neutral' # neutral equals nil
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien und ihre Kinder (bis 17 Jahre)'
+
+        basicOffer.age_from = 0
+        basicOffer.age_to = 1
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien und ihre Babys (bis 1 Jahr)'
+
         basicOffer.age_visible = false
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_7', identifier: 'refugees_pre_asylum_procedure')]
-        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge vor dem Asylantrag'
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien und ihre Töchter'
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_8', identifier: 'refugees_asylum_procedure')]
-        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge im Asylverfahren'
+        basicOffer.gender_second_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Familien und ihre Söhne'
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_9', identifier: 'refugees_deportation_decision')]
-        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge mit Abschiebebescheid'
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter und ihre Söhne'
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_10', identifier: 'refugees_toleration_decision')]
-        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge mit Duldung'
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter und ihre Töchter'
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_11', identifier: 'refugees_residence_permit')]
-        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge mit Aufenthaltserlaubnis'
+        basicOffer.gender_second_part_of_stamp = 'neutral'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter und ihre Babys'
 
-        basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_13', identifier: 'refugees_parents')]
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Eltern'
+        basicOffer.age_from = 1
+        basicOffer.age_to = 2
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mütter und ihre Kinder'
 
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter und ihre Kinder'
+
+        basicOffer.age_from = 0
+        basicOffer.age_to = 1
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter und ihre Babys'
+
+        basicOffer.gender_second_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter und ihre Söhne'
+
+        basicOffer.gender_second_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Väter und ihre Töchter'
+      end
+
+      it 'should behave correctly for refugees_general target_audience' do
         basicOffer.target_audience_filters =
-          [TargetAudienceFilter.create(name: 'ref_14', identifier: 'refugees_general')]
+          [TargetAudienceFilter.create(name: 'ref_1', identifier: 'refugees_general')]
+        basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge'
+        basicOffer.stamp_family(:de).must_equal ''
+
+        # neutral equals nil
+        basicOffer.gender_first_part_of_stamp = 'neutral'
         basicOffer.stamp_refugees(:de).must_equal 'für Flüchtlinge'
 
-        basicOffer.target_audience_filters = []
-        basicOffer.stamp_refugees(:de).must_equal ''
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.age_from = 15
+        basicOffer.age_to = 42
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Mädchen und Frauen'
+
+        basicOffer.gender_first_part_of_stamp = 'male'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Jungen und Männer'
+
+        basicOffer.age_from = 18
+        basicOffer.age_to = 42
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Männer'
+
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen'
+
+        # TODO: abklaeren!
+        # basicOffer.age_from = 15
+        # basicOffer.age_to = 17
+        # basicOffer.stamp_refugees(:de).must_equal 'fuer gefluechtete Jungen'
+        #
+        # basicOffer.gender_first_part_of_stamp = 'female'
+        # basicOffer.stamp_refugees(:de).must_equal 'fuer gefluechtete Maedchen'
+
+        # simple residence_status test
+        basicOffer.residence_status = 'before_asylum_application'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen vor dem Asylantrag'
       end
     end
   end

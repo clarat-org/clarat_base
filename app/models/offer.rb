@@ -22,6 +22,10 @@ class Offer < ActiveRecord::Base
   BENEFICIARY_GENDERS = %w(female male).freeze
   STAMP_SECOND_PART_GENDERS = %w(female male neutral).freeze
   # ^ nil means inclusive to any gender
+  CONTACT_TYPES = %w(personal remote).freeze
+  RESIDENCE_STATUSES =
+    %w(before_asylum_application asylum_procedure residence_permit
+       toleration_decision deportation_decision).freeze
 
   enumerize :encounter, in: ENCOUNTERS
   enumerize :exclusive_gender, in: EXCLUSIVE_GENDERS
@@ -29,7 +33,7 @@ class Offer < ActiveRecord::Base
   enumerize :gender_second_part_of_stamp, in: STAMP_SECOND_PART_GENDERS
   enumerize :treatment_type, in: TREATMENT_TYPES
   enumerize :participant_structure, in: PARTICIPANT_STRUCTURES
-  CONTACT_TYPES = %w(personal remote).freeze
+  enumerize :residence_status, in: RESIDENCE_STATUSES
 
   # Friendly ID
   extend FriendlyId
