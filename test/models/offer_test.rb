@@ -678,10 +678,10 @@ describe Offer do
         basicOffer.stamp_family(:de).must_equal 'für Kinder (2 Jahre)'
 
         basicOffer.age_to = 18
-        basicOffer.stamp_family(:de).must_equal 'für Kinder und Jugendliche (ab 2 Jahre)'
+        basicOffer.stamp_family(:de).must_equal 'für Kinder und Jugendliche (ab 2 Jahren)'
 
         basicOffer.age_to = 99
-        basicOffer.stamp_family(:de).must_equal 'für Kinder und Jugendliche (ab 2 Jahre)'
+        basicOffer.stamp_family(:de).must_equal 'für Kinder und Jugendliche (ab 2 Jahren)'
 
         basicOffer.age_visible = false
         basicOffer.stamp_family(:de).must_equal 'für Kinder und Jugendliche'

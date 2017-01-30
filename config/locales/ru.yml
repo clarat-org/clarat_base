@@ -2,10 +2,11 @@ ru:
   offer:
     stamp:
       age:
-        from: от
-        of_child: 'Возраст ребенка:'
+        age_from: 
+        age_of_child: 'Возраст ребенка: %{age}'
+        age_to: 
         suffix: лет
-        to: до
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         asylum_procedure: 
         before_asylum_application: 
@@ -13,14 +14,6 @@ ru:
         residence_permit: 
         toleration_decision: 
       target_audience:
-        OLD_family_pregnant_woman: для беременной женщины
-        OLD_refugees_adolescents: для беженцев молодежи
-        OLD_refugees_children: для детей беженцев
-        OLD_refugees_children_and_adolescents: для детей и молодежи беженцев
-        OLD_refugees_families: для семей беженцев
-        OLD_refugees_general: для беженцев
-        OLD_refugees_parents: для родителей беженцев
-        OLD_refugees_umf: для несовершеннолетних беженцев без сопровождения
         family_children:
           adolescents: для молодежи
           and_adolescents: для детей и молодежи
@@ -75,14 +68,12 @@ ru:
             male: для будущих родителей и их сыновей
             neutral: для будущих родителей с детьми
         family_relatives: для родственников
-        refugees_asylum_procedure: для беженцев в поря́док предоставле́ния убе́жища
         refugees_children:
           adolescents: для беженцев молодежи
           and_adolescents: для детей и молодежи беженцев
           default: для детей беженцев
           female: 
           male: 
-        refugees_deportation_decision: для беженцев с решением о депортации
         refugees_families:
           default: для семей беженцев
           female:
@@ -107,7 +98,9 @@ ru:
           male:
             default: 
             special: 
-          neutral: для беженцев
+          neutral:
+            adults: 
+            neutral: для беженцев
         refugees_parents:
           female:
             female: 
@@ -125,10 +118,6 @@ ru:
           female: 
           male: 
           neutral: 
-        refugees_pre_asylum_procedure: для беженцев перед прошением о предоставлении убежища
-        refugees_residence_permit: для беженцев с разрешением на проживание
-        refugees_toleration_decision: для беженцев с правом на кратковременное ограниченное пребывание в стране
-        refugees_ujf: для беженцев молодежи без сопровождения
         refugees_umf:
           female: 
           male: 

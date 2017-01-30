@@ -2,10 +2,11 @@ tr:
   offer:
     stamp:
       age:
-        from: itibaren
-        of_child: Çocuğun yaşı
+        age_from: 
+        age_of_child: 'Çocuğun yaşı: %{age}'
+        age_to: 
         suffix: Yaş
-        to: kadar
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         asylum_procedure: 
         before_asylum_application: 
@@ -13,14 +14,6 @@ tr:
         residence_permit: 
         toleration_decision: 
       target_audience:
-        OLD_family_pregnant_woman: Hamileler
-        OLD_refugees_adolescents: Kaçan gençler için
-        OLD_refugees_children: Kaçan çocuklar için
-        OLD_refugees_children_and_adolescents: Kaçan çocuk ve gençler için
-        OLD_refugees_families: Kaçan aileler için
-        OLD_refugees_general: Mülteciler için
-        OLD_refugees_parents: Kaçan ebeveynler için
-        OLD_refugees_umf: sahipsiz, reşit olmayan mülteciler için
         family_children:
           adolescents: Gençler için
           and_adolescents: Çocuk ve gençler için
@@ -75,14 +68,12 @@ tr:
             male: Ebeveyn adayları ve oğulları için
             neutral: Ebeveyn adayları ve çocukları için
         family_relatives: Yakınları için
-        refugees_asylum_procedure: İltica işleminde bulunan mülteciler için
         refugees_children:
           adolescents: Kaçan gençler için
           and_adolescents: Kaçan çocuk ve gençler için
           default: Kaçan çocuklar için
           female: 
           male: 
-        refugees_deportation_decision: Ülkeden sürülme bilgisi alan mülteciler için
         refugees_families:
           default: Kaçan aileler için
           female:
@@ -107,7 +98,9 @@ tr:
           male:
             default: 
             special: 
-          neutral: Mülteciler için
+          neutral:
+            adults: 
+            neutral: Mülteciler için
         refugees_parents:
           female:
             female: 
@@ -125,10 +118,6 @@ tr:
           female: 
           male: 
           neutral: 
-        refugees_pre_asylum_procedure: İltica başvurusu yapacak mülteciler için
-        refugees_residence_permit: İkametgahı olan mülteciler için
-        refugees_toleration_decision: Geçici olarak kabul edilen mülteciler için
-        refugees_ujf: sahipsiz genç mülteciler için
         refugees_umf:
           female: 
           male: 

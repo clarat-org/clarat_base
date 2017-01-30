@@ -2,12 +2,15 @@ de:
   offer:
     stamp:
       age:
-        from: ab
-        of_child: 'Alter des Kindes:'
-        suffix:
-          one: Jahr
-          other: Jahre
-        to: bis
+        age_from:
+          one: ab %{count} Jahr
+          other: ab %{count} Jahren
+        age_of_child: 'Alter des Kindes: %{age}'
+        age_to:
+          one: bis %{count} Jahr
+          other: bis %{count} Jahre
+        suffix: Jahre
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         asylum_procedure: im Asylverfahren
         before_asylum_application: vor dem Asylantrag
@@ -15,14 +18,6 @@ de:
         residence_permit: mit Aufenthaltserlaubnis
         toleration_decision: mit Duldung
       target_audience:
-        OLD_family_pregnant_woman: für Schwangere
-        OLD_refugees_adolescents: für geflüchtete Jugendliche
-        OLD_refugees_children: für geflüchtete Kinder
-        OLD_refugees_children_and_adolescents: für geflüchtete Kinder und Jugendliche
-        OLD_refugees_families: für geflüchtete Familien
-        OLD_refugees_general: für Flüchtlinge
-        OLD_refugees_parents: für geflüchtete Eltern
-        OLD_refugees_umf: für unbegleitete minderjährige Flüchtlinge
         family_children:
           adolescents: für Jugendliche
           and_adolescents: für Kinder und Jugendliche
@@ -77,14 +72,12 @@ de:
             male: für werdende Eltern und ihre Söhne
             neutral: für werdende Eltern und ihre Kinder
         family_relatives: für Angehörige
-        refugees_asylum_procedure: für Flüchtlinge im Asylverfahren
         refugees_children:
           adolescents: für geflüchtete Jugendliche
           and_adolescents: für geflüchtete Kinder und Jugendliche
           default: für geflüchtete Kinder
           female: für geflüchtete Mädchen
           male: für geflüchtete Jungen
-        refugees_deportation_decision: für Flüchtlinge mit Abschiebebescheid
         refugees_families:
           default: für geflüchtete Familien
           female:
@@ -109,7 +102,9 @@ de:
           male:
             default: für geflüchtete Männer
             special: für geflüchtete Jungen und Männer
-          neutral: für Flüchtlinge
+          neutral:
+            adults: für geflüchtete Erwachsene
+            neutral: für Flüchtlinge
         refugees_parents:
           female:
             female: für geflüchtete Mütter von Töchtern
@@ -127,10 +122,6 @@ de:
           female: für geflüchtete Schwangere
           male: für geflüchtete werdende Väter
           neutral: für geflüchtete werdende Eltern
-        refugees_pre_asylum_procedure: für Flüchtlinge vor dem Asylantrag
-        refugees_residence_permit: für Flüchtlinge mit Aufenthaltserlaubnis
-        refugees_toleration_decision: für Flüchtlinge mit Duldung
-        refugees_ujf: für unbegleitete junge Flüchtlinge
         refugees_umf:
           female: für unbegleitete minderjährige Mädchen
           male: für unbegleitete minderjährige Jungen

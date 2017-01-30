@@ -2,25 +2,30 @@ ar:
   offer:
     stamp:
       age:
-        from: من
-        of_child: 'عمر الطفل:'
+        age_from:
+          few: من %{count} سنوات
+          many: من %{count} سنوات
+          one: من %{count} سنة
+          other: من %{count} سنوات
+          two: من %{count} سنتان
+          zero: " من %{count} سنة"
+        age_of_child: 'عمر الطفل: %{age}'
+        age_to:
+          few: حتى %{count} سنوات
+          many: حتى %{count} سنوات
+          one: حتى %{count} سنة
+          other: حتى %{count} سنوات
+          two: حتى %{count} سنتان
+          zero: حتى %{count} سنة
         suffix: سنوات
-        to: إلى
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: 
-        before_asylum_application: 
-        deportation_decision: 
-        residence_permit: 
-        toleration_decision: 
+        asylum_procedure: في قضية اللجوء
+        before_asylum_application: قبل تقديم طلب اللجوء
+        deportation_decision: " بقرار الترحيل"
+        residence_permit: بتصريح إقامة
+        toleration_decision: بإذن إقامة مؤقت (دولدونج)
       target_audience:
-        OLD_family_pregnant_woman: للحوامل
-        OLD_refugees_adolescents: للاجئين  الشبان
-        OLD_refugees_children: للأجئين الأطفال
-        OLD_refugees_children_and_adolescents: للأجئين الأطفال والشبان
-        OLD_refugees_families: للأسرة اللاجئة
-        OLD_refugees_general: للاجئين
-        OLD_refugees_parents: للاجئين من الآباء
-        OLD_refugees_umf: للاجئين القصر غير المصحوبين بذويهم
         family_children:
           adolescents: للشبان
           and_adolescents: للأطفال والشبان
@@ -75,61 +80,57 @@ ar:
             male: من سوف يصيرون آباء وأمهات وصبيانهم
             neutral: من سوف يصيرون آباء وأمهات وأطفالهم
         family_relatives: 'للأقارب '
-        refugees_asylum_procedure: للاجئين في إجراءات اللجوء
         refugees_children:
           adolescents: للاجئين  الشبان
           and_adolescents: للأجئين الأطفال والشبان
           default: للأجئين الأطفال
-          female: 
-          male: 
-        refugees_deportation_decision: للأجئين مع قرار الترحيل
+          female: للبنات اللاجئات
+          male: للأولاد اللاجئين
         refugees_families:
           default: للأسرة اللاجئة
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: للأمهات اللاجئات وبناتهن
+            male: للأمهات اللاجئات وأولادهن
+            neutral: للأمهات اللاجئات وأطفالهن
+            with_baby: للأمهات اللاجئات وأطفالهن الرضع
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: للآباء اللاجئين وبناتهم
+            male: للآباء اللاجئين وأولادهم
+            neutral: للآباء اللاجئين وأطفالهم
+            with_baby: للآباء اللاجئين وأطفالهم الرضع
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: للأسر اللاجئة وبناتها
+            male: للأسر اللاجئة وأولادها الصبيان
+            neutral: للأسر اللاجئة وأطفالها
+            with_baby: للأسر اللاجئة وأطفالها الرضع
         refugees_general:
           female:
-            default: 
-            special: 
+            default: للنساء اللاجئات
+            special: للفتيات والنساء اللاجئات
           male:
-            default: 
-            special: 
-          neutral: للاجئين
+            default: للاجئين الرجال
+            special: للاجئين الصبيان والرجال
+          neutral:
+            adults: للاجئين البالغين
+            neutral: للاجئين
         refugees_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: للأمهات الاجئات اللاتي لديهن بنات
+            male: للأمهات اللاجئات اللاتي لديهن صبيان
+            neutral: للأمهات اللاجئات
           male:
-            female: 
-            male: 
-            neutral: 
+            female: لللآباء اللاجئين الذين لديهم بنات
+            male: للآباء اللاجئين الذين لديهم صبيان
+            neutral: للآباء اللاجئين
           neutral:
-            female: 
-            male: 
+            female: للآباء اللاجئين الذين لديهم بنات
+            male: للآباء اللاجئين الذين لديهم صبيان
             neutral: للاجئين من الآباء
         refugees_parents_to_be:
-          female: 
-          male: 
-          neutral: 
-        refugees_pre_asylum_procedure: للاجئين قبل إجراءات اللجوء
-        refugees_residence_permit: للاجئين الحاصلين على تصريح إقامة
-        refugees_toleration_decision: للاجئين الحاصلين على التسامح (دولدنج)
-        refugees_ujf: للاجئين الصغار غير المصحوبين بذويهم
+          female: للاجئات الحوامل
+          male: للاجئين الرجال الذين سيصيرون قريباً آباء
+          neutral: للاجئين الذين سيصيرون قريباً آباء
         refugees_umf:
-          female: 
-          male: 
+          female: للفتيات القاصرات غير المصحوبات
+          male: للصبيان القصر غير المصحوبين
           neutral: للاجئين القصر غير المصحوبين بذويهم

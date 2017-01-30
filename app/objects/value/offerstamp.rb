@@ -18,18 +18,20 @@ class Offerstamp
 
   def self.generate_offer_stamp current_section, offer, ta, locale
     locale_entry = 'offer.stamp.target_audience.' + ta.to_s
-    target_audiences_with_advanced_logic =
-      %w(family_children family_parents family_nuclear_family
-         family_parents_to_be refugees_children refugees_parents_to_be
-         refugees_umf refugees_parents refugees_families refugees_general)
 
-    if target_audiences_with_advanced_logic.include?(ta)
+    if %w(family_children family_parents family_nuclear_family refugees_general
+          family_parents_to_be refugees_children refugees_parents_to_be
+          refugees_umf refugees_parents refugees_families ).include?(ta)
       locale_entry += send("stamp_#{ta}", offer)
     end
+    # build separate parts of stamp and join them with locale-specific format
     stamp = I18n.t(locale_entry, locale: locale)
-
-    stamp = stamp_add_age offer, ta, stamp, current_section, locale
-    stamp_add_residence_status offer, stamp, locale, current_section
+    optional_age = stamp_optional_age(offer, ta, current_section, locale)
+    optional_status = stamp_optional_residence_status(offer, locale, current_section)
+    I18n.t('offer.stamp.format', locale: locale,
+                                 stamp: stamp,
+                                 optional_age: optional_age,
+                                 optional_status: optional_status)
   end
 
   # --------- FAMILY
@@ -130,35 +132,43 @@ class Offerstamp
     if offer.gender_first_part_of_stamp == 'male' || offer.gender_first_part_of_stamp == 'female'
       locale_entry += offer.age_from >= 18 ? '.default' : '.special'
     end
-    locale_entry
+    locale_entry + stamp_refugees_general_adult_special(offer)
   end
 
-  #  TODO: formatting, account for different languages...
-  def self.stamp_add_residence_status offer, stamp, locale, current_section
+  def self.stamp_refugees_general_adult_special offer
+    if offer.gender_first_part_of_stamp.blank? || offer.gender_first_part_of_stamp == 'neutral'
+      offer.age_to >= 18 && offer.age_from >= 18 ? '.adults' : '.neutral'
+    else
+      ''
+    end
+  end
+
+  def self.stamp_optional_residence_status offer, locale, current_section
     if current_section == 'refugees' && offer.residence_status.blank? == false
       locale_entry = "offer.stamp.status.#{offer.residence_status}"
-      stamp + ' ' + I18n.t(locale_entry, locale: locale)
+      " #{I18n.t(locale_entry, locale: locale)}"
     else
-      stamp
+      ''
     end
   end
 
   # --------- GENERAL (AGE)
 
-  def self.stamp_add_age offer, ta, stamp, current_section, locale
+  def self.stamp_optional_age offer, ta, current_section, locale
     append_age = offer.age_visible && stamp_append_age?(offer, ta)
     child_age = stamp_child_age? offer, ta
 
     if append_age
-      stamp += generate_age_for_stamp(
+      age_string = generate_age_for_stamp(
         offer.age_from,
         offer.age_to,
-        child_age ? "#{I18n.t('offer.stamp.age.of_child', locale: locale)} " : '',
         current_section,
         locale
       )
+      " (#{child_age ? I18n.t('offer.stamp.age.age_of_child', locale: locale, age: age_string) : age_string})"
+    else
+      ''
     end
-    stamp
   end
 
   def self.stamp_append_age? offer, ta
@@ -173,19 +183,16 @@ class Offerstamp
       offer.gender_second_part_of_stamp == 'neutral'
   end
 
-  def self.generate_age_for_stamp from, to, prefix, current_section, locale
-    age_string =
-      prefix +
-      if from == 0
-        "#{I18n.t('offer.stamp.age.to', locale: locale)} #{to}"
-      elsif to == 99 || current_section == 'family' && to > 17
-        "#{I18n.t('offer.stamp.age.from', locale: locale)} #{from}"
-      elsif from == to
-        from.to_s
-      else
-        "#{from} - #{to}"
-      end
-    " (#{age_string} #{I18n.t('offer.stamp.age.suffix', locale: locale, count: to)})"
+  def self.generate_age_for_stamp from, to, current_section, locale
+    if from == 0
+      I18n.t('offer.stamp.age.age_to', locale: locale, count: to)
+    elsif to == 99 || current_section == 'family' && to > 17
+      I18n.t('offer.stamp.age.age_from', locale: locale, count: from)
+    elsif from == to
+      "#{from} #{I18n.t('offer.stamp.age.suffix', locale: locale)}"
+    else
+      "#{from} - #{to} #{I18n.t('offer.stamp.age.suffix', locale: locale)}"
+    end
   end
 end
 # rubocop:enable Metrics/ClassLength

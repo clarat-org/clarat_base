@@ -2,134 +2,125 @@ fa:
   offer:
     stamp:
       age:
-        from: 
-        of_child: 
-        suffix: 
-        to: 
+        age_from: "از %{count} سال\n\n"
+        age_of_child: 'سن کودک: %{age}'
+        age_to: 'تا %{count} سال
+
+'
+        suffix: سال
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: 
-        before_asylum_application: 
-        deportation_decision: 
-        residence_permit: 
-        toleration_decision: 
+        asylum_procedure: در مرحله روند رسیدگی به پناهندگی
+        before_asylum_application: قبل از درخواست پناهندگی
+        deportation_decision: با برگه ترک خاک
+        residence_permit: با اجازه اقامت
+        toleration_decision: با دولدونگ
       target_audience:
-        OLD_family_pregnant_woman: 
-        OLD_refugees_adolescents: 
-        OLD_refugees_children: 
-        OLD_refugees_children_and_adolescents: 
-        OLD_refugees_families: 
-        OLD_refugees_general: 
-        OLD_refugees_parents: 
-        OLD_refugees_umf: 
         family_children:
-          adolescents: 
-          and_adolescents: 
-          default: 
-          female: 
-          male: 
-        family_everyone: 
+          adolescents: برای نوجوانان
+          and_adolescents: برای کودکان و نو جوانان
+          default: برای کودکان
+          female: برای دختران
+          male: برای پسران
+        family_everyone: برای همه
         family_nuclear_family:
-          default: 
+          default: برای خانواده ها
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای مادران و دختران آنها
+            male: برای مادران و پسران آنها
+            neutral: برای ماران و فرزندان آنها
+            with_baby: برای مادران و کودکان آنها
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای پدران و دختران آنها
+            male: برای پدران و پسران آنها
+            neutral: برای پدران و فرزندان آنها
+            with_baby: برای پدران و کودکان آنها
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای خانواده ها و دختران آنها
+            male: برای خانواده ها و پسران آنها
+            neutral: برای خانواده ها و فرزندان آنها
+            with_baby: برای خانواده ها و کودکان آنها
         family_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: برای مادران دختران
+            male: برای مادران پسران
+            neutral: برای مادران
           male:
-            female: 
-            male: 
-            neutral: 
+            female: برای پدران دختران
+            male: برای پدران پسران
+            neutral: برای پدران
           neutral:
-            female: 
-            male: 
-            neutral: 
+            female: برای والدین دختران
+            male: برای والدین پسران
+            neutral: برای والدین
         family_parents_to_be:
-          default: 
+          default: برای والدین چشم به راه کودک
           female:
-            default: 
-            female: 
-            male: 
-            neutral: 
+            default: برای بارداران
+            female: برای بارداران با دختران آنها
+            male: برای بارداران با پسران آنها
+            neutral: برای بارداران با فرزندان آنها
           male:
-            default: 
-            female: 
-            male: 
-            neutral: 
+            default: برای پدران چشم به راه کودک
+            female: برای پدران چشم به راه کودک و دختران آنها
+            male: برای پدران چشم به راه کودک و پسران آنها
+            neutral: برای پدران چشم به راه کودک و فرزندان آنها
           neutral:
-            female: 
-            male: 
-            neutral: 
-        family_relatives: 
-        refugees_asylum_procedure: 
+            female: برای پدران چشم به راه کودک و دختران آنها
+            male: برای والدین چشم به راه کودک و پسران آنها
+            neutral: برای والدین چشم به راه کودک و فرزندان آنها
+        family_relatives: برای بستگان
         refugees_children:
-          adolescents: 
-          and_adolescents: 
-          default: 
-          female: 
-          male: 
-        refugees_deportation_decision: 
+          adolescents: برای نوجوانان پناهنده
+          and_adolescents: برای کودکان و نوجوانان پناهنده
+          default: برای کودکان پناهنده
+          female: برای دختران پناهنده
+          male: برای پسران پناهنده
         refugees_families:
-          default: 
+          default: برای خانواده های پناهنده
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای مادران پناهنده و دختران آنها
+            male: برای مادران پناهنده و پسران آنها
+            neutral: برای مادران پناهنده و فرزندان آنها
+            with_baby: برای مادران پناهنده و کودکان آنها
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای پدران پناهنده و دختران آنها
+            male: برای پدران پناهنده و پسران آنها
+            neutral: برای پدران پناهنده و فرزندان آنها
+            with_baby: برای پدران پناهنده و کودکان آنها
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: برای خانواده های پناهنده و دختران آنها
+            male: برای خانواده های پناهنده با پسران آنها
+            neutral: برای خانواده های پناهنده و دختران آنها
+            with_baby: برای خانواده های پناهنده و کودکان آنها
         refugees_general:
           female:
-            default: 
-            special: 
+            default: برای زنهای پناهنده
+            special: برای دختران و زنان پناهنده
           male:
-            default: 
-            special: 
-          neutral: 
+            default: برای مردان پناهنده
+            special: برای پسران و مردان پناهنده
+          neutral:
+            adults: برای پناهندگان بزگسال
+            neutral: برای پناهندگان
         refugees_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: برای مادران پناهنده دختران
+            male: برای مادران پناهنده پسران
+            neutral: برای مادران پناهنده
           male:
-            female: 
-            male: 
-            neutral: 
+            female: برای پدران پناهنده دختران
+            male: برای پدران پناهنده پسران
+            neutral: برای پدران پناهنده
           neutral:
-            female: 
-            male: 
-            neutral: 
+            female: برای والدیدن پناهنده دختران
+            male: برای والدین پناهنده پسران
+            neutral: برای والدین پناهنده
         refugees_parents_to_be:
-          female: 
-          male: 
-          neutral: 
-        refugees_pre_asylum_procedure: 
-        refugees_residence_permit: 
-        refugees_toleration_decision: 
-        refugees_ujf: 
+          female: برای زنان باردار پناهنده
+          male: برای پدران پناهنده چشم به را کودک
+          neutral: برای والدین پناهنده چشم به راه کودک
         refugees_umf:
-          female: 
-          male: 
-          neutral: 
+          female: برای دختران زیر سن و بدون همراه
+          male: برای پسران زیر سن و بدون همراه
+          neutral: برای پناهندگان زیر سن و بدون همراه

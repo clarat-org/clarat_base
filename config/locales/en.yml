@@ -2,10 +2,15 @@ en:
   offer:
     stamp:
       age:
-        from: from
-        of_child: 'age of child:'
+        age_from:
+          one: from %{count} year of age
+          other: from %{count} years of age
+        age_of_child: 'age of child: %{age}'
+        age_to:
+          one: up to %{count} year
+          other: up to %{count} years
         suffix: years
-        to: up to
+      format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         asylum_procedure: during the asylum procedure
         before_asylum_application: before the asylum procedure
@@ -13,14 +18,6 @@ en:
         residence_permit: with a residence permit
         toleration_decision: with temporary suspension of deportation
       target_audience:
-        OLD_family_pregnant_woman: for pregnant women
-        OLD_refugees_adolescents: for adolescent refugees
-        OLD_refugees_children: for refugee children
-        OLD_refugees_children_and_adolescents: for refugee children and adolescents
-        OLD_refugees_families: for refugee families
-        OLD_refugees_general: for refugees
-        OLD_refugees_parents: for refugee parents
-        OLD_refugees_umf: for unaccompanied minor refugees
         family_children:
           adolescents: for adolescents
           and_adolescents: for children and adolescents
@@ -75,14 +72,12 @@ en:
             male: for parents to be and their sons
             neutral: for parents to be and their children
         family_relatives: for relatives
-        refugees_asylum_procedure: for refugees during the asylum procedure
         refugees_children:
           adolescents: for adolescent refugees
           and_adolescents: for refugee children and adolescents
           default: for refugee children
           female: 
           male: 
-        refugees_deportation_decision: for refugees with deportation notice
         refugees_families:
           default: for refugee families
           female:
@@ -107,7 +102,9 @@ en:
           male:
             default: 
             special: 
-          neutral: for refugees
+          neutral:
+            adults: 
+            neutral: for refugees
         refugees_parents:
           female:
             female: 
@@ -125,10 +122,6 @@ en:
           female: 
           male: 
           neutral: 
-        refugees_pre_asylum_procedure: for refugees before the asylum procedure
-        refugees_residence_permit: for refugees with a residence permit
-        refugees_toleration_decision: for refugees with temporary suspension of deportation
-        refugees_ujf: for unaccompanied young refugees
         refugees_umf:
           female: 
           male: 
