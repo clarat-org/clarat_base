@@ -4,9 +4,7 @@ fa:
       age:
         age_from: "از %{count} سال\n\n"
         age_of_child: 'سن کودک: %{age}'
-        age_to: 'تا %{count} سال
-
-'
+        age_to: تا %{count} سال
         suffix: سال
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
