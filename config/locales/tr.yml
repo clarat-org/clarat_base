@@ -8,11 +8,11 @@ tr:
         suffix: Yaş
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: 
-        before_asylum_application: 
-        deportation_decision: 
-        residence_permit: 
-        toleration_decision: 
+        before_the_asylum_application: 
+        during_the_asylum_procedure: 
+        with_a_residence_permit: 
+        with_deportation_decision: 
+        with_temporary_suspension_of_deportation: 
       target_audience:
         family_children:
           adolescents: Gençler için

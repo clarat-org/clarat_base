@@ -12,11 +12,11 @@ de:
         suffix: Jahre
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: im Asylverfahren
-        before_asylum_application: vor dem Asylantrag
-        deportation_decision: mit Abschiebebescheid
-        residence_permit: mit Aufenthaltserlaubnis
-        toleration_decision: mit Duldung
+        before_the_asylum_application: "– vor dem Asylantrag"
+        during_the_asylum_procedure: "– im Asylverfahren"
+        with_a_residence_permit: "– mit Aufenthaltserlaubnis"
+        with_deportation_decision: "– mit Abschiebebescheid"
+        with_temporary_suspension_of_deportation: "– mit Duldung"
       target_audience:
         family_children:
           adolescents: für Jugendliche

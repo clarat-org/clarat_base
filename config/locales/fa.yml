@@ -8,11 +8,11 @@ fa:
         suffix: سال
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: در مرحله روند رسیدگی به پناهندگی
-        before_asylum_application: قبل از درخواست پناهندگی
-        deportation_decision: با برگه ترک خاک
-        residence_permit: با اجازه اقامت
-        toleration_decision: با دولدونگ
+        before_the_asylum_application: قبل از درخواست پناهندگی
+        during_the_asylum_procedure: در مرحله روند رسیدگی به پناهندگی
+        with_a_residence_permit: با اجازه اقامت
+        with_deportation_decision: با برگه ترک خاک
+        with_temporary_suspension_of_deportation: با دولدونگ
       target_audience:
         family_children:
           adolescents: برای نوجوانان
@@ -116,7 +116,7 @@ fa:
             neutral: برای والدین پناهنده
         refugees_parents_to_be:
           female: برای زنان باردار پناهنده
-          male: برای پدران پناهنده چشم به را کودک
+          male: برای پدران پناهنده چشم به راه کودک
           neutral: برای والدین پناهنده چشم به راه کودک
         refugees_umf:
           female: برای دختران زیر سن و بدون همراه

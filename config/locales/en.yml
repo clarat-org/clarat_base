@@ -12,11 +12,11 @@ en:
         suffix: years
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: during the asylum procedure
-        before_asylum_application: before the asylum procedure
-        deportation_decision: with deportation notice
-        residence_permit: with a residence permit
-        toleration_decision: with temporary suspension of deportation
+        before_the_asylum_application: before the asylum procedure
+        during_the_asylum_procedure: during the asylum procedure
+        with_a_residence_permit: with a residence permit
+        with_deportation_decision: with deportation notice
+        with_temporary_suspension_of_deportation: with temporary suspension of deportation
       target_audience:
         family_children:
           adolescents: for adolescents
@@ -76,53 +76,53 @@ en:
           adolescents: for adolescent refugees
           and_adolescents: for refugee children and adolescents
           default: for refugee children
-          female: 
-          male: 
+          female: for refugee girls
+          male: for refugee boys
         refugees_families:
           default: for refugee families
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: for refugee mothers and their daughters
+            male: for refugee mothers and their sons
+            neutral: for refugee mothers and their children
+            with_baby: for refugee mothers and their babies
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: for refugee fathers and their daughters
+            male: for refugee fathers and their sons
+            neutral: for refugee fathers and their children
+            with_baby: for refugee fathers and their babies
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: for refugee families and their daughters
+            male: for refugee families and their sons
+            neutral: for refugee families and their children
+            with_baby: for refugee families and their babies
         refugees_general:
           female:
-            default: 
-            special: 
+            default: for refugee women
+            special: for refugee girls and women
           male:
-            default: 
-            special: 
+            default: for refugee men
+            special: for refugee boys and men
           neutral:
-            adults: 
+            adults: for adult refugees
             neutral: for refugees
         refugees_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: for refugee mothers of daughters
+            male: for refugee mothers of sons
+            neutral: for refugee mothers
           male:
-            female: 
-            male: 
-            neutral: 
+            female: for refugee fathers of daughters
+            male: for refugee fathers of sons
+            neutral: for refugee fathers
           neutral:
-            female: 
-            male: 
+            female: for refugee parents of daughters
+            male: for refugee parents of sons
             neutral: for refugee parents
         refugees_parents_to_be:
-          female: 
-          male: 
-          neutral: 
+          female: for pregnant refugees
+          male: for refugee expectant fathers
+          neutral: for refugee expectant parents
         refugees_umf:
-          female: 
-          male: 
+          female: for unaccompanied female minors
+          male: for unaccompanied male minors
           neutral: for unaccompanied minor refugees

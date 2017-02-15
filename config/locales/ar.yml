@@ -20,11 +20,11 @@ ar:
         suffix: سنوات
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: في قضية اللجوء
-        before_asylum_application: قبل تقديم طلب اللجوء
-        deportation_decision: " بقرار الترحيل"
-        residence_permit: بتصريح إقامة
-        toleration_decision: بإذن إقامة مؤقت (دولدونج)
+        before_the_asylum_application: قبل تقديم طلب اللجوء
+        during_the_asylum_procedure: في قضية اللجوء
+        with_a_residence_permit: بتصريح إقامة
+        with_deportation_decision: " بقرار الترحيل"
+        with_temporary_suspension_of_deportation: بإذن إقامة مؤقت (دولدونج)
       target_audience:
         family_children:
           adolescents: للشبان
@@ -115,7 +115,7 @@ ar:
             neutral: للاجئين
         refugees_parents:
           female:
-            female: للأمهات الاجئات اللاتي لديهن بنات
+            female: للأمهات اللاجئات اللاتي لديهن بنات
             male: للأمهات اللاجئات اللاتي لديهن صبيان
             neutral: للأمهات اللاجئات
           male:

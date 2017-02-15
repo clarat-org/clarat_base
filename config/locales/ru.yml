@@ -2,21 +2,29 @@ ru:
   offer:
     stamp:
       age:
-        age_from: 
+        age_from:
+          few: от %{count} лет
+          many: от %{count} лет
+          one: от %{count} года
+          other: от %{count} лет
         age_of_child: 'Возраст ребенка: %{age}'
-        age_to: 
+        age_to:
+          few: до %{count} лет
+          many: до %{count} лет
+          one: до %{count} года
+          other: до %{count} лет
         suffix: лет
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: 
-        before_asylum_application: 
-        deportation_decision: 
-        residence_permit: 
-        toleration_decision: 
+        before_the_asylum_application: до подачи ходатайства о предоставлении убежища
+        during_the_asylum_procedure: в процессе рассмотрения ходатайства о предоставлении убежища
+        with_a_residence_permit: с видом на жительство
+        with_deportation_decision: с заключением о депортации
+        with_temporary_suspension_of_deportation: с правом на кратковременное ограниченное пребывание в стране
       target_audience:
         family_children:
-          adolescents: для молодежи
-          and_adolescents: для детей и молодежи
+          adolescents: для подростков
+          and_adolescents: для детей и подростков
           default: для детей
           female: для девочек
           male: для мальчиков
@@ -27,98 +35,98 @@ ru:
             female: для матерей и их дочерей
             male: для матерей и их сыновей
             neutral: для матерей и их детей
-            with_baby: для матерей и их младенцев
+            with_baby: для матерей с младенцами
           male:
-            female: для отцов и их дочерей
-            male: для отцов и их сыновей
-            neutral: для отцов и их детей
-            with_baby: для отцов и их младенцев
+            female: для отцов с дочерьми
+            male: для отцов с сыновьями
+            neutral: для отцов с детьми
+            with_baby: для отцов с младенцами
           neutral:
-            female: для семей и их дочерей
-            male: для семей и их мальчиков
-            neutral: для семей и их детей
-            with_baby: для семей и их младенцев
+            female: для семей с дочерьми
+            male: для семей с сыновьями
+            neutral: для семей с детьми
+            with_baby: для семей с младенцами
         family_parents:
           female:
-            female: для матерей дочерей
-            male: для матерей сыновей
+            female: для матерей девочек
+            male: для матерей мальчиков
             neutral: для матерей
           male:
-            female: для отцов дочерей
-            male: для отцов сыновей
+            female: для отцов девочек
+            male: для отцов мальчиков
             neutral: 'для отцов '
           neutral:
-            female: для родителей дочерей
-            male: для родителей сыновей
+            female: для родителей девочек
+            male: для родителей мальчиков
             neutral: 'для родителей '
         family_parents_to_be:
           default: для будущих родителей
           female:
-            default: для беременной женщины
-            female: для беременной женщины и ее дочерей
-            male: для беременной женщины и ее сыновей
-            neutral: для беременной женщины с детьми
+            default: для беременных
+            female: для беременных матерей с дочерьми
+            male: для беременных матерей с сыновьями
+            neutral: для беременных матерей с детьми
           male:
             default: для будущих отцов
-            female: для будущих отцов и их дочерей
-            male: для будущих отцов и их сыновей
-            neutral: для будущих отцов и их детей
+            female: для будущих отцов с дочерьми
+            male: для будущих отцов с сыновьями
+            neutral: для будущих отцов с детьми
           neutral:
-            female: для будущих родителей и их дочерей
-            male: для будущих родителей и их сыновей
+            female: для будущих родителей с дочерьми
+            male: для будущих родителей с сыновьями
             neutral: для будущих родителей с детьми
         family_relatives: для родственников
         refugees_children:
-          adolescents: для беженцев молодежи
-          and_adolescents: для детей и молодежи беженцев
-          default: для детей беженцев
-          female: 
-          male: 
+          adolescents: для подростков-беженцев
+          and_adolescents: для детей- и подростков-беженцев
+          default: для детей-беженцев
+          female: для девочек-беженцев
+          male: для мальчиков-беженцев
         refugees_families:
-          default: для семей беженцев
+          default: для семей-беженцев
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: для матерей-беженцев с дочерьми
+            male: для матерей-беженцев с сыновьями
+            neutral: для матерей-беженцев с детьми
+            with_baby: для матерей-беженцев с младенцами
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: для отцов-беженцев с дочерьми
+            male: для отцов-беженцев с сыновьями
+            neutral: для отцов-беженцев с детьми
+            with_baby: для отцов-беженцев с младенцами
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: для семей беженцев с дочерьми
+            male: для семей беженцев с сыновьями
+            neutral: для семей беженцев с детьми
+            with_baby: для семей-беженцев с младенцами
         refugees_general:
           female:
-            default: 
-            special: 
+            default: для женщин-беженцев
+            special: для девочек- и женщин-беженцев
           male:
-            default: 
-            special: 
+            default: для мужчин-беженцев
+            special: для мальчиков- и мужчин-беженцев
           neutral:
-            adults: 
+            adults: для взрослых беженцев
             neutral: для беженцев
         refugees_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: для матерей-беженок, имеющих дочерей
+            male: для матерей-беженок, имеющих сыновей
+            neutral: для матерей-беженок
           male:
-            female: 
-            male: 
-            neutral: 
+            female: для отцов-беженцев, имеющих дочерей
+            male: для отцов-беженцев, имеющих сыновей
+            neutral: для отцов-беженцев
           neutral:
-            female: 
-            male: 
-            neutral: для родителей беженцев
+            female: для родителей-беженцев, имеющих дочерей
+            male: для родителей-беженцев, имеющих сыновей
+            neutral: для родителей-беженцев
         refugees_parents_to_be:
-          female: 
-          male: 
-          neutral: 
+          female: для беременных беженок
+          male: для будущих отцов-беженцев
+          neutral: для будущих родителей-беженцев
         refugees_umf:
-          female: 
-          male: 
-          neutral: для несовершеннолетних беженцев без сопровождения
+          female: для беспризорных девочек
+          male: для беспризорных мальчиков
+          neutral: для беспризорных несовершеннолетних беженцев

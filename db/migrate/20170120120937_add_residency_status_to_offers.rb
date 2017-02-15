@@ -1,6 +1,6 @@
-class AddResidenceStatusToOffers < ActiveRecord::Migration
+class AddResidencyStatusToOffers < ActiveRecord::Migration
   def change
-    add_column :offers, :residence_status, :string, null: true
+    add_column :offers, :residency_status, :string, null: true
 
     # Transfer Data: only change TargetAudienceFilter
     old_ta = TargetAudienceFilter.find_by(identifier: 'refugees_adolescents')
@@ -30,14 +30,14 @@ class AddResidenceStatusToOffers < ActiveRecord::Migration
       end
     end
 
-    # Transfer Data: change TargetAudienceFilter and set residence_status
+    # Transfer Data: change TargetAudienceFilter and set residency_status
     old_ta = TargetAudienceFilter.find_by(identifier: 'refugees_pre_asylum_procedure')
     if old_ta
       new_ta = TargetAudienceFilter.find_by(identifier: 'refugees_general')
       old_ta.offers.map do |o|
         o.target_audience_filters.delete(old_ta)
         o.target_audience_filters << new_ta
-        o.update_columns residence_status: 'before_asylum_application'
+        o.update_columns residency_status: 'before_the_asylum_application'
       end
     end
 
@@ -47,7 +47,7 @@ class AddResidenceStatusToOffers < ActiveRecord::Migration
       old_ta.offers.map do |o|
         o.target_audience_filters.delete(old_ta)
         o.target_audience_filters << new_ta
-        o.update_columns residence_status: 'asylum_procedure'
+        o.update_columns residency_status: 'during_the_asylum_procedure'
       end
     end
 
@@ -57,7 +57,7 @@ class AddResidenceStatusToOffers < ActiveRecord::Migration
       old_ta.offers.map do |o|
         o.target_audience_filters.delete(old_ta)
         o.target_audience_filters << new_ta
-        o.update_columns residence_status: 'residence_permit' # TODO: final wording?!?!
+        o.update_columns residency_status: 'with_a_residence_permit'
       end
     end
 
@@ -67,7 +67,7 @@ class AddResidenceStatusToOffers < ActiveRecord::Migration
       old_ta.offers.map do |o|
         o.target_audience_filters.delete(old_ta)
         o.target_audience_filters << new_ta
-        o.update_columns residence_status: 'deportation_decision'
+        o.update_columns residency_status: 'with_temporary_suspension_of_deportation'
       end
     end
 
@@ -77,7 +77,7 @@ class AddResidenceStatusToOffers < ActiveRecord::Migration
       old_ta.offers.map do |o|
         o.target_audience_filters.delete(old_ta)
         o.target_audience_filters << new_ta
-        o.update_columns residence_status: 'toleration_decision' # TODO: final wording?!?!
+        o.update_columns residency_status: 'with_deportation_decision'
       end
     end
 

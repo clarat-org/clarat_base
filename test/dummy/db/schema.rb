@@ -371,7 +371,7 @@ ActiveRecord::Schema.define(version: 20170120120937) do
     t.date     "starts_at"
     t.datetime "completed_at"
     t.integer  "completed_by"
-    t.string   "residence_status"
+    t.string   "residency_status"
   end
 
   add_index "offers", ["aasm_state"], name: "index_offers_on_aasm_state"

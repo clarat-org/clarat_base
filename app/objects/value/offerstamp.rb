@@ -27,7 +27,7 @@ class Offerstamp
     # build separate parts of stamp and join them with locale-specific format
     stamp = I18n.t(locale_entry, locale: locale)
     optional_age = stamp_optional_age(offer, ta, current_section, locale)
-    optional_status = stamp_optional_residence_status(offer, locale, current_section)
+    optional_status = stamp_optional_residency_status(offer, locale, current_section)
     I18n.t('offer.stamp.format', locale: locale,
                                  stamp: stamp,
                                  optional_age: optional_age,
@@ -143,9 +143,9 @@ class Offerstamp
     end
   end
 
-  def self.stamp_optional_residence_status offer, locale, current_section
-    if current_section == 'refugees' && offer.residence_status.blank? == false
-      locale_entry = "offer.stamp.status.#{offer.residence_status}"
+  def self.stamp_optional_residency_status offer, locale, current_section
+    if current_section == 'refugees' && offer.residency_status.blank? == false
+      locale_entry = "offer.stamp.status.#{offer.residency_status}"
       " #{I18n.t(locale_entry, locale: locale)}"
     else
       ''
@@ -191,7 +191,7 @@ class Offerstamp
     elsif from == to
       "#{from} #{I18n.t('offer.stamp.age.suffix', locale: locale)}"
     else
-      "#{from} - #{to} #{I18n.t('offer.stamp.age.suffix', locale: locale)}"
+      "#{from} – #{to} #{I18n.t('offer.stamp.age.suffix', locale: locale)}"
     end
   end
 end

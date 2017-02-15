@@ -2,17 +2,23 @@ pl:
   offer:
     stamp:
       age:
-        age_from: 
+        age_from:
+          few: ''
+          one: od %{count} roku
+          other: od %{count} lat
         age_of_child: 'wiek dziecka: %{age}'
-        age_to: 
+        age_to:
+          few: ''
+          one: do %{count} roku
+          other: do %{count} roku
         suffix: lata
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
-        asylum_procedure: 
-        before_asylum_application: 
-        deportation_decision: 
-        residence_permit: 
-        toleration_decision: 
+        before_the_asylum_application: przed złożeniem wniosku azylowego
+        during_the_asylum_procedure: w trakcie procedury azylowej
+        with_a_residence_permit: z pozwoleniem na pobyt
+        with_deportation_decision: z zawiadomieniem o deportacji
+        with_temporary_suspension_of_deportation: z pobytem tolerowanym
       target_audience:
         family_children:
           adolescents: dla młodzieży
@@ -72,53 +78,53 @@ pl:
           adolescents: dla młodocianych uchodźców
           and_adolescents: dla uchodźców-dzieci i młodocianych uchodźców
           default: dla uchodźców-dzieci
-          female: 
-          male: 
+          female: dla zbiegłych dziewcząt
+          male: dla zbiegłych chłopców
         refugees_families:
           default: dla uchodźców-rodzin
           female:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: dla zbiegłych matek i ich córek
+            male: dla zbiegłych matek i ich synów
+            neutral: dla zbiegłych matek i ich dzieci
+            with_baby: dla zbiegłych matek i ich niemowląt
           male:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: dla zbiegłych ojców i ich córek
+            male: dla zbiegłych ojców i ich synów
+            neutral: dla zbiegłych ojców i ich dzieci
+            with_baby: dla zbiegłych ojców i ich niemowląt
           neutral:
-            female: 
-            male: 
-            neutral: 
-            with_baby: 
+            female: dla zbiegłych rodzin i ich córek
+            male: dla zbiegłych rodzin i ich synów
+            neutral: dla zbiegłych rodzin i ich dzieci
+            with_baby: dla zbiegłych rodzin i ich niemowląt
         refugees_general:
           female:
-            default: 
-            special: 
+            default: dla zbiegłych pań
+            special: dla zbiegłych dziewcząt i pań
           male:
-            default: 
-            special: 
+            default: dla zbiegłych mężczyzn
+            special: dla zbiegłych chłopców i mężczyzn
           neutral:
-            adults: 
+            adults: dla zbiegłych dorosłych
             neutral: dla uchodźców
         refugees_parents:
           female:
-            female: 
-            male: 
-            neutral: 
+            female: dla zbiegłych matek swoich córek
+            male: dla zbiegłych matek swoich synów
+            neutral: dla zbiegłych matek
           male:
-            female: 
-            male: 
-            neutral: 
+            female: dla zbiegłych ojców swoich córek
+            male: dla zbiegłych ojców swoich synów
+            neutral: dla zbiegłych ojców
           neutral:
-            female: 
-            male: 
+            female: dla zbiegłych rodziców swoich córek
+            male: dla zbiegłych rodziców swoich synów
             neutral: dla uchodźców-rodziców
         refugees_parents_to_be:
-          female: 
-          male: 
-          neutral: 
+          female: dla zbiegłych ciężarnych
+          male: dla zbiegłych przyszłych ojców
+          neutral: dla zbiegłych przyszłych rodziców
         refugees_umf:
-          female: 
-          male: 
+          female: dla nieletnich dziewcząt bez opiekuna
+          male: dla nieletnich chłopców bez opiekuna
           neutral: dla niepełnoletnich uchodźców bez opieki
