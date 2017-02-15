@@ -20,11 +20,11 @@ class Offer
       end
 
       def personal_indexable?
-        approved? && personal?
+        visible_in_frontend? && personal?
       end
 
       def remote_indexable?
-        approved? && !personal?
+        visible_in_frontend? && !personal?
       end
 
       def personal?

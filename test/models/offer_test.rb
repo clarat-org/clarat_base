@@ -293,8 +293,20 @@ describe Offer do
         offer.personal_indexable?.must_equal true
       end
 
+      it 'should return true when personal and expired' do
+        offer.aasm_state = 'expired'
+        offer.stubs(:personal?).returns true
+        offer.personal_indexable?.must_equal true
+      end
+
       it 'should return false when not personal and approved' do
         offer.aasm_state = 'approved'
+        offer.stubs(:personal?).returns false
+        offer.personal_indexable?.must_equal false
+      end
+
+      it 'should return true when not personal and expired' do
+        offer.aasm_state = 'expired'
         offer.stubs(:personal?).returns false
         offer.personal_indexable?.must_equal false
       end
@@ -313,8 +325,20 @@ describe Offer do
         offer.remote_indexable?.must_equal true
       end
 
+      it 'should return true when not personal and expired' do
+        offer.aasm_state = 'expired'
+        offer.stubs(:personal?).returns false
+        offer.remote_indexable?.must_equal true
+      end
+
       it 'should return false when personal and approved' do
         offer.aasm_state = 'approved'
+        offer.stubs(:personal?).returns true
+        offer.remote_indexable?.must_equal false
+      end
+
+      it 'should return false when personal and expired' do
+        offer.aasm_state = 'expired'
         offer.stubs(:personal?).returns true
         offer.remote_indexable?.must_equal false
       end
@@ -640,6 +664,36 @@ describe Offer do
       it 'should be true with a start date in the future' do
         basicOffer.starts_at = Time.zone.now + 1.day
         basicOffer.send(:seasonal_offer_not_yet_to_be_approved?).must_equal true
+      end
+    end
+
+    describe '#visible_in_frontend?' do
+      it 'should return true for approved or expired states' do
+        basicOffer.aasm_state = 'approved'
+        basicOffer.visible_in_frontend?.must_equal true
+        basicOffer.aasm_state = 'expired'
+        basicOffer.visible_in_frontend?.must_equal true
+      end
+
+      it 'should return false for other states' do
+        basicOffer.aasm_state = 'initialized'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'completed'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'approval_process'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'internal_feedback'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'internal_feedback'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'website_unreachable'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'organization_deactivated'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'under_construction_pre'
+        basicOffer.visible_in_frontend?.must_equal false
+        basicOffer.aasm_state = 'under_construction_post'
+        basicOffer.visible_in_frontend?.must_equal false
       end
     end
 

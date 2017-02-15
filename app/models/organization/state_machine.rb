@@ -88,19 +88,19 @@ class Organization
       end
 
       # When an organization switches from approved to an unapproved state,
-      # also deactivate all it's associated approved offers
+      # also deactivate all it's associated visible offers
       def deactivate_offers!
-        offers.approved.find_each do |offer|
+        offers.visible_in_frontend.find_each do |offer|
           next if offer.deactivate_through_organization!
           raise "#deactivate_offers! failed for #{offer.id}"
         end
       end
 
       # When an organization switches from an approval to approved,
-      # also try to approve all it's associated organization_deactivated
-      # and under_construction_post offers
+      # also try to approve all it's associated organization_deactivated,
+      # expired and under_construction_post offers
       def reactivate_offers!
-        offers.where(aasm_state: %w(organization_deactivated
+        offers.where(aasm_state: %w(organization_deactivated expired
                                     under_construction_post)).find_each do |o|
           # set checkup state on local offer instance (don't save this)
           o.aasm_state = 'checkup_process'
@@ -111,9 +111,9 @@ class Organization
       end
 
       # When an organization switches to a website_under_construction state, the
-      # associated approved offers also transitions to under_construction
+      # associated visible offers also transitions to under_construction
       def deactivate_offers_to_under_construction!
-        offers.approved.find_each do |offer|
+        offers.visible_in_frontend.find_each do |offer|
           next if offer.website_under_construction!
           raise "#deactivate_offer_to_under_construction failed for #{offer.id}"
         end

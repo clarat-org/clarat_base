@@ -120,7 +120,22 @@ describe Location do
   describe 'Observer' do
     it 'should call index on approved offers after visible change' do
       loc = locations(:basic)
-      Offer.approved.any_instance.expects :index!
+      # add another offer - both must be re-indexed
+      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
+      another_offer.organizations.map do |orga|
+        orga.locations << loc
+      end
+      another_offer.location = loc
+      another_offer.save!
+      # add unapproved offer => should not be re-indexed
+      initialized_offer = FactoryGirl.create(:offer, :with_location)
+      initialized_offer.organizations.map do |orga|
+        orga.locations << loc
+      end
+      initialized_offer.location = loc
+      initialized_offer.save!
+      initialized_offer.expects(:index!).never
+      Offer.any_instance.expects(:index!).times(loc.offers.visible_in_frontend.count)
       loc.visible = !loc.visible
       loc.save!
     end

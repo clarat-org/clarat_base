@@ -98,13 +98,13 @@ describe Organization do
   describe 'Scopes' do
     describe 'approved' do
       it 'should return approved offers' do
-        Organization.approved.count.must_equal 1
+        Organization.visible_in_frontend.count.must_equal 1
       end
 
       it 'should return approved and done offers' do
-        Organization.approved.count.must_equal 1
+        Organization.visible_in_frontend.count.must_equal 1
         FactoryGirl.create(:organization, aasm_state: 'all_done')
-        Organization.approved.count.must_equal 2 # one approved and one done
+        Organization.visible_in_frontend.count.must_equal 2 # one approved and one done
       end
     end
   end
@@ -443,27 +443,27 @@ describe Organization do
     end
   end
 
-  describe '#approved?' do
+  describe '#visible_in_frontend?' do
     it 'should return true for approved or all_done states' do
       orga.aasm_state = 'approved'
-      orga.approved?.must_equal true
+      orga.visible_in_frontend?.must_equal true
       orga.aasm_state = 'all_done'
-      orga.approved?.must_equal true
+      orga.visible_in_frontend?.must_equal true
     end
 
     it 'should return false for other states' do
       orga.aasm_state = 'initialized'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
       orga.aasm_state = 'completed'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
       orga.aasm_state = 'approval_process'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
       orga.aasm_state = 'internal_feedback'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
       orga.aasm_state = 'internal_feedback'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
       orga.aasm_state = 'website_unreachable'
-      orga.approved?.must_equal false
+      orga.visible_in_frontend?.must_equal false
     end
   end
 end

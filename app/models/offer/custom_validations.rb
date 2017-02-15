@@ -4,7 +4,7 @@ class Offer
 
     included do
       validate :validate_associated_fields
-      validate :only_approved_organizations, if: :approved?
+      validate :only_visible_organizations, if: :visible_in_frontend?
       validate :age_from_fits_age_to
       validate :location_and_area_fit_encounter
       validate :location_fits_organization, on: :update
@@ -68,15 +68,16 @@ class Offer
         end
       end
 
-      # Fail if an organization added to this offer is unapproved
-      def only_approved_organizations
+      # Fail if an organization added to this offer is not visible in frontend
+      def only_visible_organizations
         return unless association_instance_get(:organizations) # tests fail w/o
-        if organizations.to_a.count { |orga| !orga.approved? } > 0
-          approved_organization_names =
-            organizations.approved.pluck(:name).join(', ')
+        if organizations.to_a.count { |orga| !orga.visible_in_frontend? } > 0
+          problematic_organization_names =
+            (organizations - organizations.visible_in_frontend)
+            .map(&:name).join(', ')
 
-          fail_validation :organizations, 'only_approved_organizations',
-                          list: approved_organization_names
+          fail_validation :organizations, 'only_visible_organizations',
+                          list: problematic_organization_names
         end
       end
 

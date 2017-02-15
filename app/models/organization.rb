@@ -2,6 +2,8 @@
 class Organization < ActiveRecord::Base
   has_paper_trail
 
+  VISIBLE_FRONTEND_STATES = %w(approved all_done).freeze
+
   # Modules
   include StateMachine
 
@@ -44,7 +46,7 @@ class Organization < ActiveRecord::Base
   translate :description
 
   # Scopes
-  scope :approved, -> { where(aasm_state: %w(approved all_done)) }
+  scope :visible_in_frontend, -> { where(aasm_state: VISIBLE_FRONTEND_STATES) }
   scope :created_at_day, ->(date) { where('created_at::date = ?', date) }
   scope :approved_at_day, ->(date) { where('approved_at::date = ?', date) }
 
@@ -105,7 +107,7 @@ class Organization < ActiveRecord::Base
     mailings == 'enabled'
   end
 
-  def approved?
-    aasm_state == 'approved' || aasm_state == 'all_done'
+  def visible_in_frontend?
+    VISIBLE_FRONTEND_STATES.include?(aasm_state)
   end
 end

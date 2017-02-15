@@ -8,7 +8,7 @@ class LocationObserver < ActiveRecord::Observer
 
     # update algolia indices of offers (for location_visible) if changed
     if l.visible_changed?
-      l.offers.approved.find_each(&:index!)
+      l.offers.visible_in_frontend.find_each(&:index!)
     end
   end
 end

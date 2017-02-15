@@ -71,19 +71,23 @@ class Offer
 
         event :deactivate_internal do
           transitions from: :approved, to: :internal_feedback
+          transitions from: :expired, to: :internal_feedback
           transitions from: :external_feedback, to: :internal_feedback
           transitions from: :under_construction_post, to: :internal_feedback
         end
 
         event :deactivate_external do
           transitions from: :approved, to: :external_feedback
+          transitions from: :expired, to: :external_feedback
           transitions from: :internal_feedback, to: :external_feedback
           transitions from: :under_construction_post, to: :external_feedback
         end
 
         event :deactivate_through_organization do
           transitions from: :approved, to: :organization_deactivated,
-                      guard: :at_least_one_organization_not_approved?
+                      guard: :at_least_one_organization_not_visible?
+          transitions from: :expired, to: :organization_deactivated,
+                      guard: :at_least_one_organization_not_visible?
         end
 
         event :website_under_construction do
@@ -92,14 +96,11 @@ class Offer
           transitions from: :completed, to: :under_construction_pre
           # post approve
           transitions from: :approved, to: :under_construction_post
+          transitions from: :expired, to: :under_construction_post
           transitions from: :internal_feedback, to: :under_construction_post
           transitions from: :external_feedback, to: :under_construction_post
           transitions from: :organization_deactivated, to: :under_construction_post
           transitions from: :checkup_process, to: :under_construction_post
-        end
-
-        event :website_twice_unreachable do
-          transitions from: :approved, to: :website_unreachable
         end
 
         event :start_checkup_process do
@@ -122,7 +123,7 @@ class Offer
 
       private
 
-      def at_least_one_organization_not_approved?
+      def at_least_one_organization_not_visible?
         organizations.where.not(aasm_state: %w(approved all_done)).any?
       end
 
