@@ -17,10 +17,10 @@ ru:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: до подачи ходатайства о предоставлении убежища
-        during_the_asylum_procedure: в процессе рассмотрения ходатайства о предоставлении убежища
+        during_the_asylum_procedure: в процессе предоставления убежища
         with_a_residence_permit: с видом на жительство
         with_deportation_decision: с заключением о депортации
-        with_temporary_suspension_of_deportation: с правом на кратковременное ограниченное пребывание в стране
+        with_temporary_suspension_of_deportation: с правом на кратковременное пребывание в стране
       target_audience:
         family_children:
           adolescents: для подростков
