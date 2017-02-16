@@ -1,3 +1,3 @@
 class BroadcastMailer < ActionMailer::Base
-  default from: 'Anne Schulze | clarat <anne.schulze@clarat.org>'
+  default from: 'clarat-Team <post@clarat.org>'
 end
