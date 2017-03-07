@@ -4,10 +4,10 @@ class Offer < ActiveRecord::Base
   has_paper_trail
 
   # Modules
-  include Validations, CustomValidations, Associations, Search#, StateMachine
+  include Validations, CustomValidations, Associations, Search
 
   # Concerns
-  include Creator, CustomValidatable, Notable, Translation
+  include CustomValidatable, Notable, Translation
 
   # Enumerization
   extend Enumerize

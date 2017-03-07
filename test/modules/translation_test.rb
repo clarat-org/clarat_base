@@ -29,7 +29,7 @@ describe Translation do
   describe 'untranslated field getter' do
     it 'should find the original content of a field' do
       subject.expects(:attributes).returns(sometranslation: nil)
-      subject.untranslated_somefield.must_equal nil
+      assert_nil subject.untranslated_somefield
     end
   end
 

@@ -68,7 +68,7 @@ describe Assignable do
   #     end
   #
   #     it 'must return nil for non-existing fields' do
-  #       subject.current_field_assignment(:doesNotExist).must_equal nil
+  #       assert_nil subject.current_field_assignment(:doesNotExist)
   #     end
   #   end
   #

@@ -4,11 +4,8 @@ class Organization < ActiveRecord::Base
 
   VISIBLE_FRONTEND_STATES = %w(approved all_done).freeze
 
-  # Modules
-  # include StateMachine
-
   # Concerns
-  include Creator, CustomValidatable, Notable, Translation
+  include CustomValidatable, Notable, Translation
 
   # Associtations
   has_many :locations
@@ -92,15 +89,6 @@ class Organization < ActiveRecord::Base
 
   def homepage
     websites.find_by_host('own')
-  end
-
-  def set_approved_information
-    self.approved_at = Time.zone.now
-    self.approved_by = current_actor
-  end
-
-  def different_actor?
-    created_by && current_actor && created_by != current_actor
   end
 
   def mailings_enabled?

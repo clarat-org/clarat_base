@@ -227,17 +227,6 @@ describe Offer do
   end
 
   describe 'methods' do
-    describe '#creator' do
-      it 'should return anonymous by default' do
-        offer.creator.must_equal 'anonymous'
-      end
-
-      it 'should return users name if there is a version' do
-        offer = FactoryGirl.create :offer, :with_creator
-        offer.creator.must_equal User.find(offer.created_by).name
-      end
-    end
-
     describe '#_tags' do
       it 'should return unique categories with ancestors of an offer' do
         offers(:basic).categories << categories(:sub1)
@@ -605,7 +594,7 @@ describe Offer do
         basicOffer.visible_in_frontend?.must_equal false
         basicOffer.aasm_state = 'under_construction_pre'
         basicOffer.visible_in_frontend?.must_equal false
-        basicOffer.aasm_state = 'under_construction_post'
+        basicOffer.aasm_state = 'under_construction'
         basicOffer.visible_in_frontend?.must_equal false
       end
     end
