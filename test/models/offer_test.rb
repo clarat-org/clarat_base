@@ -484,76 +484,6 @@ describe Offer do
       end
     end
 
-    describe 'State Machine' do
-      describe '#different_actor?' do
-        it 'should return true when created_by differs from current_actor' do
-          offer.created_by = 99
-          offer.send(:different_actor?).must_equal true
-        end
-
-        it 'should return false when created_by is the same as current_actor' do
-          offer.created_by = offer.current_actor
-          offer.send(:different_actor?).must_equal false
-        end
-
-        it 'should return falsy when created_by is nil' do
-          offer.send(:different_actor?).must_equal nil
-        end
-
-        it 'should return false when current_actor is nil' do
-          offer.created_by = 1
-          offer.stubs(:current_actor).returns(nil)
-          offer.send(:different_actor?).must_equal nil
-        end
-      end
-
-      describe '#LogicVersion' do
-        it 'should have the latest LogicVersion after :complete and :approve' do
-          offer.created_by = 99
-          offer.aasm_state = 'initialized'
-          offer.logic_version_id.must_equal logic_versions(:basic).id
-          new_logic1 = LogicVersion.create(name: 'Foo', version: 200)
-          offer.send(:complete)
-          offer.logic_version_id.must_equal new_logic1.id
-          new_logic2 = LogicVersion.create(name: 'Bar', version: 201)
-          offer.send(:start_approval_process)
-          offer.send(:approve)
-          offer.logic_version_id.must_equal new_logic2.id
-        end
-      end
-
-      describe 'seasonal offers' do
-        it 'should transition to seasonal_pending for a future start_date' do
-          basicOffer.update_columns aasm_state: 'approval_process',
-                                    starts_at: Time.zone.now + 1.day,
-                                    expires_at: Time.zone.now + 30.days
-          basicOffer.must_be :valid?
-          basicOffer.send(:approve)
-          basicOffer.must_be :seasonal_pending?
-        end
-
-        it 'should transition to approved for a past start_date' do
-          basicOffer.update_columns aasm_state: 'approval_process',
-                                    starts_at: Time.zone.now - 1.day,
-                                    expires_at: Time.zone.now + 30.days
-          basicOffer.must_be :valid?
-          basicOffer.send(:approve)
-          basicOffer.must_be :approved?
-        end
-      end
-
-      describe '#was_approved?' do
-        it 'should return true for an offer with approve information' do
-          approved_offer = FactoryGirl.create :offer, :approved
-          approved_offer.send(:was_approved?).must_equal true
-        end
-
-        it 'should return false for an offer w/o approve information' do
-          basicOffer.send(:was_approved?).must_equal false
-        end
-      end
-    end
-
     describe '#opening_details?' do
       it 'should return false when there are no openings / opening specs' do
         offer.opening_details?.must_equal false
@@ -647,23 +577,6 @@ describe Offer do
 
       it 'should correctly return language_filters' do
         basicOffer._language_filters.must_equal(['deu'])
-      end
-    end
-
-    describe '#seasonal_offer_not_yet_to_be_approved' do
-      it 'should be false without a start date' do
-        basicOffer.starts_at = nil
-        basicOffer.send(:seasonal_offer_not_yet_to_be_approved?).must_equal false
-      end
-
-      it 'should be false with a start date in the past' do
-        basicOffer.starts_at = Time.zone.now - 1.day
-        basicOffer.send(:seasonal_offer_not_yet_to_be_approved?).must_equal false
-      end
-
-      it 'should be true with a start date in the future' do
-        basicOffer.starts_at = Time.zone.now + 1.day
-        basicOffer.send(:seasonal_offer_not_yet_to_be_approved?).must_equal true
       end
     end
 

@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   VISIBLE_FRONTEND_STATES = %w(approved all_done).freeze
 
   # Modules
-  include StateMachine
+  # include StateMachine
 
   # Concerns
   include Creator, CustomValidatable, Notable, Translation

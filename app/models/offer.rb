@@ -4,7 +4,7 @@ class Offer < ActiveRecord::Base
   has_paper_trail
 
   # Modules
-  include Validations, CustomValidations, Associations, Search, StateMachine
+  include Validations, CustomValidations, Associations, Search#, StateMachine
 
   # Concerns
   include Creator, CustomValidatable, Notable, Translation
@@ -99,24 +99,4 @@ class Offer < ActiveRecord::Base
   def visible_in_frontend?
     VISIBLE_FRONTEND_STATES.include?(aasm_state)
   end
-
-  # def personal?
-  #   encounter == 'personal'
-  # end
-  #
-  # def self.per_env_index
-  #   if Rails.env.development?
-  #     "Offer_development_#{ENV['USER']}"
-  #   else
-  #     "Offer_#{Rails.env}"
-  #   end
-  # end
-  #
-  # def self.personal_index_name locale
-  #   "#{per_env_index}_personal_#{locale}"
-  # end
-  #
-  # def self.remote_index_name locale
-  #   "#{per_env_index}_remote_#{locale}"
-  # end
 end
