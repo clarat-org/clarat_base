@@ -14,7 +14,7 @@ describe UserTeam do
     it { subject.must have_many :user_team_users }
     it { subject.must have_many(:users).through :user_team_users }
     it { subject.must have_many :current_users }
-    it { subject.must have_many :productivity_goals }
+    it { subject.must have_many :statistic_charts }
     it { subject.must have_many :statistics }
   end
 end
