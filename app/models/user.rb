@@ -7,11 +7,16 @@ class User < ActiveRecord::Base
   has_many :user_teams, through: :user_team_users, inverse_of: :users
   belongs_to :current_team, class_name: 'UserTeam', inverse_of: :current_users
   has_many :statistics, inverse_of: :user
+  has_many :statistic_charts, inverse_of: :user
   has_many :absences, inverse_of: :user
   has_many :time_allocations, inverse_of: :user
 
-  has_many :created_assignments, class_name: 'Assignment', foreign_key: 'creator_id', inverse_of: :creator
-  has_many :received_assignments, class_name: 'Assignment', foreign_key: 'receiver_id', inverse_of: :receiver
+  has_many :created_assignments, class_name: 'Assignment',
+                                 foreign_key: 'creator_id',
+                                 inverse_of: :creator
+  has_many :received_assignments, class_name: 'Assignment',
+                                  foreign_key: 'receiver_id',
+                                  inverse_of: :receiver
 
   # Validations
   # validates :email, uniqueness: true, presence: true

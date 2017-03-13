@@ -5,7 +5,7 @@ class UserTeam < ActiveRecord::Base
   has_many :current_users, class_name: 'User', foreign_key: 'current_team_id',
                            inverse_of: :current_team
 
-  has_many :productivity_goals, inverse_of: :user_team
+  has_many :statistic_charts, inverse_of: :user_team
   has_many :statistics, inverse_of: :user_team
 
   has_many :created_assignments, class_name: 'Assignment',

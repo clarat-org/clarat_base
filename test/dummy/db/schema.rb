@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222135228) do
+ActiveRecord::Schema.define(version: 20170308130003) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -451,19 +451,6 @@ ActiveRecord::Schema.define(version: 20170222135228) do
   add_index "organizations", ["approved_at"], name: "index_organizations_on_approved_at"
   add_index "organizations", ["created_at"], name: "index_organizations_on_created_at"
 
-  create_table "productivity_goals", force: :cascade do |t|
-    t.string  "title",              null: false
-    t.date    "starts_at",          null: false
-    t.date    "ends_at",            null: false
-    t.string  "target_model",       null: false
-    t.integer "target_count",       null: false
-    t.string  "target_field_name",  null: false
-    t.string  "target_field_value", null: false
-    t.integer "user_team_id",       null: false
-  end
-
-  add_index "productivity_goals", ["user_team_id"], name: "index_productivity_goals_on_user_team_id"
-
   create_table "search_locations", force: :cascade do |t|
     t.string   "query",                 null: false
     t.float    "latitude",              null: false
@@ -511,6 +498,45 @@ ActiveRecord::Schema.define(version: 20170222135228) do
 
   add_index "split_bases", ["organization_id"], name: "index_split_bases_on_organization_id"
   add_index "split_bases", ["solution_category_id"], name: "index_split_bases_on_solution_category_id"
+
+  create_table "statistic_chart_goals", id: false, force: :cascade do |t|
+    t.integer "statistic_chart_id", null: false
+    t.integer "statistic_goal_id",  null: false
+  end
+
+  add_index "statistic_chart_goals", ["statistic_chart_id"], name: "index_statistic_chart_goals_on_statistic_chart_id"
+  add_index "statistic_chart_goals", ["statistic_goal_id"], name: "index_statistic_chart_goals_on_statistic_goal_id"
+
+  create_table "statistic_chart_transitions", id: false, force: :cascade do |t|
+    t.integer "statistic_chart_id",      null: false
+    t.integer "statistic_transition_id", null: false
+  end
+
+  add_index "statistic_chart_transitions", ["statistic_chart_id"], name: "index_statistic_chart_transitions_on_statistic_chart_id"
+  add_index "statistic_chart_transitions", ["statistic_transition_id"], name: "index_statistic_chart_transitions_on_statistic_transition_id"
+
+  create_table "statistic_charts", force: :cascade do |t|
+    t.string  "title",        null: false
+    t.date    "starts_at",    null: false
+    t.date    "ends_at",      null: false
+    t.integer "user_team_id"
+    t.integer "user_id"
+  end
+
+  add_index "statistic_charts", ["user_id"], name: "index_statistic_charts_on_user_id"
+  add_index "statistic_charts", ["user_team_id"], name: "index_statistic_charts_on_user_team_id"
+
+  create_table "statistic_goals", force: :cascade do |t|
+    t.integer "amount",    null: false
+    t.date    "starts_at", null: false
+  end
+
+  create_table "statistic_transitions", force: :cascade do |t|
+    t.string "klass_name",  null: false
+    t.string "field_name",  null: false
+    t.string "start_value", null: false
+    t.string "end_value",   null: false
+  end
 
   create_table "statistics", force: :cascade do |t|
     t.string  "topic",             limit: 40
