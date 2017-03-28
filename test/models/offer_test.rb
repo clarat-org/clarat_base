@@ -1010,11 +1010,8 @@ describe Offer do
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen'
 
         # simple residency_status tests
-        basicOffer.residency_status = 'before_the_asylum_application'
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – vor dem Asylantrag'
-
-        basicOffer.residency_status = 'during_the_asylum_procedure'
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – im Asylverfahren'
+        basicOffer.residency_status = 'before_the_asylum_decision'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – vor der Asylentscheidung'
 
         basicOffer.residency_status = 'with_a_residence_permit'
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – mit Aufenthaltserlaubnis'

@@ -24,8 +24,8 @@ class Offer < ActiveRecord::Base
   # ^ nil means inclusive to any gender
   CONTACT_TYPES = %w(personal remote).freeze
   RESIDENCY_STATUSES =
-    %w(before_the_asylum_application during_the_asylum_procedure
-       with_a_residence_permit with_temporary_suspension_of_deportation
+    %w(before_the_asylum_decision with_a_residence_permit
+       with_temporary_suspension_of_deportation
        with_deportation_decision).freeze
   VISIBLE_FRONTEND_STATES = %w(approved expired).freeze
 
