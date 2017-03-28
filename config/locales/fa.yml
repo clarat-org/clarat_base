@@ -9,6 +9,7 @@ fa:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: قبل از درخواست پناهندگی
+        before_the_asylum_decision: قبل از تصمیم گیری در مورد پناهندگی
         during_the_asylum_procedure: در مرحله روند رسیدگی به پناهندگی
         with_a_residence_permit: با اجازه اقامت
         with_deportation_decision: با برگه ترک خاک

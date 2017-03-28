@@ -17,6 +17,7 @@ pl:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: przed złożeniem wniosku azylowego
+        before_the_asylum_decision: przed podjęciem decyzji o azyl
         during_the_asylum_procedure: w trakcie procedury azylowej
         with_a_residence_permit: z pozwoleniem na pobyt
         with_deportation_decision: z zawiadomieniem o deportacji

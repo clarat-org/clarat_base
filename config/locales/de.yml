@@ -13,6 +13,7 @@ de:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: "– vor dem Asylantrag"
+        before_the_asylum_decision: "- Vor der Asylentscheidung"
         during_the_asylum_procedure: "– im Asylverfahren"
         with_a_residence_permit: "– mit Aufenthaltserlaubnis"
         with_deportation_decision: "– mit Abschiebebescheid"
