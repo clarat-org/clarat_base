@@ -135,8 +135,6 @@ describe Organization do
       orga.mailings_enabled?.must_equal false
       orga.mailings = 'force_disabled'
       orga.mailings_enabled?.must_equal false
-      orga.mailings = 'big_player'
-      orga.mailings_enabled?.must_equal false
     end
   end
 
