@@ -36,7 +36,7 @@ class Offer
       has_many :hyperlinks, as: :linkable, dependent: :destroy
       has_many :websites, through: :hyperlinks
       has_one :city, through: :location
-      has_one :section_filter,
+      has_one :section_filter, through: :filter,
               association_foreign_key: 'filter_id',
               join_table: 'filters_offers'
     end
