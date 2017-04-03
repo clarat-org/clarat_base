@@ -14,7 +14,7 @@ class Offer
       validates :expires_at, presence: true
       validates :expires_at, later_date: true
       validates :code_word, length: { maximum: 140 }
-      validates_uniqueness_of :slug, scope: :section_id
+      validates_uniqueness_of :slug, scope: { section_filter: section_filter_id }
 
       MIN_AGE = 0
       MAX_AGE = 99
