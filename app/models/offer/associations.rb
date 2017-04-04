@@ -11,9 +11,6 @@ class Offer
       belongs_to :split_base, inverse_of: :offers
       has_and_belongs_to_many :categories
       has_and_belongs_to_many :filters
-      has_and_belongs_to_many :section_filters,
-                              association_foreign_key: 'filter_id',
-                              join_table: 'filters_offers'
       has_and_belongs_to_many :language_filters,
                               association_foreign_key: 'filter_id',
                               join_table: 'filters_offers'
@@ -39,6 +36,7 @@ class Offer
       has_many :hyperlinks, as: :linkable, dependent: :destroy
       has_many :websites, through: :hyperlinks
       has_one :city, through: :location
+      has_one :section_filter, through: :filter
     end
   end
 end
