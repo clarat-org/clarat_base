@@ -89,7 +89,7 @@ class Offer < ActiveRecord::Base
   end
 
   def in_section? section
-    section_filters.where(identifier: section).count > 0
+    section_filter.identifier == section
   end
 
   def opening_details?

@@ -22,13 +22,16 @@ class Offer
       # Uses method from CustomValidatable concern.
       def validate_associated_fields
         validate_associated_presence :organizations
-        validate_associated_presence :section_filters
         validate_associated_presence :language_filters
         validate_associated_presence :target_audience_filters
       end
 
       def validate_associated_presence field
         fail_validation field, "needs_#{field}" if send(field).empty?
+      end
+
+      def validate_section_filter
+        fail_validation field, "needs_section_filter" if send(field).present?
       end
 
       ## Custom Validation Methods ##

@@ -7,8 +7,8 @@ class Category < ActiveRecord::Base
   include CustomValidatable
 
   # Associations
-  has_and_belongs_to_many :section_filters,
-                          association_foreign_key: 'filter_id'
+  has_many :categories_section_filters
+  has_many :section_filters, through: :categories_section_filters
   has_many :categories_offers
   has_many :offers, through: :categories_offers
   has_many :organizations, through: :offers
@@ -28,7 +28,7 @@ class Category < ActiveRecord::Base
   # Scope
   scope :mains, -> { where.not(icon: nil).order(:icon).limit(7) }
   scope :in_section, lambda { |section|
-    joins(:section_filters).where(filters: { identifier: section })
+    joins(:section_filters).where('section_filters.identifier = ?', section )
   }
 
   # Methods

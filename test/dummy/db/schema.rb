@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326080706) do
+ActiveRecord::Schema.define(version: 20170404145931) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -89,6 +89,13 @@ ActiveRecord::Schema.define(version: 20170326080706) do
 
   add_index "categories_offers", ["category_id"], name: "index_categories_offers_on_category_id"
   add_index "categories_offers", ["offer_id"], name: "index_categories_offers_on_offer_id"
+
+  create_table "categories_section_filters", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "section_filter_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "category_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
@@ -373,6 +380,7 @@ ActiveRecord::Schema.define(version: 20170326080706) do
     t.datetime "completed_at"
     t.integer  "completed_by"
     t.string   "residency_status"
+    t.integer  "section_filter_id"
   end
 
   add_index "offers", ["aasm_state"], name: "index_offers_on_aasm_state"
@@ -462,6 +470,13 @@ ActiveRecord::Schema.define(version: 20170326080706) do
 
   add_index "search_locations", ["geoloc"], name: "index_search_locations_on_geoloc"
   add_index "search_locations", ["query"], name: "index_search_locations_on_query"
+
+  create_table "section_filters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "sitemaps", force: :cascade do |t|
     t.string "path",    null: false
