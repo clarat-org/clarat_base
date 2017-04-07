@@ -56,7 +56,7 @@ class Offer < ActiveRecord::Base
   scope :created_at_day, ->(date) { where('created_at::date = ?', date) }
   scope :approved_at_day, ->(date) { where('approved_at::date = ?', date) }
   scope :in_section, lambda { |section|
-    joins(:section_filters).where(filters: { identifier: section })
+    joins(:section_filter).where('section_filters.identifier = ?', section )
   }
 
   # Methods

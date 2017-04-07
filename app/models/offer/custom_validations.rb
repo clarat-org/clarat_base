@@ -96,22 +96,22 @@ class Offer
 
       # The offers section_filters must match the categories section_filters
       def section_filters_must_match_categories_section_filters
-        section_filters.each do |offer_filter|
-          next if categories.any? do |category|
-            category.section_filters.include?(offer_filter)
+        if categories.any?
+          categories.each do |category|
+            next if category.section_filters.include?(section_filter)
+            fail_validation(:categories, 'category_for_section_filter_needed',
+                          world: section_filter.name)
           end
-          fail_validation(:categories, 'category_for_section_filter_needed',
-                          world: offer_filter.name)
         end
       end
 
       def at_least_one_section_filter_of_each_category_must_be_present
-        categories.each do |offer_category|
-          next if section_filters.any? do |offer_filter|
-            offer_category.section_filters.include?(offer_filter)
-          end
-          fail_validation(:categories, 'section_filter_for_category_needed',
+        if categories.any?
+          categories.each do |offer_category|
+            next if offer_category.section_filters.include?(section_filter)
+            fail_validation(:categories, 'section_filter_for_category_needed',
                           category: offer_category.name)
+          end
         end
       end
 
