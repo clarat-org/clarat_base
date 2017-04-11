@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  identifier: MyString
+family:
+  id: 1
+  name: Family
+  identifier: family
 
-two:
-  name: MyString
-  identifier: MyString
+refugees:
+  id: 2
+  name: Refugees
+  identifier: refugees

@@ -5,5 +5,17 @@ one:
   section_filter_id: 1
 
 two:
-  category_id: 1
+  category_id: 2
+  section_filter_id: 2
+
+three:
+  category_id: 3
   section_filter_id: 1
+
+four:
+  category_id: 4
+  section_filter_id: 1
+
+five:
+  category_id: 5
+  section_filter_id: 2

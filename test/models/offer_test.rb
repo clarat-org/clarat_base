@@ -78,7 +78,7 @@ describe Offer do
         basicOffer.must_be :valid? # !
       end
 
-      it 'should ensure locations and organizations fit together (personal)' do
+      it 'should ensure locations and organizations match (personal)' do
         location = FactoryGirl.create(:location)
         basicOffer.location_id = location.id
         basicOffer.wont_be :valid?
@@ -215,11 +215,11 @@ describe Offer do
       it { subject.must have_many :organization_offers }
       it { subject.must have_many(:organizations).through :organization_offers }
       it { subject.must have_and_belong_to_many :categories }
-      it { subject.must have_and_belong_to_many :filters }
+      it { subject.must have_many(:filters).through :filters_offers }
       it { subject.must belong_to :section_filter }
-      it { subject.must have_and_belong_to_many :language_filters }
-      it { subject.must have_and_belong_to_many :target_audience_filters }
-      it { subject.must have_and_belong_to_many :trait_filters }
+      it { subject.must have_many(:language_filters).through :filters_offers }
+      it { subject.must have_many(:target_audience_filters).through :filters_offers }
+      it { subject.must have_many(:trait_filters).through :filters_offers }
       it { subject.must have_and_belong_to_many :openings }
       it { subject.must have_many :hyperlinks }
       it { subject.must have_many :websites }
@@ -366,7 +366,6 @@ describe Offer do
     describe '#in_section?' do
       it 'should correctly reply to in_section? call' do
         off = offers(:basic)
-        binding.pry
         off.in_section?('family').must_equal true
         off.in_section?('refugees').must_equal false
       end
