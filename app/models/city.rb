@@ -6,6 +6,5 @@ class City < ActiveRecord::Base
   has_many :organizations, -> { uniq }, through: :locations,
                                         inverse_of: :cities
 
-  # Validations
-  validates :name, uniqueness: true, presence: true
+  # Validations moved to claradmin
 end
