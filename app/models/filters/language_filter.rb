@@ -2,7 +2,6 @@ class LanguageFilter < Filter
   # Validations
   validates :identifier, length: { is: 3 }, presence: true, uniqueness: true
   # identifier: ISO 639-2 code (+ additional values)
-
   # sorted by german display name
   IDENTIFIER = %w(cau aar sqi abk amh ara arc arm aze ban bam ben ber bos bul
                   zho 639 deu 150 dyu dan eng ewo fil fin fra ell hau heb hin 
