@@ -12,4 +12,3 @@ class LanguageFilter < Filter
                   tir cze tur tuk twi 326 hun urd uzb vie bel wol zza mul).freeze
   enumerize :identifier, in: LanguageFilter::IDENTIFIER
 end
- 
