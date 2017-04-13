@@ -7,8 +7,7 @@ class SolutionCategory < ActiveRecord::Base
   has_many :offers, inverse_of: :solution_category
   has_many :split_bases, inverse_of: :solution_category
 
-  # Validations
-  validates :name, presence: true
+  # Validations moved to claradmin
 
   # Sanitization
   extend Sanitization

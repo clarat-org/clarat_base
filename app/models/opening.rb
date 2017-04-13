@@ -8,15 +8,7 @@ class Opening < ActiveRecord::Base
   DAYS = %w(mon tue wed thu fri sat sun).freeze
   enumerize :day, in: DAYS
 
-  # Validations
-  validates :day, presence: true, uniqueness: { scope: [:open, :close] }
-  validates :open, uniqueness: { scope: [:day, :close] }
-  validates :open, presence: true, if: :close
-  validates :close, uniqueness: { scope: [:day, :open] }
-  validates :close, presence: true, if: :open
-
-  validates :sort_value, presence: true
-  validates :name, presence: true
+  # Validations moved to claradmin
 
   # Callbacks
   before_validation :calculate_sort_value
