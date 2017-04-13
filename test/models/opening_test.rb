@@ -35,8 +35,10 @@ describe Opening do
       end
 
       it 'should return true if neither open nor close is present' do
-        opening.assign_attributes open: nil, close: nil
-        opening.appointment?.must_equal true
+        opening_new = Opening.new(day: 'mon')
+        opening_new.save
+        opening_new.name.must_include 'appointment'
+        opening_new.appointment?.must_equal true
       end
     end
   end
