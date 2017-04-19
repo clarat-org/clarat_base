@@ -5,4 +5,6 @@ class SectionFilter < ActiveRecord::Base
   has_many :divisions, inverse_of: :section_filter
   has_many :categories_section_filters
   has_many :categories, through: :categories_section_filters
+
+  IDENTIFIER = %w(family refugees).freeze
 end
