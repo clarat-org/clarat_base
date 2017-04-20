@@ -13,19 +13,6 @@ describe NextStep do
     end
   end
 
-  describe 'validations' do
-    it { subject.must validate_presence_of :text_de }
-    it { subject.must validate_presence_of :text_en }
-    it { subject.must validate_length_of(:text_de).is_at_most 255 }
-    it { subject.must validate_length_of(:text_en).is_at_most 255 }
-    it { subject.must validate_length_of(:text_ar).is_at_most 255 }
-    it { subject.must validate_length_of(:text_fr).is_at_most 255 }
-    it { subject.must validate_length_of(:text_tr).is_at_most 255 }
-    it { subject.must validate_length_of(:text_pl).is_at_most 255 }
-    it { subject.must validate_length_of(:text_ru).is_at_most 255 }
-    it { subject.must validate_length_of(:text_fa).is_at_most 255 }
-  end
-
   describe 'methods' do
     describe '#text' do
       it 'should show text_[locale] for the current locale' do

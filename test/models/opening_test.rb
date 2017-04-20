@@ -22,16 +22,6 @@ describe Opening do
     it { subject.must_respond_to :updated_at }
   end
 
-  describe 'validations' do
-    describe 'always' do
-      it { subject.must validate_presence_of :day }
-      it { subject.must validate_presence_of :open }
-      it { subject.must validate_uniqueness_of(:open).scoped_to([:day, :close]) }
-      it { subject.must validate_presence_of :close }
-      it { subject.must validate_uniqueness_of(:close).scoped_to([:day, :open]) }
-    end
-  end
-
   describe '::Base' do
     describe 'associations' do
       it { subject.must have_and_belong_to_many :offers }
@@ -45,8 +35,10 @@ describe Opening do
       end
 
       it 'should return true if neither open nor close is present' do
-        opening.assign_attributes open: nil, close: nil
-        opening.appointment?.must_equal true
+        opening_new = Opening.new(day: 'mon')
+        opening_new.save
+        opening_new.name.must_include 'appointment'
+        opening_new.appointment?.must_equal true
       end
     end
   end

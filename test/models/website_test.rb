@@ -16,15 +16,6 @@ describe Website do
     it { subject.must_respond_to :unreachable_count }
   end
 
-  describe 'validations' do
-    describe 'always' do
-      it { subject.must validate_presence_of :host }
-      it { subject.must validate_presence_of :url }
-      it { subject.must validate_uniqueness_of :url }
-      it { subject.must validate_presence_of :unreachable_count }
-    end
-  end
-
   describe '::Base' do
     describe 'associations' do
       it { subject.must have_many :hyperlinks }

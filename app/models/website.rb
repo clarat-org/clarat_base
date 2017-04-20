@@ -16,12 +16,6 @@ class Website < ActiveRecord::Base
              contact_form other).freeze
   enumerize :host, in: HOSTS
 
-  # Validations
-  validates :host, presence: true
-  validates :unreachable_count, presence: true
-  validates :url, format: %r{\Ahttps?://\S+\.\S+\z}, uniqueness: true,
-                  presence: true
-
   # Scopes..
   # .. by hostname
   HOSTS.each { |host_name| scope host_name, -> { where(host: host_name) } }

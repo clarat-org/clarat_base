@@ -4,15 +4,7 @@ class NextStep < ActiveRecord::Base
   has_many :next_steps_offers, inverse_of: :next_step
   has_many :offers, through: :next_steps_offers, inverse_of: :next_steps
 
-  # Validations
-  validates :text_de, presence: true, length: { maximum: 255 }
-  validates :text_en, presence: true, length: { maximum: 255 }
-  validates :text_ar, length: { maximum: 255 }
-  validates :text_fr, length: { maximum: 255 }
-  validates :text_pl, length: { maximum: 255 }
-  validates :text_tr, length: { maximum: 255 }
-  validates :text_ru, length: { maximum: 255 }
-  validates :text_fa, length: { maximum: 255 }
+  # Validations moved to claradmin
 
   # Methods
 
