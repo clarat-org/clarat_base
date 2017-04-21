@@ -30,10 +30,6 @@ class Offer
         fail_validation field, "needs_#{field}" if send(field).empty?
       end
 
-      def validate_section_filter
-        fail_validation field, "needs_section_filter" if send(field).present?
-      end
-
       ## Custom Validation Methods ##
 
       # Age From has to be smaller than Age To

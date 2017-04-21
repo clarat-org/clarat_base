@@ -44,6 +44,7 @@ describe Offer do
       it { subject.must validate_length_of(:legal_information).is_at_most 400 }
       it { subject.must validate_presence_of :expires_at }
       it { subject.must validate_length_of(:code_word).is_at_most 140 }
+      it { subject.must validate_presence_of :section_filter_id }
 
       it 'should ensure that age_from fits age_to' do
         basicOffer.age_from = 9
