@@ -39,7 +39,7 @@ class Offer < ActiveRecord::Base
 
   # Friendly ID
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged]
+  friendly_id :slug_candidates, use: :scoped, scope: :section_filter
 
   # Translation
   translate :name, :description, :old_next_steps, :opening_specification
