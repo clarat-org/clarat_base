@@ -23,7 +23,7 @@ class Offer
                through: :filters_offers,
                source: :filter
       has_many :trait_filters,
-               class_name: 'TargetAudienceFilter',
+               class_name: 'TraitFilter',
                through: :filters_offers,
                source: :filter
 
