@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404145931) do
+ActiveRecord::Schema.define(version: 20170419100056) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -145,6 +145,18 @@ ActiveRecord::Schema.define(version: 20170404145931) do
 
   add_index "contact_person_offers", ["contact_person_id"], name: "index_contact_person_offers_on_contact_person_id"
   add_index "contact_person_offers", ["offer_id"], name: "index_contact_person_offers_on_offer_id"
+
+  create_table "contact_person_translations", force: :cascade do |t|
+    t.integer  "contact_person_id",              null: false
+    t.string   "locale",                         null: false
+    t.string   "source",            default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "responsibility"
+  end
+
+  add_index "contact_person_translations", ["contact_person_id"], name: "index_contact_person_translations_on_contact_person_id"
+  add_index "contact_person_translations", ["locale"], name: "index_contact_person_translations_on_locale"
 
   create_table "contacts", force: :cascade do |t|
     t.string   "name"
@@ -352,7 +364,6 @@ ActiveRecord::Schema.define(version: 20170404145931) do
     t.datetime "updated_at"
     t.text     "opening_specification"
     t.datetime "approved_at"
-    t.text     "legal_information"
     t.integer  "created_by"
     t.integer  "approved_by"
     t.date     "expires_at",                                              null: false
@@ -360,7 +371,6 @@ ActiveRecord::Schema.define(version: 20170404145931) do
     t.text     "description_html"
     t.text     "next_steps_html"
     t.text     "opening_specification_html"
-    t.string   "exclusive_gender"
     t.integer  "age_from",                                default: 0
     t.integer  "age_to",                                  default: 99
     t.string   "target_audience"
@@ -553,19 +563,18 @@ ActiveRecord::Schema.define(version: 20170404145931) do
 
   create_table "statistics", force: :cascade do |t|
     t.string  "topic",             limit: 40
-    t.integer "user_id"
     t.date    "date",                                           null: false
     t.float   "count",                        default: 0.0,     null: false
-    t.integer "user_team_id"
     t.string  "model"
     t.string  "field_name"
     t.string  "field_start_value"
     t.string  "field_end_value"
     t.string  "time_frame",                   default: "daily"
+    t.string  "trackable_type"
+    t.integer "trackable_id"
   end
 
-  add_index "statistics", ["user_id"], name: "index_statistics_on_user_id"
-  add_index "statistics", ["user_team_id"], name: "index_statistics_on_user_team_id"
+  add_index "statistics", ["trackable_id", "trackable_type"], name: "index_statistics_on_trackable_id_and_trackable_type"
 
   create_table "subscriptions", force: :cascade do |t|
     t.string   "email"
@@ -600,9 +609,14 @@ ActiveRecord::Schema.define(version: 20170404145931) do
   add_index "user_team_users", ["user_team_id"], name: "index_user_team_users_on_user_team_id"
 
   create_table "user_teams", force: :cascade do |t|
-    t.string "name",                                  null: false
-    t.string "classification", default: "researcher"
+    t.string  "name",                                  null: false
+    t.string  "classification", default: "researcher"
+    t.integer "lead_id"
+    t.integer "parent_id"
   end
+
+  add_index "user_teams", ["lead_id"], name: "index_user_teams_on_lead_id"
+  add_index "user_teams", ["parent_id"], name: "index_user_teams_on_parent_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",              default: "",         null: false
@@ -615,10 +629,8 @@ ActiveRecord::Schema.define(version: 20170404145931) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
-    t.integer  "current_team_id"
   end
 
-  add_index "users", ["current_team_id"], name: "index_users_on_current_team_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
   create_table "versions", force: :cascade do |t|

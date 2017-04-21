@@ -15,7 +15,7 @@ PATH
       bundler (>= 1.8.4)
       closure_tree
       easy_translate
-      enumerize
+      enumerize (= 2.0.1)
       friendly_id (>= 5.0)
       geocoder
       localeapp
@@ -70,7 +70,7 @@ GEM
     algoliasearch (1.12.7)
       httpclient (~> 2.8.3)
       json (>= 1.5.1)
-    algoliasearch-rails (1.18.0)
+    algoliasearch-rails (1.19.1)
       algoliasearch (~> 1.12.4)
       json (>= 1.5.1)
     arel (6.0.4)
@@ -424,4 +424,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.4
+   1.14.6

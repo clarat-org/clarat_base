@@ -3,11 +3,9 @@ researcher:
   name: 'researcherName'
   email: 'researcher@researcher.com'
   role: 'researcher'
-  current_team_id: 1
 
 super:
   id: 2
   name: 'superName'
   email: 'super@super.com'
   role: 'super'
-  current_team_id: 2

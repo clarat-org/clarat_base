@@ -15,7 +15,7 @@ module Translation
     end
 
     has_many :translations, class_name: "#{self.name}Translation",
-                            inverse_of: self.name.downcase,
+                            inverse_of: self.name.underscore,
                             dependent: :destroy
 
     def translation_automated?

@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails-i18n'
   s.add_dependency 'web-console', '~> 2.0'
   s.add_dependency 'rails-observers' # observers got extracted since rails 4
-  s.add_dependency 'enumerize'
+  s.add_dependency 'enumerize', '2.0.1'
   s.add_dependency 'paper_trail'
   s.add_dependency 'sanitize' # parser based sanitization
   s.add_dependency 'closure_tree'

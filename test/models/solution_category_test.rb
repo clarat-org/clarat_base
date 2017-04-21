@@ -13,12 +13,6 @@ describe SolutionCategory do
     it { subject.must_respond_to :updated_at }
   end
 
-  describe 'validations' do
-    describe 'always' do
-      it { subject.must validate_presence_of :name }
-    end
-  end
-
   describe 'associations' do
     it { subject.must have_many(:offers) }
   end

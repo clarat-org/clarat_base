@@ -8,8 +8,7 @@
 # #user => Reference to the one this point is about
 class Statistic < ActiveRecord::Base
   # Associations
-  belongs_to :user, inverse_of: :statistics
-  belongs_to :user_team, inverse_of: :statistics
+  belongs_to :trackable, polymorphic: true
 
   # Enumerization
   extend Enumerize

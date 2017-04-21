@@ -14,6 +14,17 @@ describe User do
     it { subject.must_respond_to :role }
   end
 
+  describe 'relations' do
+    it { subject.must have_many :authored_notes }
+    it { subject.must have_many(:user_teams).through :user_team_users }
+    it { subject.must have_many :led_teams }
+    it { subject.must have_many :statistic_charts }
+    it { subject.must have_many :absences }
+    it { subject.must have_many :time_allocations }
+    it { subject.must have_many :created_assignments }
+    it { subject.must have_many :received_assignments }
+  end
+
   # describe 'validations' do
   #   describe 'always' do
   #     it { user.must validate_presence_of :email }

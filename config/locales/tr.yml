@@ -9,6 +9,7 @@ tr:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: iltica talebinden önce
+        before_the_asylum_decision: iltica kararından önce
         during_the_asylum_procedure: iltica prosedüründe
         with_a_residence_permit: oturma izni ile
         with_deportation_decision: sınırdışı belgesi ile

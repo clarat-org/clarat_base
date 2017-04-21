@@ -16,10 +16,8 @@ describe Offer do
     it { subject.must_respond_to :updated_at }
     it { subject.must_respond_to :opening_specification }
     it { subject.must_respond_to :aasm_state }
-    it { subject.must_respond_to :legal_information }
     it { subject.must_respond_to :age_from }
     it { subject.must_respond_to :age_to }
-    it { subject.must_respond_to :exclusive_gender }
     it { subject.must_respond_to :target_audience }
     it { subject.must_respond_to :hide_contact_people }
     it { subject.must_respond_to :code_word }
@@ -41,7 +39,6 @@ describe Offer do
       it { subject.must validate_presence_of :name }
       it { subject.must validate_presence_of :description }
       it { subject.must validate_presence_of :encounter }
-      it { subject.must validate_length_of(:legal_information).is_at_most 400 }
       it { subject.must validate_presence_of :expires_at }
       it { subject.must validate_length_of(:code_word).is_at_most 140 }
       it { subject.must validate_presence_of :section_filter_id }
@@ -114,12 +111,9 @@ describe Offer do
         basicOffer.reload.must_be :valid?
       end
 
-      it 'should validate expiration date' do
-        subject.expires_at = Time.zone.now
-        subject.valid?
-        subject.errors.messages[:expires_at].must_include(
-          I18n.t('shared.validations.later_date')
-        )
+      it 'should validate presence of expiration date' do
+        subject.expires_at = nil
+        subject.valid?.must_equal false
       end
 
       it 'should validate start date' do
@@ -145,32 +139,33 @@ describe Offer do
 
       it 'should validate that section filters of offer and categories match' do
         category = FactoryGirl.create(:category)
-        category.section_filters = [filters(:family)]
+        category.section_filters = [section_filters(:family)]
         basicOffer.categories = [category]
-        basicOffer.section_filter = filters(:refugees)
+        basicOffer.section_filter = section_filters(:refugees)
         basicOffer.valid?.must_equal false
 
-        basicOffer.section_filter = filters(:family)
-        category.section_filters = [filters(:refugees)]
+        basicOffer.section_filter = section_filters(:family)
+        category.section_filters = [section_filters(:refugees)]
         basicOffer.valid?.must_equal false
 
-        category.section_filters = [filters(:refugees), filters(:family)]
+        category.section_filters =
+          [section_filters(:refugees), section_filters(:family)]
         basicOffer.valid?.must_equal true
         basicOffer.errors.messages[:categories].must_be :nil?
 
-        basicOffer.section_filter = filters(:refugees)
+        basicOffer.section_filter = section_filters(:refugees)
         category2 = FactoryGirl.create(:category)
-        category2.section_filters = [filters(:family)]
+        category2.section_filters = [section_filters(:family)]
         basicOffer.categories << category2
         basicOffer.valid?.must_equal false
 
-        basicOffer.section_filter = filters(:family)
+        basicOffer.section_filter = section_filters(:family)
         basicOffer.valid?.must_equal true
 
-        category.section_filters = [filters(:refugees)]
+        category.section_filters = [section_filters(:refugees)]
         basicOffer.valid?.must_equal false
 
-        #basicOffer.section_filter = [filters(:family), filters(:refugees)]
+        #basicOffer.section_filter = [section_filters(:family), section_filters(:refugees)]
         #basicOffer.valid?.must_equal true
       end
 
@@ -343,7 +338,7 @@ describe Offer do
     describe '#target_audience_filters?' do
       it 'should behave correctly in family section' do
         offer = offers(:basic)
-        offer.section_filter = filters(:family)
+        offer.section_filter = section_filters(:family)
         offer.expects(:fail_validation).never
         offer.send :validate_associated_fields
         offer.target_audience_filters = []
@@ -354,7 +349,7 @@ describe Offer do
 
       it 'should behave correctly in refugees section' do
         offer = offers(:basic)
-        offer.section_filter = filters(:refugees)
+        offer.section_filter = section_filters(:refugees)
         offer.expects(:fail_validation).never
         offer.send :validate_associated_fields
         offer.target_audience_filters = []
@@ -557,8 +552,8 @@ describe Offer do
       end
 
       it 'should correctly return _exclusive_gender_filters' do
-        basicOffer.exclusive_gender = 'boys_only'
-        basicOffer._exclusive_gender_filters.must_equal(['boys_only'])
+        basicOffer.gender_first_part_of_stamp = 'female'
+        basicOffer._exclusive_gender_filters.must_equal(['female'])
       end
 
       it 'should correctly return target_audience_filters' do
@@ -1011,11 +1006,8 @@ describe Offer do
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen'
 
         # simple residency_status tests
-        basicOffer.residency_status = 'before_the_asylum_application'
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – vor dem Asylantrag'
-
-        basicOffer.residency_status = 'during_the_asylum_procedure'
-        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – im Asylverfahren'
+        basicOffer.residency_status = 'before_the_asylum_decision'
+        basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – vor der Asylentscheidung'
 
         basicOffer.residency_status = 'with_a_residence_permit'
         basicOffer.stamp_refugees(:de).must_equal 'für geflüchtete Frauen – mit Aufenthaltserlaubnis'

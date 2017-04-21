@@ -12,26 +12,24 @@ class Offer < ActiveRecord::Base
   # Enumerization
   extend Enumerize
   ENCOUNTERS =
-    %w(personal hotline email chat forum online-course portal fax letter).freeze
+    %w(personal hotline email chat forum online-course portal).freeze
   TREATMENT_TYPES = %w(in-patient semi-residential out-patient).freeze
   PARTICIPANT_STRUCTURES =
     %w(target_audience_alone
        target_audience_in_group_with_others_with_different_problems
        target_audience_in_group_with_others_with_same_problem).freeze
-  EXCLUSIVE_GENDERS = %w(boys_only girls_only).freeze
-  BENEFICIARY_GENDERS = %w(female male).freeze
+  EXCLUSIVE_GENDERS = %w(female male).freeze
   STAMP_SECOND_PART_GENDERS = %w(female male neutral).freeze
   # ^ nil means inclusive to any gender
   CONTACT_TYPES = %w(personal remote).freeze
   RESIDENCY_STATUSES =
-    %w(before_the_asylum_application during_the_asylum_procedure
-       with_a_residence_permit with_temporary_suspension_of_deportation
+    %w(before_the_asylum_decision with_a_residence_permit
+       with_temporary_suspension_of_deportation
        with_deportation_decision).freeze
   VISIBLE_FRONTEND_STATES = %w(approved expired).freeze
 
   enumerize :encounter, in: ENCOUNTERS
-  enumerize :exclusive_gender, in: EXCLUSIVE_GENDERS
-  enumerize :gender_first_part_of_stamp, in: BENEFICIARY_GENDERS
+  enumerize :gender_first_part_of_stamp, in: EXCLUSIVE_GENDERS
   enumerize :gender_second_part_of_stamp, in: STAMP_SECOND_PART_GENDERS
   enumerize :treatment_type, in: TREATMENT_TYPES
   enumerize :participant_structure, in: PARTICIPANT_STRUCTURES

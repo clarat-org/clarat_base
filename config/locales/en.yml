@@ -13,6 +13,7 @@ en:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: before the asylum procedure
+        before_the_asylum_decision: before the asylum decision
         during_the_asylum_procedure: during the asylum procedure
         with_a_residence_permit: with a residence permit
         with_deportation_decision: with deportation notice

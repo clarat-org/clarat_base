@@ -13,6 +13,7 @@ fr:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: avant la demande d'asile
+        before_the_asylum_decision: avant la décision d'asile
         during_the_asylum_procedure: dans une procédure de demande d'asile
         with_a_residence_permit: avec permis de séjour
         with_deportation_decision: avec décision d'expulsion

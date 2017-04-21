@@ -88,7 +88,7 @@ class Offer
       end
 
       def _exclusive_gender_filters
-        [exclusive_gender]
+        [gender_first_part_of_stamp]
       end
 
       def _next_steps locale

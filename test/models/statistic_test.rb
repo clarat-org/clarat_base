@@ -11,12 +11,13 @@ describe Statistic do
   describe 'attributes' do
     it { subject.must_respond_to :id }
     it { subject.must_respond_to :topic }
-    it { subject.must_respond_to :user_id }
     it { subject.must_respond_to :date }
     it { subject.must_respond_to :count }
+    it { subject.must_respond_to :trackable_type }
+    it { subject.must_respond_to :trackable_id }
   end
 
   describe 'associations' do
-    it { subject.must belong_to :user }
+    it { subject.must belong_to :trackable }
   end
 end

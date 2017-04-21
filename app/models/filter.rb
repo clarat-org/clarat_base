@@ -9,7 +9,5 @@ class Filter < ActiveRecord::Base
   		  
   has_and_belongs_to_many :organizations
 
-  # Validations
-  validates :name, uniqueness: true, presence: true
-  validates :identifier, uniqueness: true, presence: true
+  # Validations moved to claradmin
 end

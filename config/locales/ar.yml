@@ -21,6 +21,7 @@ ar:
       format: "%{stamp}%{optional_age}%{optional_status}"
       status:
         before_the_asylum_application: قبل تقديم طلب اللجوء
+        before_the_asylum_decision: قبل الحكم في قضية اللجوء
         during_the_asylum_procedure: في قضية اللجوء
         with_a_residence_permit: بتصريح إقامة
         with_deportation_decision: " بقرار الترحيل"
