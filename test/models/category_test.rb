@@ -23,12 +23,12 @@ describe Category do
     describe 'always' do
       it { subject.must validate_presence_of :name_de }
       it { subject.must validate_presence_of :name_en }
-      it 'must validate the presence of a section_filter' do
-        category.expects(:validate_section_filter_presence)
+      it 'must validate the presence of a section' do
+        category.expects(:validate_section_presence)
         category.save
       end
-      it 'must validate the section_filters of the parent' do
-        category.expects(:validate_section_filters_with_parent)
+      it 'must validate the sections of the parent' do
+        category.expects(:validate_sections_with_parent)
         category.save
       end
     end
@@ -48,7 +48,7 @@ describe Category do
       it { subject.must have_many :categories_offers }
       it { subject.must have_many(:offers).through :categories_offers }
       it { subject.must have_many(:organizations).through :offers }
-      it { subject.must have_many(:section_filters).through :categories_section_filters}
+      it { subject.must have_many(:sections).through :categories_sections }
     end
   end
 
@@ -76,33 +76,33 @@ describe Category do
         I18n.with_locale(:ar) { subject.name.must_equal('foo') }
       end
     end
-    describe '#validate_section_filter_presence' do
+    describe '#validate_section_presence' do
       it 'should fail when there is no section filter' do
-        category.validate_section_filter_presence
+        category.validate_section_presence
         category.wont_be :valid?
       end
       it 'should succeed when there is at least one section filter' do
         category = categories(:main1)
-        category.validate_section_filter_presence
+        category.validate_section_presence
         category.must_be :valid?
       end
     end
-    describe '#validate_section_filters_with_parent' do
+    describe '#validate_sections_with_parent' do
       it 'should fail when the parent does not have the section filter' do
         category = categories(:sub1)
         category.parent = categories(:main2)
-        category.validate_section_filters_with_parent
+        category.validate_sections_with_parent
         category.wont_be :valid?
       end
       it 'should succeed when the parent has the same section filter' do
         category = categories(:sub2)
         category.expects(:fail_validation).never
-        category.validate_section_filters_with_parent
+        category.validate_sections_with_parent
       end
       it 'should succeed on main categories (no parent)' do
         category = categories(:main1)
         category.expects(:fail_validation).never
-        category.validate_section_filters_with_parent
+        category.validate_sections_with_parent
       end
     end
   end

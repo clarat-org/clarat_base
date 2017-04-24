@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419100056) do
+ActiveRecord::Schema.define(version: 20170424081649) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -90,12 +90,15 @@ ActiveRecord::Schema.define(version: 20170419100056) do
   add_index "categories_offers", ["category_id"], name: "index_categories_offers_on_category_id"
   add_index "categories_offers", ["offer_id"], name: "index_categories_offers_on_offer_id"
 
-  create_table "categories_section_filters", force: :cascade do |t|
+  create_table "categories_sections", force: :cascade do |t|
     t.integer  "category_id"
-    t.integer  "section_filter_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "section_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "categories_sections", ["category_id"], name: "index_categories_sections_on_category_id"
+  add_index "categories_sections", ["section_id"], name: "index_categories_sections_on_section_id"
 
   create_table "category_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
@@ -177,15 +180,16 @@ ActiveRecord::Schema.define(version: 20170419100056) do
   end
 
   create_table "divisions", force: :cascade do |t|
-    t.string   "name",              null: false
+    t.string   "name",            null: false
     t.text     "description"
     t.integer  "organization_id"
-    t.integer  "section_filter_id", null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "section_id",      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "divisions", ["organization_id"], name: "index_divisions_on_organization_id"
+  add_index "divisions", ["section_id"], name: "index_divisions_on_section_id"
 
   create_table "emails", force: :cascade do |t|
     t.string   "address",       limit: 64,                        null: false
@@ -202,15 +206,15 @@ ActiveRecord::Schema.define(version: 20170419100056) do
   end
 
   create_table "filters", force: :cascade do |t|
-    t.string   "name",                         null: false
-    t.string   "identifier",        limit: 35, null: false
+    t.string   "name",                  null: false
+    t.string   "identifier", limit: 35, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type",                         null: false
-    t.integer  "section_filter_id"
+    t.string   "type",                  null: false
+    t.integer  "section_id"
   end
 
-  add_index "filters", ["section_filter_id"], name: "index_filters_on_section_filter_id"
+  add_index "filters", ["section_id"], name: "index_filters_on_section_id"
 
   create_table "filters_offers", id: false, force: :cascade do |t|
     t.integer "filter_id", null: false
@@ -390,7 +394,7 @@ ActiveRecord::Schema.define(version: 20170419100056) do
     t.datetime "completed_at"
     t.integer  "completed_by"
     t.string   "residency_status"
-    t.integer  "section_filter_id"
+    t.integer  "section_id"
   end
 
   add_index "offers", ["aasm_state"], name: "index_offers_on_aasm_state"
@@ -399,6 +403,7 @@ ActiveRecord::Schema.define(version: 20170419100056) do
   add_index "offers", ["created_at"], name: "index_offers_on_created_at"
   add_index "offers", ["location_id"], name: "index_offers_on_location_id"
   add_index "offers", ["logic_version_id"], name: "index_offers_on_logic_version_id"
+  add_index "offers", ["section_id"], name: "index_offers_on_section_id"
   add_index "offers", ["solution_category_id"], name: "index_offers_on_solution_category_id"
   add_index "offers", ["split_base_id"], name: "index_offers_on_split_base_id"
 
@@ -481,7 +486,7 @@ ActiveRecord::Schema.define(version: 20170419100056) do
   add_index "search_locations", ["geoloc"], name: "index_search_locations_on_geoloc"
   add_index "search_locations", ["query"], name: "index_search_locations_on_query"
 
-  create_table "section_filters", force: :cascade do |t|
+  create_table "sections", force: :cascade do |t|
     t.string   "name"
     t.string   "identifier"
     t.datetime "created_at", null: false

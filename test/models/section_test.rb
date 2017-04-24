@@ -1,8 +1,7 @@
 require 'test_helper'
 
-describe SectionFilter do
-
-  let(:family) { section_filters(:family) }
+describe Section do
+  let(:family) { sections(:family) }
   subject { family }
 
   describe 'attributes' do
@@ -17,8 +16,8 @@ describe SectionFilter do
       it { subject.must have_many(:organizations).through :offers }
       it { subject.must have_many(:target_audience_filters) }
       it { subject.must have_many(:divisions) }
-      it { subject.must have_many(:categories_section_filters) }
-      it { subject.must have_many(:categories).through :categories_section_filters}
+      it { subject.must have_many(:categories_sections) }
+      it { subject.must have_many(:categories).through :categories_sections }
     end
   end
 end

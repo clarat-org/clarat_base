@@ -11,7 +11,7 @@ describe Filter do
     it { subject.must_respond_to :identifier }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
-    it { subject.must_respond_to :section_filter_id }
+    it { subject.must_respond_to :section_id }
   end
 
   describe '::Base' do

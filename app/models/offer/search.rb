@@ -76,8 +76,8 @@ class Offer
         location ? location.visible : false
       end
 
-      def section_filter_name
-        section_filter.identifier
+      def section_name
+        section.identifier
       end
 
       # filter indexing methods

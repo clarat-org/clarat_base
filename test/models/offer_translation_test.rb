@@ -11,7 +11,7 @@ describe OfferTranslation do
 
   describe '::Base' do
     describe 'associations' do
-      it { subject.must have_one(:section_filter).through :offer }
+      it { subject.must have_one(:section).through :offer }
     end
   end
 

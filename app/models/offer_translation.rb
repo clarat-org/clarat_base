@@ -6,7 +6,7 @@ class OfferTranslation < ActiveRecord::Base
 
   # Associations
   belongs_to :offer, inverse_of: :translations
-  has_one :section_filter, through: :offer
+  has_one :section, through: :offer
 
   alias translated_model offer
 

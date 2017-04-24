@@ -10,10 +10,10 @@ class Offer
       belongs_to :logic_version, inverse_of: :offers
       belongs_to :split_base, inverse_of: :offers
       has_and_belongs_to_many :categories
-      
+
       has_many :filters_offers
       has_many :filters, through: :filters_offers, source: :filter
-      belongs_to :section_filter
+      belongs_to :section
       has_many :language_filters,
                class_name: 'LanguageFilter',
                through: :filters_offers,

@@ -9,9 +9,9 @@ class Offer
       validate :location_and_area_fit_encounter
       validate :location_fits_organization, on: :update
       validate :contact_people_are_choosable
-      validate :section_filters_must_match_categories_section_filters,
+      validate :sections_must_match_categories_sections,
                on: :update
-      validate :at_least_one_section_filter_of_each_category_must_be_present,
+      validate :at_least_one_section_of_each_category_must_be_present,
                on: :update
       validate :no_more_than_10_next_steps
       validate :split_base_id_if_version_greater_7
@@ -90,23 +90,23 @@ class Offer
         end
       end
 
-      # The offers section_filters must match the categories section_filters
-      def section_filters_must_match_categories_section_filters
+      # The offers sections must match the categories sections
+      def sections_must_match_categories_sections
         if categories.any?
           categories.each do |category|
-            next if category.section_filters.include?(section_filter)
-            fail_validation(:categories, 'category_for_section_filter_needed',
-                          world: section_filter.name)
+            next if category.sections.include?(section)
+            fail_validation(:categories, 'category_for_section_needed',
+                            world: section.name)
           end
         end
       end
 
-      def at_least_one_section_filter_of_each_category_must_be_present
+      def at_least_one_section_of_each_category_must_be_present
         if categories.any?
           categories.each do |offer_category|
-            next if offer_category.section_filters.include?(section_filter)
-            fail_validation(:categories, 'section_filter_for_category_needed',
-                          category: offer_category.name)
+            next if offer_category.sections.include?(section)
+            fail_validation(:categories, 'section_for_category_needed',
+                            category: offer_category.name)
           end
         end
       end
