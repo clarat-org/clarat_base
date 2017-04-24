@@ -25,6 +25,7 @@ class Organization < ActiveRecord::Base
   has_many :cities, -> { uniq }, through: :locations,
                                  inverse_of: :organizations
   has_many :definitions, through: :definitions_organizations
+  has_many :definitions_organizations
 
   # Enumerization
   extend Enumerize

@@ -1,5 +1,5 @@
 # Connector model
-class DefinitionOrganization < ActiveRecord::Base
+class DefinitionsOrganization < ActiveRecord::Base
   belongs_to :organization
   belongs_to :definition
 end

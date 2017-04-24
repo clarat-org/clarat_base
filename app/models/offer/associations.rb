@@ -40,6 +40,7 @@ class Offer
       has_many :websites, through: :hyperlinks
       has_one :city, through: :location
       has_many :definitions, through: :definitions_offers
+      has_many :definitions_offers
     end
   end
 end
