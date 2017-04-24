@@ -11,7 +11,7 @@ describe OrganizationTranslation do
 
   describe '::Base' do
     describe 'associations' do
-      it { subject.must have_many(:section_filters).through :organization }
+      it { subject.must have_many(:sections).through :organization }
     end
   end
 

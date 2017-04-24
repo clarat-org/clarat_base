@@ -71,7 +71,7 @@ describe Organization do
     it { subject.must have_many :locations }
     it { subject.must have_many :hyperlinks }
     it { subject.must have_many :websites }
-    it { subject.must have_many(:section_filters).through :offers }
+    it { subject.must have_many(:sections).through :offers }
     it { subject.must have_and_belong_to_many :filters }
     it { subject.must have_and_belong_to_many :umbrella_filters }
   end
@@ -163,7 +163,7 @@ describe Organization do
   end
 
   describe '#in_section?' do
-    it 'should return true for family when the section_filter is present' do
+    it 'should return true for family when the section is present' do
       orga.in_section?('family').must_equal true
     end
   end
