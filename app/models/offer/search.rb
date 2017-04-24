@@ -76,10 +76,6 @@ class Offer
         location ? location.visible : false
       end
 
-      def section_name
-        section.identifier
-      end
-
       # filter indexing methods
       %w(target_audience language).each do |filter|
         define_method "_#{filter}_filters" do
