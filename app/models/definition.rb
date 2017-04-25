@@ -1,7 +1,7 @@
 # Internal dictionary: Definitions for certain words get automatically
 # infused into the texts of other models.
 class Definition < ActiveRecord::Base
-  # Associations
+  #Associations
   has_many :organizations, through: :definitions_organizations
   has_many :definitions_organizations
   has_many :offers, through: :definitions_offers

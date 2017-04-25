@@ -6,15 +6,15 @@ FactoryGirl.define do
     name_en { name_de + ' (en)' }
 
     transient do
-      sections do
-        [Section.first || FactoryGirl.create(:section)]
+      section_filters do
+        [SectionFilter.first || FactoryGirl.create(:section_filter)]
       end
     end
 
     after :build do |category, evaluator|
       # Filters
-      evaluator.sections.each do |section|
-        category.sections << section
+      evaluator.section_filters.each do |section_filter|
+        category.section_filters << section_filter
       end
     end
 

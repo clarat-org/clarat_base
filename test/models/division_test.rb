@@ -15,7 +15,7 @@ describe Division do
   describe '::Base' do
     describe 'associations' do
       it { subject.must belong_to :organization }
-      it { subject.must belong_to :section }
+      it { subject.must belong_to :section_filter }
     end
   end
 end

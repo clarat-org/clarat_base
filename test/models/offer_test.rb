@@ -41,7 +41,6 @@ describe Offer do
       it { subject.must validate_presence_of :encounter }
       it { subject.must validate_presence_of :expires_at }
       it { subject.must validate_length_of(:code_word).is_at_most 140 }
-      it { subject.must validate_presence_of :section_id }
 
       it 'should ensure that age_from fits age_to' do
         basicOffer.age_from = 9
@@ -76,7 +75,7 @@ describe Offer do
         basicOffer.must_be :valid? # !
       end
 
-      it 'should ensure locations and organizations match (personal)' do
+      it 'should ensure locations and organizations fit together (personal)' do
         location = FactoryGirl.create(:location)
         basicOffer.location_id = location.id
         basicOffer.wont_be :valid?
@@ -137,36 +136,35 @@ describe Offer do
           .is_greater_than(0).is_less_than_or_equal_to(99)
       end
 
-      it 'should validate that section filters of offer and categories match' do
+      it 'should validate that section filters of offer and categories fit' do
         category = FactoryGirl.create(:category)
-        category.sections = [sections(:family)]
+        category.section_filters = [filters(:family)]
         basicOffer.categories = [category]
-        basicOffer.section = sections(:refugees)
+        basicOffer.section_filters = [filters(:refugees)]
         basicOffer.valid?.must_equal false
 
-        basicOffer.section = sections(:family)
-        category.sections = [sections(:refugees)]
+        basicOffer.section_filters = [filters(:family), filters(:refugees)]
+        category.section_filters = [filters(:refugees)]
         basicOffer.valid?.must_equal false
 
-        category.sections =
-          [sections(:refugees), sections(:family)]
+        category.section_filters = [filters(:refugees), filters(:family)]
         basicOffer.valid?.must_equal true
         basicOffer.errors.messages[:categories].must_be :nil?
 
-        basicOffer.section = sections(:refugees)
+        basicOffer.section_filters = [filters(:refugees)]
         category2 = FactoryGirl.create(:category)
-        category2.sections = [sections(:family)]
+        category2.section_filters = [filters(:family)]
         basicOffer.categories << category2
         basicOffer.valid?.must_equal false
 
-        basicOffer.section = sections(:family)
+        basicOffer.section_filters = [filters(:family)]
         basicOffer.valid?.must_equal true
 
-        category.sections = [sections(:refugees)]
+        category.section_filters = [filters(:refugees)]
         basicOffer.valid?.must_equal false
 
-        # basicOffer.section = [sections(:family), sections(:refugees)]
-        # basicOffer.valid?.must_equal true
+        basicOffer.section_filters = [filters(:family), filters(:refugees)]
+        basicOffer.valid?.must_equal true
       end
 
       it 'should validate that split_base is assigned with version >= 7' do
@@ -211,11 +209,11 @@ describe Offer do
       it { subject.must have_many :organization_offers }
       it { subject.must have_many(:organizations).through :organization_offers }
       it { subject.must have_and_belong_to_many :categories }
-      it { subject.must have_many(:filters).through :filters_offers }
-      it { subject.must belong_to :section }
-      it { subject.must have_many(:language_filters).through :filters_offers }
-      it { subject.must have_many(:target_audience_filters).through :filters_offers }
-      it { subject.must have_many(:trait_filters).through :filters_offers }
+      it { subject.must have_and_belong_to_many :filters }
+      it { subject.must have_and_belong_to_many :section_filters }
+      it { subject.must have_and_belong_to_many :language_filters }
+      it { subject.must have_and_belong_to_many :target_audience_filters }
+      it { subject.must have_and_belong_to_many :trait_filters }
       it { subject.must have_and_belong_to_many :openings }
       it { subject.must have_many :hyperlinks }
       it { subject.must have_many :websites }
@@ -338,7 +336,7 @@ describe Offer do
     describe '#target_audience_filters?' do
       it 'should behave correctly in family section' do
         offer = offers(:basic)
-        offer.section = sections(:family)
+        offer.section_filters = [filters(:family)]
         offer.expects(:fail_validation).never
         offer.send :validate_associated_fields
         offer.target_audience_filters = []
@@ -349,7 +347,7 @@ describe Offer do
 
       it 'should behave correctly in refugees section' do
         offer = offers(:basic)
-        offer.section = sections(:refugees)
+        offer.section_filters = [filters(:refugees)]
         offer.expects(:fail_validation).never
         offer.send :validate_associated_fields
         offer.target_audience_filters = []

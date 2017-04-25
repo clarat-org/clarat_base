@@ -1,7 +1,7 @@
 class TargetAudienceFilter < Filter
   # Associations
   # should always remain a single reference (no habtm or hmt)!!
-  belongs_to :section
+  belongs_to :section_filter
 
   FAMILY_IDENTIFIER = %w(family_children family_parents family_nuclear_family
                          family_relatives family_parents_to_be
