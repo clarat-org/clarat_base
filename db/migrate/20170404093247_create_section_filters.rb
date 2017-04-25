@@ -21,11 +21,12 @@ class CreateSectionFilters < ActiveRecord::Migration
 
     add_column :offers, :section_filter_id, :integer
 
-    fam_new = SectionFilter.create(name: 'Family', identifier: 'family')
-    ref_new = SectionFilter.create(name: 'Refugees', identifier: 'refugees')
+    fam_new = SectionFilter.find_by(identifier: 'family').nil? ? SectionFilter.create(name: 'Family', identifier: 'family') : SectionFilter.find_by(identifier: 'family')
+
+    ref_new = SectionFilter.find_by(identifier: 'refugees').nil? ? SectionFilter.create(name: 'Refugees', identifier: 'refugees') : SectionFilter.find_by(identifier: 'refugees')
 
     Offer.find_each do |offer|
-      new_id = offer.filter_ids.include?(76) ? fam_new.id : ref_new.id
+      new_id = offer.filters.where(type: 'SectionFilter').pluck(:identifier).include?('family') ? fam_new.id : ref_new.id
       offer.update_columns section_filter_id: new_id
     end
   end
