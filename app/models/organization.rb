@@ -16,7 +16,7 @@ class Organization < ActiveRecord::Base
   has_many :contact_people
   has_many :offers, through: :organization_offers, inverse_of: :organizations
   has_many :emails, through: :contact_people, inverse_of: :organizations
-  has_many :section_filters, -> { uniq }, through: :offers
+  has_many :sections, -> { uniq }, through: :offers
   has_many :split_bases, inverse_of: :organization
   has_and_belongs_to_many :filters
   has_and_belongs_to_many :umbrella_filters,
@@ -102,6 +102,6 @@ class Organization < ActiveRecord::Base
   end
 
   def in_section? section
-    section_filters.where(identifier: section).count > 0
+    sections.where(identifier: section).count > 0
   end
 end

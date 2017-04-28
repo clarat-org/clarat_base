@@ -37,7 +37,7 @@ class Offer < ActiveRecord::Base
 
   # Friendly ID
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged]
+  friendly_id :slug_candidates, use: :scoped, scope: :section
 
   # Translation
   translate :name, :description, :old_next_steps, :opening_specification
@@ -54,7 +54,7 @@ class Offer < ActiveRecord::Base
   scope :created_at_day, ->(date) { where('created_at::date = ?', date) }
   scope :approved_at_day, ->(date) { where('approved_at::date = ?', date) }
   scope :in_section, lambda { |section|
-    joins(:section_filters).where(filters: { identifier: section })
+    joins(:section).where('sections.identifier = ?', section)
   }
 
   # Methods
@@ -86,8 +86,8 @@ class Offer < ActiveRecord::Base
     Offerstamp.generate_stamp self, 'refugees', locale
   end
 
-  def in_section? section
-    section_filters.where(identifier: section).count > 0
+  def in_section? section_identifier
+    section.identifier == section_identifier
   end
 
   def opening_details?

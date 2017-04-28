@@ -9,10 +9,11 @@ class Offer
       #           uniqueness: { scope: :location_id },
       #           unless: ->(offer) { offer.location.nil? }
       validates :description, presence: true
-      validates :slug, uniqueness: true
       validates :encounter, presence: true
       validates :expires_at, presence: true
       validates :code_word, length: { maximum: 140 }
+      validates :section_id, presence: true
+      validates_uniqueness_of :slug, scope: :section_id
 
       MIN_AGE = 0
       MAX_AGE = 99
