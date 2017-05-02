@@ -74,14 +74,6 @@ ActiveRecord::Schema.define(version: 20170424081649) do
 
   add_index "categories", ["name_de"], name: "index_categories_on_name_de"
 
-  create_table "categories_filters", id: false, force: :cascade do |t|
-    t.integer "filter_id",   null: false
-    t.integer "category_id", null: false
-  end
-
-  add_index "categories_filters", ["category_id"], name: "index_filters_categories_on_category_id"
-  add_index "categories_filters", ["filter_id"], name: "index_filters_categories_on_filter_id"
-
   create_table "categories_offers", id: false, force: :cascade do |t|
     t.integer "offer_id",    null: false
     t.integer "category_id", null: false
@@ -90,15 +82,15 @@ ActiveRecord::Schema.define(version: 20170424081649) do
   add_index "categories_offers", ["category_id"], name: "index_categories_offers_on_category_id"
   add_index "categories_offers", ["offer_id"], name: "index_categories_offers_on_offer_id"
 
-  create_table "categories_sections", force: :cascade do |t|
-    t.integer  "category_id"
-    t.integer  "section_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "categories_sections", id: false, force: :cascade do |t|
+    t.integer "section_id",  null: false
+    t.integer "category_id", null: false
   end
 
   add_index "categories_sections", ["category_id"], name: "index_categories_sections_on_category_id"
+  add_index "categories_sections", ["category_id"], name: "index_filters_categories_on_category_id"
   add_index "categories_sections", ["section_id"], name: "index_categories_sections_on_section_id"
+  add_index "categories_sections", ["section_id"], name: "index_filters_categories_on_filter_id"
 
   create_table "category_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false

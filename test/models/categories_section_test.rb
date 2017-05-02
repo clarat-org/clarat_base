@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CategoriesSectionTest < ActiveSupport::TestCase
-  let(:categories_section) { categories_sections(:one) }
+  let(:categories_section) { CategoriesSection.new }
 
   subject { categories_section }
 
