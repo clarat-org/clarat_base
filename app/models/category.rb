@@ -40,6 +40,12 @@ class Category < ActiveRecord::Base
     output.blank? ? name_de : output
   end
 
+  def keywords(locale = I18n.locale)
+    output = send(:"keywords_#{locale}")
+    output.blank? ? '' : output
+    output
+  end
+
   # custom validation methods
   def validate_section_presence
     return unless send(:sections).empty?

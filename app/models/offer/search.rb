@@ -48,6 +48,16 @@ class Offer
         tags.flatten.uniq
       end
 
+      def _keywords locale = :de
+        tags = []
+        categories.find_each do |category|
+          if category.keywords(locale)
+            tags << category.keywords(locale).split(',')
+          end
+        end
+        tags.flatten.uniq
+      end
+
       # lang attribute for translate markup
       def lang locale
         if translations.find_by(locale: locale).try(:automated?)
@@ -60,6 +70,11 @@ class Offer
       # additional searchable string made from categories (localized for attribute)
       def category_names locale = :de
         _tags(locale).join ' '
+      end
+
+      # additional searchable string made from category keywords (localized for attribute)
+      def category_keywords locale = :de
+        _keywords(locale).join ' '
       end
 
       # additional searchable string made from keywords
