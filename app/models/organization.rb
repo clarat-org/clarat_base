@@ -24,8 +24,9 @@ class Organization < ActiveRecord::Base
                           join_table: 'filters_organizations'
   has_many :cities, -> { uniq }, through: :locations,
                                  inverse_of: :organizations
-  has_many :definitions, through: :definitions_organizations
   has_many :definitions_organizations
+  has_many :definitions, through: :definitions_organizations
+
 
   # Enumerization
   extend Enumerize
