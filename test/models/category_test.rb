@@ -62,6 +62,14 @@ describe Category do
         end
       end
 
+      it 'should show keywords_[locale] for the current locale' do
+        locale = I18n.available_locales.sample
+        subject.send("keywords_#{locale}=", 'foobar')
+        I18n.with_locale(locale) do
+          subject.keywords.must_equal 'foobar'
+        end
+      end
+
       it 'should fall back to the en locale when the current one is empty' do
         subject.name_de = 'foo'
         subject.name_en = 'bar'

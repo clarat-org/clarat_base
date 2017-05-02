@@ -246,6 +246,31 @@ describe Offer do
       end
     end
 
+    describe '#_keywords' do
+      it 'should return unique keywords of offer categories' do
+        Category.find(1).update_column :keywords_de, 'foo, bar'
+        Category.find(3).update_column :keywords_de, 'bar, code me'
+        offers(:basic).categories << Category.find(1)
+        offers(:basic).categories << Category.find(3)
+        tags = offers(:basic)._keywords(:de)
+        tags.must_include 'foo'
+        tags.must_include 'bar'
+        tags.must_include 'code me'
+        tags.count('bar').must_equal 1
+        tags.count(' bar').must_equal 0
+      end
+    end
+
+    describe '#category_keywords' do
+      it 'should return unique keywords of offer categories' do
+        Category.find(1).update_column :keywords_de, 'foo, bar'
+        Category.find(3).update_column :keywords_de, 'bar, code me'
+        offers(:basic).categories << Category.find(1)
+        offers(:basic).categories << Category.find(3)
+        offers(:basic).category_keywords.must_equal 'foo bar code me'
+      end
+    end
+
     describe '#category_names' do
       it 'should refer to tags to gather category information' do
         offer = offers(:basic)

@@ -52,7 +52,7 @@ class Offer
         tags = []
         categories.find_each do |category|
           if category.keywords(locale)
-            tags << category.keywords(locale).split(',')
+            tags << category.keywords(locale).split(',').map(&:strip)
           end
         end
         tags.flatten.uniq
