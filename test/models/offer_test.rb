@@ -223,11 +223,11 @@ describe Offer do
   end
 
   describe 'methods' do
-    describe '#_tags' do
+    describe '#_categories' do
       it 'should return unique categories with ancestors of an offer' do
         offers(:basic).categories << categories(:sub1)
         offers(:basic).categories << categories(:sub2)
-        tags = offers(:basic)._tags(:de)
+        tags = offers(:basic)._categories(:de)
         tags.must_include 'sub1.1'
         tags.must_include 'sub1.2'
         tags.must_include 'main1'
@@ -240,7 +240,7 @@ describe Offer do
         Category.find(3).update_column :name_en, 'ensub1.1'
 
         offers(:basic).categories << categories(:sub1)
-        tags = offers(:basic)._tags(:en)
+        tags = offers(:basic)._categories(:en)
         tags.must_include 'ensub1.1'
         tags.must_include 'enmain1'
       end
@@ -274,7 +274,7 @@ describe Offer do
     describe '#category_names' do
       it 'should refer to tags to gather category information' do
         offer = offers(:basic)
-        offer.expect_chain(:_tags, :join).once
+        offer.expect_chain(:_categories, :join).once
         offer.category_names
       end
 

@@ -40,7 +40,7 @@ class Offer
       end
 
       # Offer's categories for indexing
-      def _tags locale = :de
+      def _categories locale = :de
         tags = []
         categories.find_each do |category|
           tags << category.self_and_ancestors.map { |cate| cate.name(locale) }
@@ -69,7 +69,7 @@ class Offer
 
       # additional searchable string made from categories (localized for attribute)
       def category_names locale = :de
-        _tags(locale).join ' '
+        _categories(locale).join ' '
       end
 
       # additional searchable string made from category keywords (localized for attribute)
