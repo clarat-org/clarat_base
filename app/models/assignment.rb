@@ -25,14 +25,8 @@ class Assignment < ActiveRecord::Base
   scope :root, -> { where(parent_id: nil) } # Root Assignments have no parent
 
   # Enumerization
-  # extend Enumerize
-  # enumerize :topic, in: %w(internal_info external_info)
-
-  # Validations
-  # validates :text, presence: true, length: { maximum: 800 }
-  # validates :topic, presence: true
-  # validates :notable, presence: true
-  # validates :user, presence: true
+  extend Enumerize
+  enumerize :topic, in: %w(translation) # NOTE: meant to be extended (eg. approval, rewrite...)
 
   # State Machine
   aasm do

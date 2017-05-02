@@ -15,6 +15,8 @@ describe Assignment do
     it { subject.must_respond_to :children }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
+    it { subject.must_respond_to :topic }
+    it { subject.must_respond_to :created_by_system }
   end
 
   describe 'Scopes' do
