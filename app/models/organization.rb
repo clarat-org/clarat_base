@@ -27,7 +27,6 @@ class Organization < ActiveRecord::Base
   has_many :definitions_organizations
   has_many :definitions, through: :definitions_organizations
 
-
   # Enumerization
   extend Enumerize
   enumerize :legal_form, in: %w(ev ggmbh gag foundation gug gmbh ag ug kfm gbr

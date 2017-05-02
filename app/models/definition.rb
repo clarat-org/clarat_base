@@ -7,7 +7,6 @@ class Definition < ActiveRecord::Base
   has_many :definitions_offers
   has_many :offers, through: :definitions_offers
 
-
   # Validations
   validates :key, presence: true, uniqueness: true,
                   exclusion: { in: %w(dfn class JS tooltip data id) },
