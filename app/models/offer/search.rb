@@ -63,8 +63,8 @@ class Offer
       end
 
       # additional searchable string made from keywords
-      def keyword_string
-        keywords.pluck(:name, :synonyms).flatten.compact.uniq.join(', ')
+      def tag_string locale = :en
+        tags.pluck("name_#{locale}", "keywords_#{locale}").flatten.compact.uniq.join(', ')
       end
 
       # concatenated organization name for search index
