@@ -41,8 +41,7 @@ class Category < ActiveRecord::Base
   end
 
   def keywords(locale = I18n.locale)
-    output = send(:"keywords_#{locale}")
-    output.blank? ? '' : output
+    output = self.try("keywords_#{locale}") ? send(:"keywords_#{locale}") : ''
     output
   end
 

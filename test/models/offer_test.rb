@@ -269,6 +269,13 @@ describe Offer do
         offers(:basic).categories << Category.find(3)
         offers(:basic).category_keywords.must_equal 'foo bar code me'
       end
+
+      it 'should return unique keywords of offer categories including parent' do
+        category = categories(:sub1)
+        category.parent = categories(:main2)
+        offers(:basic).categories << category
+        offers(:basic).category_keywords.must_equal 'main1kw sub1kw'
+      end
     end
 
     describe '#category_names' do
