@@ -490,7 +490,8 @@ describe Offer do
 
       it 'should correctly return tags_string' do
         basicOffer.tags << tags(:basic)
-        basicOffer.tag_string.must_equal 'test, synonym'
+        basicOffer.tag_string.must_include 'synonym'
+        basicOffer.tag_string.must_include 'test'
       end
 
       it 'should correctly return age_filters' do
