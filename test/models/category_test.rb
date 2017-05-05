@@ -15,6 +15,10 @@ describe Category do
     it { subject.must_respond_to :name_pl }
     it { subject.must_respond_to :name_ru }
     it { subject.must_respond_to :name_fa }
+    it { subject.must_respond_to :keywords_de }
+    it { subject.must_respond_to :keywords_en }
+    it { subject.must_respond_to :keywords_ar }
+    it { subject.must_respond_to :keywords_fa }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
   end
@@ -59,6 +63,14 @@ describe Category do
         subject.send("name_#{locale}=", 'foobar')
         I18n.with_locale(locale) do
           subject.name.must_equal 'foobar'
+        end
+      end
+
+      it 'should show keywords_[locale] for the current locale' do
+        locale = %w(de en ar fa).sample
+        subject.send("keywords_#{locale}=", 'foobar')
+        I18n.with_locale(locale) do
+          subject.keywords.must_equal 'foobar'
         end
       end
 

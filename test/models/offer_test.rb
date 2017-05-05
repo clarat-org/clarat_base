@@ -223,11 +223,11 @@ describe Offer do
   end
 
   describe 'methods' do
-    describe '#_tags' do
+    describe '#_categories' do
       it 'should return unique categories with ancestors of an offer' do
         offers(:basic).categories << categories(:sub1)
         offers(:basic).categories << categories(:sub2)
-        tags = offers(:basic)._tags(:de)
+        tags = offers(:basic)._categories(:de)
         tags.must_include 'sub1.1'
         tags.must_include 'sub1.2'
         tags.must_include 'main1'
@@ -240,16 +240,48 @@ describe Offer do
         Category.find(3).update_column :name_en, 'ensub1.1'
 
         offers(:basic).categories << categories(:sub1)
-        tags = offers(:basic)._tags(:en)
+        tags = offers(:basic)._categories(:en)
         tags.must_include 'ensub1.1'
         tags.must_include 'enmain1'
+      end
+    end
+
+    describe '#_keywords' do
+      it 'should return unique keywords of offer categories' do
+        Category.find(1).update_column :keywords_de, 'foo, bar'
+        Category.find(3).update_column :keywords_de, 'bar, code me'
+        offers(:basic).categories << Category.find(1)
+        offers(:basic).categories << Category.find(3)
+        tags = offers(:basic)._keywords(:de)
+        tags.must_include 'foo'
+        tags.must_include 'bar'
+        tags.must_include 'code me'
+        tags.count('bar').must_equal 1
+        tags.count(' bar').must_equal 0
+      end
+    end
+
+    describe '#category_keywords' do
+      it 'should return unique keywords of offer categories' do
+        Category.find(1).update_column :keywords_de, 'foo, bar'
+        Category.find(3).update_column :keywords_de, 'bar, code me'
+        offers(:basic).categories << Category.find(1)
+        offers(:basic).categories << Category.find(3)
+        offers(:basic).category_keywords.must_equal 'foo bar code me'
+      end
+
+      it 'should return unique keywords of offer categories including parent' do
+        category = categories(:sub1)
+        category.parent = categories(:main2)
+        offers(:basic).categories << category
+        offers(:basic).category_keywords.must_equal 'main1kw sub1kw'
       end
     end
 
     describe '#category_names' do
       it 'should refer to tags to gather category information' do
         offer = offers(:basic)
-        offer.expect_chain(:_tags, :join).once
+        offer.expect_chain(:_categories, :join).once
         offer.category_names
       end
 
@@ -488,9 +520,10 @@ describe Offer do
         basicOffer._geoloc.must_equal('lat' => 10, 'lng' => 20)
       end
 
-      it 'should correctly return keywords_string' do
-        basicOffer.keywords << keywords(:basic)
-        basicOffer.keyword_string.must_equal 'test, synonym'
+      it 'should correctly return tags_string' do
+        basicOffer.tags << tags(:basic)
+        basicOffer.tag_string.must_include 'synonym'
+        basicOffer.tag_string.must_include 'test'
       end
 
       it 'should correctly return age_filters' do

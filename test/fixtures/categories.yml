@@ -3,6 +3,7 @@ main1:
   name_de: 'main1'
   name_en: 'main1en'
   icon: 'a-main1'
+  keywords_de: 'main1kw'
 main2:
   id: 2
   name_de: 'main2'
@@ -13,6 +14,7 @@ sub1:
   name_de: 'sub1.1'
   name_en: 'sub1.1en'
   parent_id: 1
+  keywords_de: 'sub1kw'
 sub2:
   id: 4
   name_de: 'sub1.2'
