@@ -173,6 +173,22 @@ ActiveRecord::Schema.define(version: 20170502133942) do
     t.datetime "updated_at"
   end
 
+  create_table "definitions_offers", force: :cascade do |t|
+    t.integer "definition_id", null: false
+    t.integer "offer_id",      null: false
+  end
+
+  add_index "definitions_offers", ["definition_id"], name: "index_definitions_offers_on_definition_id"
+  add_index "definitions_offers", ["offer_id"], name: "index_definitions_offers_on_offer_id"
+
+  create_table "definitions_organizations", force: :cascade do |t|
+    t.integer "definition_id",   null: false
+    t.integer "organization_id", null: false
+  end
+
+  add_index "definitions_organizations", ["definition_id"], name: "index_definitions_organizations_on_definition_id"
+  add_index "definitions_organizations", ["organization_id"], name: "index_definitions_organizations_on_organization_id"
+
   create_table "divisions", force: :cascade do |t|
     t.string   "name",            null: false
     t.text     "description"

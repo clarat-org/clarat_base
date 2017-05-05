@@ -1,8 +1,8 @@
 class RenameSectionFiltersToSections < ActiveRecord::Migration
   def change
     rename_table :section_filters, :sections
-    rename_table :categories_filters, :categories_sections
-    rename_column :categories_sections, :filter_id, :section_id
+    rename_table :categories_section_filters, :categories_sections
+    rename_column :categories_sections, :section_filter_id, :section_id
     rename_column :divisions, :section_filter_id, :section_id
     rename_column :filters, :section_filter_id, :section_id
     rename_column :offers, :section_filter_id, :section_id

@@ -520,9 +520,10 @@ describe Offer do
         basicOffer._geoloc.must_equal('lat' => 10, 'lng' => 20)
       end
 
-      it 'should correctly return keywords_string' do
-        basicOffer.keywords << keywords(:basic)
-        basicOffer.keyword_string.must_equal 'test, synonym'
+      it 'should correctly return tags_string' do
+        basicOffer.tags << tags(:basic)
+        basicOffer.tag_string.must_include 'synonym'
+        basicOffer.tag_string.must_include 'test'
       end
 
       it 'should correctly return age_filters' do
