@@ -90,6 +90,12 @@ class Offer
         organizations.pluck(:name).join(', ')
       end
 
+      def definitions_string locale = :de
+        if locale == :de
+          definitions.pluck(:explanation).join(', ')
+        end
+      end
+
       def location_visible
         location ? location.visible : false
       end

@@ -521,9 +521,9 @@ describe Offer do
       end
 
       it 'should correctly return tags_string' do
-        basicOffer.tags << tags(:basic)
-        basicOffer.tag_string.must_include 'synonym'
-        basicOffer.tag_string.must_include 'test'
+        definition = Definition.new key: 'foo', explanation: 'bar'
+        basicOffer.definitions << definition
+        basicOffer.definitions_string.must_include 'bar'
       end
 
       it 'should correctly return age_filters' do
