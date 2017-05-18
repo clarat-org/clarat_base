@@ -138,6 +138,7 @@ describe Location do
       Offer.any_instance.expects(:index!).times(loc.offers.visible_in_frontend.count)
       loc.visible = !loc.visible
       loc.save!
+      LocationObserver.send(:new).after_commit(loc)
     end
   end
 end

@@ -516,6 +516,7 @@ describe Offer do
     describe 'search' do
       it 'should correctly return geolocation hash for algolia' do
         loc = FactoryGirl.create(:location)
+        LocationObserver.send(:new).after_commit(loc)
         basicOffer.location_id = loc.id
         basicOffer._geoloc.must_equal('lat' => 10, 'lng' => 20)
       end
