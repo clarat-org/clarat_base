@@ -102,6 +102,10 @@ describe Location do
         loc.generate_display_name
         loc.display_name.must_equal 'foobar, name | street, addition, zip Berlin'
       end
+
+      it 'should be able to compare geolocation coordinates' do
+        Geolocation.new(loc) != Geolocation.new(Location.new)
+      end
     end
 
     # this method is stubbed out for the entire rest of the test suite
@@ -114,104 +118,6 @@ describe Location do
 
         loc.send(:full_address).must_equal 'street, zip city state'
       end
-    end
-  end
-
-  describe 'Observer' do
-    it 'should call index on approved offers after visible change' do
-      loc = locations(:basic)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location_id = loc.id
-      another_offer.save!
-      # add unapproved offer => should not be re-indexed
-      initialized_offer = FactoryGirl.create(:offer, :with_location)
-      initialized_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      initialized_offer.location = loc
-      initialized_offer.save!
-      initialized_offer.expects(:index!).never
-      Offer.any_instance.expects(:index!).times(loc.offers.visible_in_frontend.count)
-      loc.visible = !loc.visible
-      loc.save!
-      LocationObserver.send(:new).after_commit(loc)
-    end
-
-    it 'should not update on irrelevant location change but on zip' do
-      loc = FactoryGirl.create(:location)
-      loc.assign_attributes(longitude: 5, latitude: 5)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location_id = loc.id
-      another_offer.save!
-      LocationObserver.send(:new).after_commit(loc)
-      loc.reload
-      another_offer.reload
-      another_offer._geoloc.must_equal('lat' => 5, 'lng' => 5)
-      loc.assign_attributes(zip: 100_05)
-      loc.save!
-      LocationObserver.send(:new).after_commit(loc)
-      loc.reload
-      another_offer.reload
-      another_offer._geoloc.must_equal('lat' => 10, 'lng' => 20)
-    end
-
-    it 'should update offer on street change' do
-      loc = FactoryGirl.create(:location)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location_id = loc.id
-      another_offer.save!
-      loc.assign_attributes(street: '10005')
-      loc.save!
-      LocationObserver.send(:new).after_commit(loc)
-      loc.reload
-      another_offer.reload
-      another_offer._geoloc.must_equal('lat' => 10, 'lng' => 20)
-    end
-
-    it 'should update offer on federal state change' do
-      loc = FactoryGirl.create(:location)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location_id = loc.id
-      another_offer.save!
-      loc.assign_attributes(federal_state_id: '2')
-      loc.save!
-      LocationObserver.send(:new).after_commit(loc)
-      loc.reload
-      another_offer.reload
-      another_offer._geoloc.must_equal('lat' => 10, 'lng' => 20)
-    end
-
-    it 'should update offer on city change' do
-      loc = FactoryGirl.create(:location)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location_id = loc.id
-      another_offer.save!
-      loc.assign_attributes(city_id: '2')
-      loc.save!
-      LocationObserver.send(:new).after_commit(loc)
-      loc.reload
-      another_offer.reload
-      another_offer._geoloc.must_equal('lat' => 10, 'lng' => 20)
     end
   end
 end

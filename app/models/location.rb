@@ -27,7 +27,7 @@ class Location < ActiveRecord::Base
   scope :hq, -> { where(hq: true).limit(1) }
 
   # Geocoding
-  geocoded_by :full_address
+  # geocoded_by :full_address
 
   # Methods
 
