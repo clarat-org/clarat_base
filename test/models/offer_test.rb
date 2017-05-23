@@ -184,6 +184,22 @@ describe Offer do
         offer.errors.messages[:split_base].must_be :nil?
       end
 
+      it 'should validate that solution category is assigned with version >= 8' do
+        basicOffer.logic_version = LogicVersion.create(name: 'chunky', version: 7)
+        # binding.pry
+        basicOffer.solution_category_id = nil
+        basicOffer.valid?
+        basicOffer.errors.messages[:solution_category].must_be :nil?
+
+        basicOffer.logic_version = LogicVersion.create(name: 'bacon', version: 8)
+        basicOffer.valid?
+        basicOffer.errors.messages[:solution_category].wont_be :nil?
+
+        basicOffer.solution_category_id = 1
+        basicOffer.valid?
+        basicOffer.errors.messages[:solution_category].must_be :nil?
+      end
+
       # it 'should ensure chosen contact people belong to a chosen orga' do
       #   basicOffer.reload.wont_be :valid?
       #   basicOffer.reload.must_be :valid?

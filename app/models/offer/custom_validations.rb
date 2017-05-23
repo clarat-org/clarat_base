@@ -16,6 +16,7 @@ class Offer
       validate :no_more_than_10_next_steps
       validate :split_base_id_if_version_greater_7
       validate :start_date_must_be_before_expiry_date
+      validate :categories_is_not_empty_if_version_greater_8
 
       private
 
@@ -119,6 +120,11 @@ class Offer
       def split_base_id_if_version_greater_7
         return if !logic_version || logic_version.version < 7 || split_base_id
         fail_validation :split_base, 'is_needed'
+      end
+
+      def categories_is_not_empty_if_version_greater_8
+        return if !logic_version || logic_version.version < 8 || solution_category_id
+        fail_validation :solution_category, 'needs_solution_category'
       end
 
       def start_date_must_be_before_expiry_date
