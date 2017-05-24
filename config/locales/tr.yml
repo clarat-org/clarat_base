@@ -6,7 +6,7 @@ tr:
         age_of_child: 'Çocuğun yaşı: %{age}'
         age_to: "%{count} yılına kadar"
         suffix: Yaş
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: iltica talebinden önce
         before_the_asylum_decision: iltica kararından önce

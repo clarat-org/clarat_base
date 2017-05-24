@@ -10,7 +10,7 @@ en:
           one: up to %{count} year
           other: up to %{count} years
         suffix: years
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: before the asylum procedure
         before_the_asylum_decision: before the asylum decision

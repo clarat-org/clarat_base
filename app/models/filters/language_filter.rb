@@ -1,4 +1,6 @@
 class LanguageFilter < Filter
+  # Associations
+  has_many :offers, through: :filters_offers
   # Validations moved to claradmin
   # identifier: ISO 639-2 code (+ additional values)
   # sorted by german display name

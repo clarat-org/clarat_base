@@ -18,22 +18,24 @@ class Offer < ActiveRecord::Base
     %w(target_audience_alone
        target_audience_in_group_with_others_with_different_problems
        target_audience_in_group_with_others_with_same_problem).freeze
-  EXCLUSIVE_GENDERS = %w(female male).freeze
-  STAMP_SECOND_PART_GENDERS = %w(female male neutral).freeze
-  # ^ nil means inclusive to any gender
   CONTACT_TYPES = %w(personal remote).freeze
-  RESIDENCY_STATUSES =
-    %w(before_the_asylum_decision with_a_residence_permit
-       with_temporary_suspension_of_deportation
-       with_deportation_decision).freeze
   VISIBLE_FRONTEND_STATES = %w(approved expired).freeze
-
   enumerize :encounter, in: ENCOUNTERS
-  enumerize :gender_first_part_of_stamp, in: EXCLUSIVE_GENDERS
-  enumerize :gender_second_part_of_stamp, in: STAMP_SECOND_PART_GENDERS
   enumerize :treatment_type, in: TREATMENT_TYPES
   enumerize :participant_structure, in: PARTICIPANT_STRUCTURES
-  enumerize :residency_status, in: RESIDENCY_STATUSES
+
+  # NOTE: moved to FiltersOffer! Only keep this here until the data fields can
+  # be removed from the offer-table
+  # RESIDENCY_STATUSES =
+  #   %w(before_the_asylum_decision with_a_residence_permit
+  #      with_temporary_suspension_of_deportation
+  #      with_deportation_decision).freeze
+  # EXCLUSIVE_GENDERS = %w(female male).freeze
+  # STAMP_SECOND_PART_GENDERS = %w(female male neutral).freeze
+  # # ^ nil means inclusive to any gender
+  # enumerize :gender_first_part_of_stamp, in: EXCLUSIVE_GENDERS
+  # enumerize :gender_second_part_of_stamp, in: STAMP_SECOND_PART_GENDERS
+  # enumerize :residency_status, in: RESIDENCY_STATUSES
 
   # Friendly ID
   extend FriendlyId
@@ -75,15 +77,6 @@ class Offer < ActiveRecord::Base
 
   def next_steps_for_locale locale
     next_steps.select("text_#{locale}").map(&:"text_#{locale}").join(' ')
-  end
-
-  # stamp-generation methods for each section
-  def stamp_family locale
-    Offerstamp.generate_stamp self, 'family', locale
-  end
-
-  def stamp_refugees locale
-    Offerstamp.generate_stamp self, 'refugees', locale
   end
 
   def in_section? section_identifier

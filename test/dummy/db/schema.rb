@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502133942) do
+ActiveRecord::Schema.define(version: 20170521063647) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -58,13 +58,13 @@ ActiveRecord::Schema.define(version: 20170502133942) do
   add_index "assignments", ["receiver_team_id"], name: "index_assignments_on_receiver_team_id"
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name_de",                              null: false
+    t.string   "name_de",                               null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "icon",       limit: 12
+    t.string   "icon",        limit: 12
     t.integer  "parent_id"
     t.integer  "sort_order"
-    t.boolean  "visible",               default: true
+    t.boolean  "visible",                default: true
     t.string   "name_en"
     t.string   "name_ar"
     t.string   "name_fr"
@@ -72,9 +72,21 @@ ActiveRecord::Schema.define(version: 20170502133942) do
     t.string   "name_tr"
     t.string   "name_ru"
     t.string   "name_fa"
+    t.text     "keywords_de"
+    t.text     "keywords_en"
+    t.text     "keywords_ar"
+    t.text     "keywords_fa"
   end
 
   add_index "categories", ["name_de"], name: "index_categories_on_name_de"
+
+  create_table "categories_filters", id: false, force: :cascade do |t|
+    t.integer "filter_id",   null: false
+    t.integer "category_id", null: false
+  end
+
+  add_index "categories_filters", ["category_id"], name: "index_filters_categories_on_category_id"
+  add_index "categories_filters", ["filter_id"], name: "index_filters_categories_on_filter_id"
 
   create_table "categories_offers", id: false, force: :cascade do |t|
     t.integer "offer_id",    null: false
@@ -84,15 +96,15 @@ ActiveRecord::Schema.define(version: 20170502133942) do
   add_index "categories_offers", ["category_id"], name: "index_categories_offers_on_category_id"
   add_index "categories_offers", ["offer_id"], name: "index_categories_offers_on_offer_id"
 
-  create_table "categories_sections", id: false, force: :cascade do |t|
-    t.integer "section_id",  null: false
-    t.integer "category_id", null: false
+  create_table "categories_sections", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "section_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "categories_sections", ["category_id"], name: "index_categories_sections_on_category_id"
-  add_index "categories_sections", ["category_id"], name: "index_filters_categories_on_category_id"
   add_index "categories_sections", ["section_id"], name: "index_categories_sections_on_section_id"
-  add_index "categories_sections", ["section_id"], name: "index_filters_categories_on_filter_id"
 
   create_table "category_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
@@ -257,19 +269,6 @@ ActiveRecord::Schema.define(version: 20170502133942) do
 
   add_index "hyperlinks", ["linkable_id", "linkable_type"], name: "index_hyperlinks_on_linkable_id_and_linkable_type"
   add_index "hyperlinks", ["website_id"], name: "index_hyperlinks_on_website_id"
-
-  create_table "keywords", force: :cascade do |t|
-    t.string "name"
-    t.text   "synonyms"
-  end
-
-  create_table "keywords_offers", id: false, force: :cascade do |t|
-    t.integer "keyword_id", null: false
-    t.integer "offer_id",   null: false
-  end
-
-  add_index "keywords_offers", ["keyword_id"], name: "index_keywords_offers_on_keyword_id"
-  add_index "keywords_offers", ["offer_id"], name: "index_keywords_offers_on_offer_id"
 
   create_table "locations", force: :cascade do |t|
     t.string   "street",                          null: false
@@ -596,6 +595,54 @@ ActiveRecord::Schema.define(version: 20170502133942) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name_de"
+    t.text   "keywords_de"
+    t.text   "keywords_en"
+    t.text   "keywords_ar"
+    t.text   "keywords_fa"
+    t.string "name_en"
+    t.string "name_fr"
+    t.string "name_pl"
+    t.string "name_ru"
+    t.string "name_ar"
+    t.string "name_fa"
+    t.string "name_tr"
+  end
+
+  create_table "tags_offers", id: false, force: :cascade do |t|
+    t.integer "tag_id",   null: false
+    t.integer "offer_id", null: false
+  end
+
+  add_index "tags_offers", ["offer_id"], name: "index_tags_offers_on_offer_id"
+  add_index "tags_offers", ["tag_id"], name: "index_tags_offers_on_tag_id"
+
+  create_table "target_audience_filters_offers", force: :cascade do |t|
+    t.integer  "target_audience_filter_id",                   null: false
+    t.integer  "offer_id",                                    null: false
+    t.string   "residency_status"
+    t.string   "gender_first_part_of_stamp"
+    t.string   "gender_second_part_of_stamp"
+    t.string   "addition"
+    t.integer  "age_from"
+    t.integer  "age_to"
+    t.boolean  "age_visible",                 default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "stamp_de"
+    t.string   "stamp_en"
+    t.string   "stamp_ar"
+    t.string   "stamp_fa"
+    t.string   "stamp_fr"
+    t.string   "stamp_tr"
+    t.string   "stamp_ru"
+    t.string   "stamp_pl"
+  end
+
+  add_index "target_audience_filters_offers", ["offer_id"], name: "index_target_audience_filters_offers_on_offer_id"
+  add_index "target_audience_filters_offers", ["target_audience_filter_id"], name: "index_ta_filters_offers_on_target_audience_filter_id"
 
   create_table "time_allocations", force: :cascade do |t|
     t.integer "user_id",                     null: false

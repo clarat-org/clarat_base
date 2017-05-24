@@ -18,7 +18,7 @@ ar:
           two: حتى %{count} سنتان
           zero: حتى %{count} سنة
         suffix: سنوات
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: قبل تقديم طلب اللجوء
         before_the_asylum_decision: قبل الحكم في قضية اللجوء
