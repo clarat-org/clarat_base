@@ -3,7 +3,7 @@
 class Location < ActiveRecord::Base
   has_paper_trail
 
-  # Associtations
+  # Associations
   belongs_to :organization, inverse_of: :locations, counter_cache: true
   belongs_to :federal_state, inverse_of: :locations
   belongs_to :city, inverse_of: :locations

@@ -10,7 +10,7 @@ fr:
           one: jusqu'à %{count} an
           other: jusqu'à %{count} ans
         suffix: ans
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: avant la demande d'asile
         before_the_asylum_decision: avant la décision d'asile

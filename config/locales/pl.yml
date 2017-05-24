@@ -14,7 +14,7 @@ pl:
           one: do %{count} roku
           other: do %{count} lat
         suffix: lata
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: przed złożeniem wniosku azylowego
         before_the_asylum_decision: przed podjęciem decyzji o azyl

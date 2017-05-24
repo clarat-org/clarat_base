@@ -4,8 +4,8 @@ class Offer
 
     included do
       validate :validate_associated_fields
+      validate :validate_target_audience_filters, on: :update
       validate :only_visible_organizations, if: :visible_in_frontend?
-      validate :age_from_fits_age_to
       validate :location_and_area_fit_encounter
       validate :location_fits_organization, on: :update
       validate :contact_people_are_choosable
@@ -23,6 +23,9 @@ class Offer
       def validate_associated_fields
         validate_associated_presence :organizations
         validate_associated_presence :language_filters
+      end
+
+      def validate_target_audience_filters
         validate_associated_presence :target_audience_filters
       end
 
@@ -31,12 +34,6 @@ class Offer
       end
 
       ## Custom Validation Methods ##
-
-      # Age From has to be smaller than Age To
-      def age_from_fits_age_to
-        return if !age_from || !age_to || age_from <= age_to
-        errors.add :age_from, I18n.t('offer.validations.age_from_be_smaller')
-      end
 
       # Location is only allowed when encounter is personal, but if it is, it
       # HAS to be present. A remote offer needs an area.

@@ -18,14 +18,16 @@ class Offer
                class_name: 'LanguageFilter',
                through: :filters_offers,
                source: :filter
-      has_many :target_audience_filters,
-               class_name: 'TargetAudienceFilter',
-               through: :filters_offers,
-               source: :filter
       has_many :trait_filters,
                class_name: 'TraitFilter',
                through: :filters_offers,
                source: :filter
+
+      has_many :target_audience_filters_offers
+      has_many :target_audience_filters,
+               class_name: 'TargetAudienceFilter',
+               through: :target_audience_filters_offers,
+               source: :target_audience_filter
 
       has_many :tags_offers
       has_many :tags, through: :tags_offers

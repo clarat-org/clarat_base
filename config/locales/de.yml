@@ -10,7 +10,7 @@ de:
           one: bis %{count} Jahr
           other: bis %{count} Jahre
         suffix: Jahre
-      format: "%{stamp}%{optional_age}%{optional_status}"
+      format: "%{stamp}%{optional_age}%{optional_status}%{optional_addition}"
       status:
         before_the_asylum_application: "– vor dem Asylantrag"
         before_the_asylum_decision: "– vor der Asylentscheidung"
