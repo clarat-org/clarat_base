@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
 
   # test suite
   s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'minitest' # Testing using Minitest
+  s.add_development_dependency 'minitest', '5.10.1' # Testing using Minitest
   s.add_development_dependency 'minitest-matchers'
   s.add_development_dependency 'minitest-line'
   s.add_development_dependency 'minitest-rails-capybara'
