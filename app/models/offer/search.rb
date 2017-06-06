@@ -96,6 +96,17 @@ class Offer
         end
       end
 
+      # concatenated stamp-texts for search index
+      def stamps_string locale
+        target_audience_filters_offers
+          .pluck("stamp_#{locale.nil? ? :de : locale}".to_sym).join(', ')
+      end
+
+      def singular_stamp locale
+        target_audience_filters_offers
+          .first.send("stamp_#{locale.nil? ? :de : locale}")
+      end
+
       def location_visible
         location ? location.visible : false
       end
@@ -103,7 +114,7 @@ class Offer
       # filter indexing methods
       %w(target_audience language).each do |filter|
         define_method "_#{filter}_filters" do
-          send("#{filter}_filters").pluck(:identifier)
+          send("#{filter}_filters").pluck(:identifier).uniq
         end
       end
 

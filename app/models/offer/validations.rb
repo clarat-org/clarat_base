@@ -15,22 +15,6 @@ class Offer
       validates :section_id, presence: true
       validates_uniqueness_of :slug, scope: :section_id
 
-      MIN_AGE = 0
-      MAX_AGE = 99
-      # Age validation by section
-      validates :age_from,
-                numericality: { greater_than_or_equal_to: MIN_AGE,
-                                only_integer: true,
-                                less_than: MAX_AGE,
-                                allow_blank: false },
-                presence: true
-      validates :age_to,
-                numericality: { greater_than: MIN_AGE,
-                                less_than_or_equal_to: MAX_AGE,
-                                only_integer: true,
-                                allow_blank: false },
-                presence: true
-
       # Needs to be true before approval possible. Called in custom validation.
       # def before_approve
       #   TODO: Refactor age validations lead to simple HTML 5 checks which are

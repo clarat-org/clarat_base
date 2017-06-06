@@ -1,6 +1,6 @@
 # Opening Times of Offers
 class Opening < ActiveRecord::Base
-  # associtations
+  # Associations
   has_and_belongs_to_many :offers
 
   # Enumerization
