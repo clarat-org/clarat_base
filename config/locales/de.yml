@@ -123,6 +123,10 @@ de:
           female: für geflüchtete Schwangere
           male: für geflüchtete werdende Väter
           neutral: für geflüchtete werdende Eltern
+        refugees_uf:
+          minor:
+            neutral: für unbegleitete minderjährige Flüchtlinge
+          neutral: 'für unbegleitete Flüchtlinge '
         refugees_umf:
           female: für unbegleitete minderjährige Mädchen
           male: für unbegleitete minderjährige Jungen

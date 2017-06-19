@@ -127,6 +127,10 @@ pl:
           female: dla zbiegłych ciężarnych
           male: dla zbiegłych przyszłych ojców
           neutral: dla zbiegłych przyszłych rodziców
+        refugees_uf:
+          minor:
+            neutral: dla niepełnoletnich uchodźców bez opieki
+          neutral: dla niepełnoletnich uchodźców bez opieki
         refugees_umf:
           female: dla nieletnich dziewcząt bez opiekuna
           male: dla nieletnich chłopców bez opiekuna

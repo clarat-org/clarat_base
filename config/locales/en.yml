@@ -123,6 +123,10 @@ en:
           female: for pregnant refugees
           male: for refugee expectant fathers
           neutral: for refugee expectant parents
+        refugees_uf:
+          minor:
+            neutral: for unaccompanied minor refugees
+          neutral: for unaccompanied refugees
         refugees_umf:
           female: for unaccompanied female minors
           male: for unaccompanied male minors
