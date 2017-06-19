@@ -9,7 +9,7 @@ class TargetAudienceFilter < Filter
                          family_relatives family_parents_to_be
                          family_everyone).freeze
 
-  REFUGEES_IDENTIFIER = %w(refugees_children refugees_umf refugees_parents
+  REFUGEES_IDENTIFIER = %w(refugees_children refugees_uf refugees_parents
                            refugees_families refugees_parents_to_be
                            refugees_general).freeze
 
