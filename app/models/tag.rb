@@ -7,4 +7,8 @@ class Tag < ActiveRecord::Base
   # Validations
   validates :name_de, uniqueness: true, presence: true
   validates :name_en, uniqueness: true, presence: true
+  validates :explanations_de, length: { maximum: 500 }
+  validates :explanations_en, length: { maximum: 500 }
+  validates :explanations_ar, length: { maximum: 500 }
+  validates :explanations_fa, length: { maximum: 500 }
 end

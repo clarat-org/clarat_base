@@ -16,6 +16,10 @@ class Category < ActiveRecord::Base
   # Validations
   validates :name_de, presence: true
   validates :name_en, presence: true
+  validates :explanations_de, length: { maximum: 500 }
+  validates :explanations_en, length: { maximum: 500 }
+  validates :explanations_ar, length: { maximum: 500 }
+  validates :explanations_fa, length: { maximum: 500 }
 
   # Custom Validations
   validate :validate_section_presence

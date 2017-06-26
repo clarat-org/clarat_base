@@ -21,12 +21,20 @@ describe Category do
     it { subject.must_respond_to :keywords_fa }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
+    it { subject.must_respond_to :explanations_de }
+    it { subject.must_respond_to :explanations_en }
+    it { subject.must_respond_to :explanations_ar }
+    it { subject.must_respond_to :explanations_fa }
   end
 
   describe 'validations' do
     describe 'always' do
       it { subject.must validate_presence_of :name_de }
       it { subject.must validate_presence_of :name_en }
+      it { subject.must validate_length_of(:explanations_de).with_maximum(500) }
+      it { subject.must validate_length_of(:explanations_en).with_maximum(500) }
+      it { subject.must validate_length_of(:explanations_ar).with_maximum(500) }
+      it { subject.must validate_length_of(:explanations_fa).with_maximum(500) }
       it 'must validate the presence of a section' do
         category.expects(:validate_section_presence)
         category.save
