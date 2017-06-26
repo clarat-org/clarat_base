@@ -19,8 +19,6 @@ describe Tag do
     it { subject.must_respond_to :keywords_en }
     it { subject.must_respond_to :keywords_ar }
     it { subject.must_respond_to :keywords_fa }
-    it { subject.must_respond_to :created_at }
-    it { subject.must_respond_to :updated_at }
     it { subject.must_respond_to :explanations_de }
     it { subject.must_respond_to :explanations_en }
     it { subject.must_respond_to :explanations_ar }
@@ -31,10 +29,10 @@ describe Tag do
     describe 'always' do
       it { subject.must validate_presence_of :name_de }
       it { subject.must validate_presence_of :name_en }
-      it { subject.must validate_length_of(:explanations_de).with_maximum(500) }
-      it { subject.must validate_length_of(:explanations_en).with_maximum(500) }
-      it { subject.must validate_length_of(:explanations_ar).with_maximum(500) }
-      it { subject.must validate_length_of(:explanations_fa).with_maximum(500) }
+      it { subject.must validate_length_of(:explanations_de).is_at_most(500) }
+      it { subject.must validate_length_of(:explanations_en).is_at_most(500) }
+      it { subject.must validate_length_of(:explanations_ar).is_at_most(500) }
+      it { subject.must validate_length_of(:explanations_fa).is_at_most(500) }
     end
   end
 
