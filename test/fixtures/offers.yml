@@ -6,7 +6,7 @@ basic:
   encounter: personal
   expires_at: 9999-01-01
   age_from: 0
-  age_to: 17
+  age_to: 20
   aasm_state: approved
   created_by: 1
   approved_by: 2
