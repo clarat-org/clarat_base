@@ -529,7 +529,7 @@ describe Offer do
       end
 
       it 'should correctly return age_filters' do
-        basicOffer._age_filters.must_equal((0..17).to_a)
+        basicOffer._age_filters.must_equal((0..20).to_a)
       end
 
       it 'should correctly return organization_names' do
