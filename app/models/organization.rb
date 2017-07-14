@@ -7,7 +7,7 @@ class Organization < ActiveRecord::Base
   # Concerns
   include CustomValidatable, Notable, Translation
 
-  # Associtations
+  # Associations
   has_many :locations
   has_many :divisions, dependent: :destroy
   has_many :hyperlinks, as: :linkable, dependent: :destroy
@@ -26,6 +26,7 @@ class Organization < ActiveRecord::Base
                                  inverse_of: :organizations
   has_many :definitions_organizations
   has_many :definitions, through: :definitions_organizations
+  has_many :offer_cities, -> { uniq }, through: :offers, class_name: 'City', source: 'city'
 
   # Enumerization
   extend Enumerize

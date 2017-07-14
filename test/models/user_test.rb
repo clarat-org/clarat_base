@@ -12,6 +12,7 @@ describe User do
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
     it { subject.must_respond_to :role }
+    it { subject.must_respond_to :active }
   end
 
   describe 'relations' do

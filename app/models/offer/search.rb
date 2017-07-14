@@ -77,10 +77,17 @@ class Offer
         _keywords(locale).join ' '
       end
 
+      def category_explanations locale = :de
+        (
+          categories.map { |t| t.try("explanations_#{locale}") }
+        ).compact.uniq.join(', ')
+      end
+
       # additional searchable string made from keywords
       def tag_string locale = :en
         (
           tags.map { |t| t.try("keywords_#{locale}") } +
+          tags.map { |t| t.try("explanations_#{locale}") } +
           tags.pluck("name_#{locale}")
         ).compact.uniq.join(', ')
       end
@@ -96,6 +103,17 @@ class Offer
         end
       end
 
+      # concatenated stamp-texts for search index
+      def stamps_string locale
+        target_audience_filters_offers
+          .pluck("stamp_#{locale.nil? ? :de : locale}".to_sym).join(', ')
+      end
+
+      def singular_stamp locale
+        target_audience_filters_offers
+          .first.send("stamp_#{locale.nil? ? :de : locale}")
+      end
+
       def location_visible
         location ? location.visible : false
       end
@@ -103,16 +121,18 @@ class Offer
       # filter indexing methods
       %w(target_audience language).each do |filter|
         define_method "_#{filter}_filters" do
-          send("#{filter}_filters").pluck(:identifier)
+          send("#{filter}_filters").pluck(:identifier).uniq
         end
       end
 
       def _age_filters
-        (age_from..age_to).to_a
+        target_audience_filters_offers.map do |tafo|
+          (tafo.age_from..tafo.age_to).to_a
+        end.flatten.sort.uniq
       end
 
       def _exclusive_gender_filters
-        [gender_first_part_of_stamp]
+        target_audience_filters_offers.pluck(:gender_first_part_of_stamp).uniq
       end
 
       def _next_steps locale

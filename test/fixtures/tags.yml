@@ -4,3 +4,5 @@ basic:
   name_de: 'detest'
   keywords_en: 'synonym'
   keywords_de: 'desynonym'
+  explanations_en: 'en_xplanations'
+  explanations_de: 'de_xplanations'

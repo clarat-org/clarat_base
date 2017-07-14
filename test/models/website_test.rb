@@ -14,6 +14,7 @@ describe Website do
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
     it { subject.must_respond_to :unreachable_count }
+    it { subject.must_respond_to :ignored_by_crawler }
   end
 
   describe '::Base' do

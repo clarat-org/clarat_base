@@ -102,6 +102,10 @@ describe Location do
         loc.generate_display_name
         loc.display_name.must_equal 'foobar, name | street, addition, zip Berlin'
       end
+
+      it 'should be able to compare geolocation coordinates' do
+        Geolocation.new(loc) != Geolocation.new(Location.new)
+      end
     end
 
     # this method is stubbed out for the entire rest of the test suite
@@ -114,30 +118,6 @@ describe Location do
 
         loc.send(:full_address).must_equal 'street, zip city state'
       end
-    end
-  end
-
-  describe 'Observer' do
-    it 'should call index on approved offers after visible change' do
-      loc = locations(:basic)
-      # add another offer - both must be re-indexed
-      another_offer = FactoryGirl.create(:offer, :approved, :with_location)
-      another_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      another_offer.location = loc
-      another_offer.save!
-      # add unapproved offer => should not be re-indexed
-      initialized_offer = FactoryGirl.create(:offer, :with_location)
-      initialized_offer.organizations.map do |orga|
-        orga.locations << loc
-      end
-      initialized_offer.location = loc
-      initialized_offer.save!
-      initialized_offer.expects(:index!).never
-      Offer.any_instance.expects(:index!).times(loc.offers.visible_in_frontend.count)
-      loc.visible = !loc.visible
-      loc.save!
     end
   end
 end

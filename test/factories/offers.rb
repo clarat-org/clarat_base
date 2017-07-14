@@ -6,8 +6,6 @@ FactoryGirl.define do
     name { FFaker::Lorem.words(rand(3..5)).join(' ').titleize }
     description { FFaker::Lorem.paragraph(rand(4..6))[0..399] }
     old_next_steps { FFaker::Lorem.paragraph(rand(1..3))[0..399] }
-    age_from { rand(1..3) }
-    age_to { rand(4..6) }
     encounter do
       # weighted
       %w(personal personal personal personal hotline chat forum email online-course portal).sample
@@ -25,7 +23,7 @@ FactoryGirl.define do
       category_count { rand(1..3) }
       category nil # used to get a specific category, instead of category_count
       language_count { rand(1..2) }
-      audience_count { rand(1..2) }
+      audience_count 1
       opening_count { rand(1..5) }
       fake_address false
     end
@@ -65,12 +63,6 @@ FactoryGirl.define do
             FactoryGirl.create(:language_filter)
         )
       end
-      evaluator.audience_count.times do
-        offer.target_audience_filters << (
-          TargetAudienceFilter.all.sample ||
-            FactoryGirl.create(:target_audience_filter)
-        )
-      end
     end
 
     after :create do |offer, evaluator|
@@ -100,6 +92,12 @@ FactoryGirl.define do
           else
             FactoryGirl.create(:opening)
           end
+        )
+      end
+      evaluator.audience_count.times do
+        offer.target_audience_filters << (
+          TargetAudienceFilter.all.sample ||
+            FactoryGirl.create(:target_audience_filter)
         )
       end
     end

@@ -123,6 +123,10 @@ fr:
           female: pour des femmes enceintes réfugiées
           male: pour des futurs pères réfugiés
           neutral: pour des futurs parents réfugiés
+        refugees_uf:
+          minor:
+            neutral: pour des réfugiés mineurs non-accompagnés
+          neutral: pour des réfugiés non-accompagnés
         refugees_umf:
           female: pour des filles mineures non accompagnées
           male: pour des gaarçons mineurs non accompagnés

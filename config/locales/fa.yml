@@ -10,7 +10,7 @@ fa:
       status:
         before_the_asylum_application: قبل از درخواست پناهندگی
         before_the_asylum_decision: قبل از تصمیم گیری در مورد پناهندگی
-        during_the_asylum_procedure: در مرحله روند رسیدگی به پناهندگی
+        during_the_asylum_procedure: در طول پروسه روند رسیدگی به پناهندگی
         with_a_residence_permit: با اجازه اقامت
         with_deportation_decision: با برگه ترک خاک
         with_temporary_suspension_of_deportation: با دولدونگ
@@ -119,6 +119,10 @@ fa:
           female: برای زنان باردار پناهنده
           male: برای پدران پناهنده چشم به راه کودک
           neutral: برای والدین پناهنده چشم به راه کودک
+        refugees_uf:
+          minor:
+            neutral: برای پناهندگان زیر سن و بدون همراه
+          neutral: برای پناهندگان بدون همراه
         refugees_umf:
           female: برای دختران زیر سن و بدون همراه
           male: برای پسران زیر سن و بدون همراه
