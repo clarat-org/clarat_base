@@ -44,8 +44,9 @@ describe Offer do
       it { subject.must belong_to :area }
       it { subject.must belong_to :solution_category }
       it { subject.must belong_to :logic_version }
-      it { subject.must have_many :organization_offers }
-      it { subject.must have_many(:organizations).through :organization_offers }
+      it { subject.must belong_to :split_base }
+      it { subject.must have_many(:divisions).through :split_base }
+      it { subject.must have_many(:organizations).through :split_base }
       it { subject.must have_and_belong_to_many :categories }
       it { subject.must have_many(:filters).through :filters_offers }
       it { subject.must belong_to :section }
@@ -146,7 +147,7 @@ describe Offer do
       end
 
       it 'should return 2 if there are two organizations' do
-        offers(:basic).organizations << FactoryGirl.create(:organization)
+        offers(:basic).split_base.divisions << FactoryGirl.create(:division)
         offers(:basic).organization_count.must_equal(2)
       end
     end

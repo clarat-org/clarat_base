@@ -13,10 +13,13 @@ describe Division do
 
   describe '::Base' do
     describe 'associations' do
-      it { subject.must belong_to :organization }
       it { subject.must belong_to :section }
       it { subject.must belong_to :city }
       it { subject.must belong_to :area }
+      it { subject.must belong_to :organization }
+      it { subject.must have_many(:split_base_divisions) }
+      it { subject.must have_many(:split_bases).through :split_base_divisions }
+      it { subject.must have_many(:offers).through :split_bases }
     end
   end
 end

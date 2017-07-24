@@ -38,6 +38,13 @@ FactoryGirl.define do
         create_list :location, (evaluator.location_count - 1),
                     organization: orga, hq: false
       end
+      # create an initial assignment
+      orga.assignments <<
+        FactoryGirl.create(
+          :assignment,
+          assignable_type: 'Organization',
+          assignable_id: orga.id
+        )
     end
 
     # traits

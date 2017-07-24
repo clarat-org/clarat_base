@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628153424) do
+ActiveRecord::Schema.define(version: 20170721123055) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 20170628153424) do
     t.integer  "area_id"
   end
 
+  add_index "divisions", ["area_id"], name: "index_divisions_on_area_id"
   add_index "divisions", ["city_id"], name: "index_divisions_on_city_id"
   add_index "divisions", ["organization_id"], name: "index_divisions_on_organization_id"
   add_index "divisions", ["section_id"], name: "index_divisions_on_section_id"
@@ -546,11 +547,21 @@ ActiveRecord::Schema.define(version: 20170628153424) do
   add_index "solution_category_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "solution_category_anc_desc_idx", unique: true
   add_index "solution_category_hierarchies", ["descendant_id"], name: "solution_category_desc_idx"
 
+  create_table "split_base_divisions", force: :cascade do |t|
+    t.integer  "split_base_id", null: false
+    t.integer  "division_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "split_base_divisions", ["division_id"], name: "index_split_base_divisions_on_division_id"
+  add_index "split_base_divisions", ["split_base_id"], name: "index_split_base_divisions_on_split_base_id"
+
   create_table "split_bases", force: :cascade do |t|
     t.string   "title",                null: false
     t.string   "clarat_addition"
     t.text     "comments"
-    t.integer  "organization_id",      null: false
+    t.integer  "organization_id"
     t.integer  "solution_category_id", null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false

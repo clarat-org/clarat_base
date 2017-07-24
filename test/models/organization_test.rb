@@ -73,6 +73,9 @@ describe Organization do
     it { subject.must have_many(:sections).through :offers }
     it { subject.must have_and_belong_to_many :filters }
     it { subject.must have_and_belong_to_many :umbrella_filters }
+    it { subject.must have_many(:divisions) }
+    it { subject.must have_many(:split_bases).through :divisions }
+    it { subject.must have_many(:offers).through :divisions }
   end
 
   describe 'Observer' do

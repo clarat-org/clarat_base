@@ -16,9 +16,6 @@ FactoryGirl.define do
     # associations
 
     transient do
-      organization_count 1
-      organization nil
-      contact_person_count 1
       website_count { rand(0..3) }
       category_count { rand(1..3) }
       category nil # used to get a specific category, instead of category_count
@@ -29,16 +26,9 @@ FactoryGirl.define do
     end
 
     after :build do |offer, evaluator|
-      # organization
-      if evaluator.organization
-        offer.organizations << evaluator.organization
-      else
-        evaluator.organization_count.times do
-          offer.organizations << FactoryGirl.create(:organization, :approved)
-        end
-      end
-      organization =
-        offer.organizations[0] || FactoryGirl.create(:organization, :approved)
+      # SplitBase => Division(s) => Organization(s)
+      offer.split_base = FactoryGirl.create(:split_base)
+      organization = offer.organizations[0]
 
       # location
       if offer.personal?
@@ -67,7 +57,7 @@ FactoryGirl.define do
 
     after :create do |offer, evaluator|
       # Contact People
-      evaluator.organization_count.times do
+      offer.organizations.count.times do
         offer.contact_people << FactoryGirl.create(
           :contact_person, organization: offer.organizations.first
         )
