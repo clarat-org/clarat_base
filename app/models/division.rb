@@ -2,6 +2,7 @@
 class Division < ActiveRecord::Base
   # Concerns
   include Assignable
+
   # Associations
   # VORHER
   # belongs_to :organization, inverse_of: :divisions
