@@ -10,7 +10,7 @@ module Assignable
     # parent) and it must belong to the model (and not to a field of the model).
     # There must always be exactly one current_assignment for each assignable.
     has_one :current_assignment,
-            -> { active.root.base },
+            ->(assignable) { where(assignable: assignable).active.root.base },
             class_name: 'Assignment', foreign_key: :assignable_id
 
     # # accepts_nested_attributes_for :assignments
