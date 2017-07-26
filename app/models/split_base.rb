@@ -1,9 +1,5 @@
 class SplitBase < ActiveRecord::Base
   # Associations
-  # VORHER
-  # has_many :offers, inverse_of: :split_base
-  # belongs_to :organization, inverse_of: :split_bases
-  # NACHER
   has_many :offers, inverse_of: :split_base
   has_many :split_base_divisions, inverse_of: :split_base,
                                   dependent: :destroy

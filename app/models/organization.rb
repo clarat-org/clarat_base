@@ -8,12 +8,6 @@ class Organization < ActiveRecord::Base
   include CustomValidatable, Notable, Translation, Assignable
 
   # Associations
-  # VORHER
-  # has_many :organization_offers, dependent: :destroy
-  # has_many :offers, through: :organization_offers, inverse_of: :organizations
-  # has_many :split_bases, inverse_of: :organization
-  # has_many :divisions, inverse_of: :organization, dependent: :destroy
-  # NACHHER
   has_many :divisions, inverse_of: :organization, dependent: :destroy
   has_many :split_bases, through: :divisions, inverse_of: :organizations
   has_many :offers, through: :divisions, inverse_of: :organizations

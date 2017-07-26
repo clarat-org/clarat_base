@@ -4,12 +4,6 @@ class Offer
 
     included do
       # Associations
-      # VORHER
-      # belongs_to :split_base, inverse_of: :offers
-      # has_many :organization_offers, dependent: :destroy
-      # has_many :organizations, through: :organization_offers,
-      #                          inverse_of: :offers
-      # NACHHER
       belongs_to :split_base, inverse_of: :offers
       has_many :divisions, through: :split_base,
                            inverse_of: :offers

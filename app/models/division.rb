@@ -4,9 +4,6 @@ class Division < ActiveRecord::Base
   include Assignable
 
   # Associations
-  # VORHER
-  # belongs_to :organization, inverse_of: :divisions
-  # NACHHER
   belongs_to :organization, inverse_of: :divisions
   has_many :split_base_divisions, inverse_of: :division,
                                   dependent: :destroy
