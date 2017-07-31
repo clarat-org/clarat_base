@@ -4,8 +4,7 @@ module Translation
   included do
     def self.translate *fields
       fields.each do |field|
-        define_field_getter(field)
-        define_untranslated_field_getter(field)
+        define_translated_field_getter(field)
         I18n.available_locales.each do |locale|
           define_specific_locale_field_getter(field, locale)
         end
@@ -39,21 +38,14 @@ module Translation
 
     private
 
-    # :name -> translated #name getter in currently set locale
-    def self.define_field_getter field
-      define_method field do
+    # :name -> #translated_name getter in currently set locale
+    def self.define_translated_field_getter field
+      define_method "translated_#{field}" do
         if translation && !translation.send(field).blank?
           translation.send(field)
         else
-          send("untranslated_#{field}")
+          send(field)
         end
-      end
-    end
-
-    # :name -> #untranslated_name as regular #name getter
-    def self.define_untranslated_field_getter field
-      define_method "untranslated_#{field}" do
-        attributes[field.to_s]
       end
     end
 
