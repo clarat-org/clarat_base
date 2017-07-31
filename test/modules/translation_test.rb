@@ -17,11 +17,20 @@ describe Translation do
     OpenStruct.new(somefield: 'some translation', locale: 'en')
   end
 
+  let(:empty_translation) do
+    OpenStruct.new(somefield: '', locale: 'en')
+  end
+
   describe 'methods' do
     describe 'translated field getter' do
       it 'should find the content of a translation with translated_field' do
         subject.expect_chain(:translations, :find_by).returns(translation)
         subject.translated_somefield.must_equal 'some translation'
+      end
+
+      it 'should fallback to source field if the translation is empty' do
+        subject.expect_chain(:translations, :find_by).returns(empty_translation)
+        assert_nil subject.translated_somefield
       end
     end
   end
