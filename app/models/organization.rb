@@ -5,19 +5,18 @@ class Organization < ActiveRecord::Base
   VISIBLE_FRONTEND_STATES = %w(approved all_done).freeze
 
   # Concerns
-  include CustomValidatable, Notable, Translation
+  include CustomValidatable, Notable, Translation, Assignable
 
   # Associations
-  has_many :locations
-  has_many :divisions, dependent: :destroy
-  has_many :hyperlinks, as: :linkable, dependent: :destroy
-  has_many :websites, through: :hyperlinks
-  has_many :organization_offers, dependent: :destroy
-  has_many :contact_people
-  has_many :offers, through: :organization_offers, inverse_of: :organizations
+  has_many :divisions, inverse_of: :organization, dependent: :destroy
+  has_many :split_bases, through: :divisions, inverse_of: :organizations
+  has_many :offers, through: :divisions, inverse_of: :organizations
+
+  has_many :locations, inverse_of: :organization
+  belongs_to :website, inverse_of: :organizations
+  has_many :contact_people, inverse_of: :organization
   has_many :emails, through: :contact_people, inverse_of: :organizations
-  has_many :sections, -> { uniq }, through: :offers
-  has_many :split_bases, inverse_of: :organization
+  has_many :sections, -> { uniq }, through: :offers, inverse_of: :organizations
   has_and_belongs_to_many :filters
   has_and_belongs_to_many :umbrella_filters,
                           association_foreign_key: 'filter_id',
@@ -25,14 +24,18 @@ class Organization < ActiveRecord::Base
   has_many :cities, -> { uniq }, through: :locations,
                                  inverse_of: :organizations
   has_many :definitions_organizations
-  has_many :definitions, through: :definitions_organizations
-  has_many :offer_cities, -> { uniq }, through: :offers, class_name: 'City', source: 'city'
+  has_many :definitions, through: :definitions_organizations,
+                         inverse_of: :organizations
+  has_many :offer_cities, -> { uniq }, through: :offers,
+                                       class_name: 'City',
+                                       source: 'city'
 
   # Enumerization
   extend Enumerize
   enumerize :legal_form, in: %w(ev ggmbh gag foundation gug gmbh ag ug kfm gbr
                                 ohg kg eg sonstige state_entity)
   enumerize :mailings, in: %w(disabled enabled force_disabled)
+  enumerize :pending_reason, in: %w(unstable on_hold foreign)
 
   # Sanitization
   extend Sanitization
@@ -50,38 +53,31 @@ class Organization < ActiveRecord::Base
   scope :created_at_day, ->(date) { where('created_at::date = ?', date) }
   scope :approved_at_day, ->(date) { where('approved_at::date = ?', date) }
 
-  # Validations
-  validates :name, length: { maximum: 100 }, presence: true, uniqueness: true
-  validates :description, presence: true
-  validates :legal_form, presence: true
-  validates :founded, length: { is: 4 }, allow_blank: true
-  validates :slug, uniqueness: true
-  validates :mailings, presence: true
-  # Custom Validations
-  validate :validate_hq_location, on: :update
-  validate :validate_websites_hosts
-  validate :must_have_umbrella_filter
-
-  def validate_hq_location
-    if locations.to_a.count(&:hq) != 1
-      errors.add(:base, I18n.t('organization.validations.hq_location'))
-    end
-  end
-
-  def validate_websites_hosts
-    websites.where.not(host: 'own').each do |website|
-      errors.add(
-        :base,
-        I18n.t('organization.validations.website_host', website: website.url)
-      )
-    end
-  end
-
-  def must_have_umbrella_filter
-    if umbrella_filters.empty?
-      fail_validation :umbrella_filters, 'needs_umbrella_filters'
-    end
-  end
+  # # Custom Validations
+  # validate :validate_hq_location, on: :update
+  # validate :validate_websites_hosts
+  # validate :must_have_umbrella_filter
+  #
+  # def validate_hq_location
+  #   if locations.to_a.count(&:hq) != 1
+  #     errors.add(:base, I18n.t('organization.validations.hq_location'))
+  #   end
+  # end
+  #
+  # def validate_websites_hosts
+  #   websites.where.not(host: 'own').each do |website|
+  #     errors.add(
+  #       :base,
+  #       I18n.t('organization.validations.website_host', website: website.url)
+  #     )
+  #   end
+  # end
+  #
+  # def must_have_umbrella_filter
+  #   if umbrella_filters.empty?
+  #     fail_validation :umbrella_filters, 'needs_umbrella_filters'
+  #   end
+  # end
 
   # Methods
 
@@ -90,9 +86,7 @@ class Organization < ActiveRecord::Base
     @location ||= locations.hq.first
   end
 
-  def homepage
-    websites.find_by_host('own')
-  end
+  alias homepage website # Deprecated
 
   def mailings_enabled?
     mailings == 'enabled'

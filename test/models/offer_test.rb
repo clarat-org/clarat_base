@@ -27,161 +27,6 @@ describe Offer do
     it { subject.must_respond_to :completed_by }
   end
 
-  describe 'validations' do
-    describe 'always' do
-      it { subject.must validate_presence_of :name }
-      it { subject.must validate_presence_of :description }
-      it { subject.must validate_presence_of :encounter }
-      it { subject.must validate_presence_of :expires_at }
-      it { subject.must validate_length_of(:code_word).is_at_most 140 }
-      it { subject.must validate_presence_of :section_id }
-
-      it 'should ensure a personal offer has a location' do
-        basicOffer.encounter = 'personal'
-        basicOffer.location_id = nil
-        basicOffer.wont_be :valid?
-        basicOffer.location_id = 1
-        basicOffer.must_be :valid?
-      end
-
-      it 'should ensure a remote offer has no location but an area' do
-        basicOffer.encounter = 'hotline'
-        basicOffer.location_id = 1
-        basicOffer.area_id = 1
-        basicOffer.wont_be :valid?
-        basicOffer.location_id = 1
-        basicOffer.area_id = nil
-        basicOffer.wont_be :valid?
-        basicOffer.location_id = nil
-        basicOffer.area_id = nil
-        basicOffer.wont_be :valid?
-
-        basicOffer.location_id = nil
-        basicOffer.area_id = 1
-        basicOffer.must_be :valid? # !
-      end
-
-      it 'should ensure locations and organizations match (personal)' do
-        location = FactoryGirl.create(:location)
-        basicOffer.location_id = location.id
-        basicOffer.wont_be :valid?
-        location.update_column :organization_id, organizations(:basic).id
-        basicOffer.location.reload
-        basicOffer.must_be :valid?
-      end
-
-      it 'should ensure all chosen organizations are approved' do
-        basicOffer.organizations.update_all aasm_state: 'expired'
-        basicOffer.reload.wont_be :valid?
-        basicOffer.organizations.update_all aasm_state: 'approved'
-        basicOffer.reload.must_be :valid?
-      end
-
-      it 'should ensure chosen contact people are SPoC or belong to orga' do
-        cp = FactoryGirl.create :contact_person, spoc: false,
-                                                 offers: [basicOffer]
-        basicOffer.reload.wont_be :valid?
-        cp.update_column :spoc, true
-        basicOffer.reload.must_be :valid?
-        cp.update_columns spoc: false, organization_id: organizations(:basic).id
-        basicOffer.reload.must_be :valid?
-      end
-
-      it 'should ensure that no more than 10 next steps are chosen' do
-        11.times do |i|
-          basicOffer.next_steps << NextStep.create(text_de: i, text_en: i)
-        end
-        basicOffer.reload.wont_be :valid?
-        NextStepsOffer.last.destroy!
-        basicOffer.reload.must_be :valid?
-      end
-
-      it 'should validate presence of expiration date' do
-        subject.expires_at = nil
-        subject.valid?.must_equal false
-      end
-
-      it 'should validate start date' do
-        basicOffer.expires_at = Time.zone.now + 1.day
-        basicOffer.valid?.must_equal true
-
-        basicOffer.starts_at = Time.zone.now + 2.day
-        basicOffer.valid?.must_equal false
-
-        basicOffer.starts_at = Time.zone.now
-        basicOffer.valid?.must_equal true
-      end
-
-      it 'should validate that section filters of offer and categories match' do
-        category = FactoryGirl.create(:category)
-        category.sections = [sections(:family)]
-        basicOffer.categories = [category]
-        basicOffer.section = sections(:refugees)
-        basicOffer.valid?.must_equal false
-
-        basicOffer.section = sections(:family)
-        category.sections = [sections(:refugees)]
-        basicOffer.valid?.must_equal false
-
-        category.sections =
-          [sections(:refugees), sections(:family)]
-        basicOffer.valid?.must_equal true
-        basicOffer.errors.messages[:categories].must_be :nil?
-
-        basicOffer.section = sections(:refugees)
-        category2 = FactoryGirl.create(:category)
-        category2.sections = [sections(:family)]
-        basicOffer.categories << category2
-        basicOffer.valid?.must_equal false
-
-        basicOffer.section = sections(:family)
-        basicOffer.valid?.must_equal true
-
-        category.sections = [sections(:refugees)]
-        basicOffer.valid?.must_equal false
-
-        # basicOffer.section = [sections(:family), sections(:refugees)]
-        # basicOffer.valid?.must_equal true
-      end
-
-      it 'should validate that split_base is assigned with version >= 7' do
-        offer.logic_version = LogicVersion.create(name: 'chunky', version: 6)
-        offer.split_base_id = nil
-        offer.valid?
-        offer.errors.messages[:split_base].must_be :nil?
-
-        offer.logic_version = LogicVersion.create(name: 'bacon', version: 7)
-        offer.valid?
-        offer.errors.messages[:split_base].wont_be :nil?
-
-        offer.split_base_id = 1
-        offer.valid?
-        offer.errors.messages[:split_base].must_be :nil?
-      end
-
-      it 'should validate that solution category is assigned with version >= 8' do
-        basicOffer.logic_version = LogicVersion.create(name: 'chunky', version: 7)
-        # binding.pry
-        basicOffer.solution_category_id = nil
-        basicOffer.valid?
-        basicOffer.errors.messages[:solution_category].must_be :nil?
-
-        basicOffer.logic_version = LogicVersion.create(name: 'bacon', version: 8)
-        basicOffer.valid?
-        basicOffer.errors.messages[:solution_category].wont_be :nil?
-
-        basicOffer.solution_category_id = 1
-        basicOffer.valid?
-        basicOffer.errors.messages[:solution_category].must_be :nil?
-      end
-
-      # it 'should ensure chosen contact people belong to a chosen orga' do
-      #   basicOffer.reload.wont_be :valid?
-      #   basicOffer.reload.must_be :valid?
-      # end
-    end
-  end
-
   describe 'observers' do
     describe 'after initialize' do
       it 'should get assigned the latest LogicVersion' do
@@ -199,8 +44,9 @@ describe Offer do
       it { subject.must belong_to :area }
       it { subject.must belong_to :solution_category }
       it { subject.must belong_to :logic_version }
-      it { subject.must have_many :organization_offers }
-      it { subject.must have_many(:organizations).through :organization_offers }
+      it { subject.must belong_to :split_base }
+      it { subject.must have_many(:divisions).through :split_base }
+      it { subject.must have_many(:organizations).through :split_base }
       it { subject.must have_and_belong_to_many :categories }
       it { subject.must have_many(:filters).through :filters_offers }
       it { subject.must belong_to :section }
@@ -301,7 +147,7 @@ describe Offer do
       end
 
       it 'should return 2 if there are two organizations' do
-        offers(:basic).organizations << FactoryGirl.create(:organization)
+        offers(:basic).split_base.divisions << FactoryGirl.create(:division)
         offers(:basic).organization_count.must_equal(2)
       end
     end
@@ -370,29 +216,29 @@ describe Offer do
       end
     end
 
-    describe '#target_audience_filters?' do
-      it 'should behave correctly in family section' do
-        offer = offers(:basic)
-        offer.section = sections(:family)
-        offer.expects(:fail_validation).never
-        offer.send :validate_associated_fields
-        offer.target_audience_filters = []
-        offer.expects(:fail_validation).with :target_audience_filters,
-                                             'needs_target_audience_filters'
-        offer.send :validate_target_audience_filters
-      end
-
-      it 'should behave correctly in refugees section' do
-        offer = offers(:basic)
-        offer.section = sections(:refugees)
-        offer.expects(:fail_validation).never
-        offer.send :validate_associated_fields
-        offer.target_audience_filters = []
-        offer.expects(:fail_validation).with :target_audience_filters,
-                                             'needs_target_audience_filters'
-        offer.send :validate_target_audience_filters
-      end
-    end
+    # describe '#target_audience_filters?' do
+    #   it 'should behave correctly in family section' do
+    #     offer = offers(:basic)
+    #     offer.section = sections(:family)
+    #     offer.expects(:fail_validation).never
+    #     offer.send :validate_associated_fields
+    #     offer.target_audience_filters = []
+    #     offer.expects(:fail_validation).with :target_audience_filters,
+    #                                          'needs_target_audience_filters'
+    #     offer.send :validate_target_audience_filters
+    #   end
+    #
+    #   it 'should behave correctly in refugees section' do
+    #     offer = offers(:basic)
+    #     offer.section = sections(:refugees)
+    #     offer.expects(:fail_validation).never
+    #     offer.send :validate_associated_fields
+    #     offer.target_audience_filters = []
+    #     offer.expects(:fail_validation).with :target_audience_filters,
+    #                                          'needs_target_audience_filters'
+    #     offer.send :validate_target_audience_filters
+    #   end
+    # end
 
     describe '#in_section?' do
       it 'should correctly reply to in_section? call' do

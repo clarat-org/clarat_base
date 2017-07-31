@@ -5,6 +5,13 @@ class UserTeam < ActiveRecord::Base
   # Associations
   has_many :user_team_users, inverse_of: :user_team
   has_many :users, through: :user_team_users, inverse_of: :user_teams
+
+  has_many :user_team_observing_users, inverse_of: :user_team
+  has_many :observing_users, through: :user_team_observing_users,
+                             class_name: 'User',
+                             source: :user,
+                             inverse_of: :observed_user_teams
+
   belongs_to :lead, class_name: 'User', inverse_of: :led_teams
 
   belongs_to :parent, class_name: 'UserTeam', inverse_of: :children

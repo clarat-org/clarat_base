@@ -2,5 +2,6 @@
 class Area < ActiveRecord::Base
   # Associations
   has_many :offers, inverse_of: :area
+  has_many :divisions, inverse_of: :area
   # Validations moved to claradmin
 end

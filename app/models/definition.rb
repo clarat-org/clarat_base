@@ -3,9 +3,11 @@
 class Definition < ActiveRecord::Base
   # Associations
   has_many :definitions_organizations
-  has_many :organizations, through: :definitions_organizations
+  has_many :organizations, through: :definitions_organizations,
+                           inverse_of: :definitions
   has_many :definitions_offers
-  has_many :offers, through: :definitions_offers
+  has_many :offers, through: :definitions_offers,
+                    inverse_of: :definitions
 
   # Validations
   validates :key, presence: true, uniqueness: true,

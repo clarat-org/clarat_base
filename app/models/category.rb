@@ -13,6 +13,11 @@ class Category < ActiveRecord::Base
   has_many :offers, through: :categories_offers
   has_many :organizations, through: :offers
 
+  has_many :divisions_presumed_categories, inverse_of: :category
+  has_many :presuming_divisions,
+           through: :divisions_presumed_categories, source: :division,
+           inverse_of: :presumed_categories
+
   # Validations
   validates :name_de, presence: true
   validates :name_en, presence: true

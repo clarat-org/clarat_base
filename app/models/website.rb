@@ -4,10 +4,11 @@ class Website < ActiveRecord::Base
 
   # Associations
   has_many :hyperlinks, dependent: :destroy
-  has_many :organizations, through: :hyperlinks,
-                           source: :linkable, source_type: 'Organization'
-  has_many :offers, through: :hyperlinks,
+  has_many :organizations, inverse_of: :website
+  has_many :offers, through: :hyperlinks, inverse_of: :websites,
                     source: :linkable, source_type: 'Offer'
+  has_many :divisions, through: :hyperlinks, inverse_of: :websites,
+                       source: :linkable, source_type: 'Division'
 
   # Enumerization
   extend Enumerize

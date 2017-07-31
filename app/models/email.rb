@@ -10,16 +10,8 @@ class Email < ActiveRecord::Base
   has_many :organizations, -> { uniq }, through: :contact_people,
                                         inverse_of: :emails
 
-  # Validations
-  # no whitespaces allowed.. whitespacec are theoratically allowed within " "
-  # but we simply won't allow them because they cause too many problems at the
-  # beginning or end of the address
+  # Validations moved to claradmin
   FORMAT = /\A\S+@\S+\.\S+\z/
-  validates :address, uniqueness: true, presence: true, format: Email::FORMAT,
-                      length: { minimum: 3, maximum: 64 }
-
-  validates :security_code, presence: true, uniqueness: true, on: :update,
-                            unless: :blocked?
 
   # State Machine
   aasm do

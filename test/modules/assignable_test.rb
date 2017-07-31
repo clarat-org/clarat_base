@@ -34,6 +34,34 @@ describe Assignable do
     end
   end
 
+  describe 'current_assignment' do
+    it 'finds the newest active base association without a parent' do
+      model = Organization.first
+      Assignment.create(
+        assignable: model, aasm_state: 'open', message: 'earlier decoy'
+      )
+      correct_assignment = Assignment.create(
+        assignable: model, aasm_state: 'open', message: 'correct'
+      )
+      Assignment.create(
+        assignable: model, aasm_state: 'closed', message: 'closed decoy'
+      )
+      Assignment.create(
+        assignable: model, aasm_state: 'open', assignable_field_type: 'name',
+        message: 'non-base decoy'
+      )
+      Assignment.create(
+        assignable: model, aasm_state: 'open', parent: correct_assignment,
+        message: 'child decoy'
+      )
+      Assignment.create(
+        assignable: Division.first, aasm_state: 'open',
+        message: 'other assignable decoy'
+      )
+      model.reload.current_assignment.must_equal correct_assignment
+    end
+  end
+
   # describe 'methods' do
   #   describe '#current_assignment' do
   #     it 'must return the current assignment' do

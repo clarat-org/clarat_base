@@ -9,10 +9,12 @@ class Assignment < ActiveRecord::Base
 
   # Creator
   belongs_to :creator, class_name: 'User', inverse_of: :created_assignments
-  belongs_to :creator_team, class_name: 'UserTeam', inverse_of: :created_assignments
+  belongs_to :creator_team, class_name: 'UserTeam',
+                            inverse_of: :created_assignments
   # Receiver
   belongs_to :receiver, class_name: 'User', inverse_of: :received_assignments
-  belongs_to :receiver_team, class_name: 'UserTeam', inverse_of: :received_assignments
+  belongs_to :receiver_team, class_name: 'UserTeam',
+                             inverse_of: :received_assignments
 
   belongs_to :parent, class_name: 'Assignment', inverse_of: :children
   has_many :children, class_name: 'Assignment', inverse_of: :parent
@@ -22,11 +24,14 @@ class Assignment < ActiveRecord::Base
   scope :closed, -> { where(aasm_state: 'closed') }
   scope :base, -> { where(assignable_field_type: '') }
   scope :field, -> { where.not(assignable_field_type: '') }
+  scope :latest, -> { order(created_at: 'DESC') }
   scope :root, -> { where(parent_id: nil) } # Root Assignments have no parent
 
   # Enumerization
   extend Enumerize
-  enumerize :topic, in: %w(translation) # NOTE: meant to be extended (eg. approval, rewrite...)
+  # NOTE: meant to be extended (eg. approval, rewrite...)
+  TOPICS = %w(translation update rewrite crawler external_feedback new).freeze
+  enumerize :topic, in: TOPICS
 
   # State Machine
   aasm do
@@ -42,27 +47,4 @@ class Assignment < ActiveRecord::Base
       transitions from: :closed, to: :open
     end
   end
-
-  # Methods
-  # delegate :name, to: :creator, prefix: true
-  # delegate :name, to: :creator_team, prefix: true
-  # delegate :name, to: :receiver, prefix: true
-  # delegate :name, to: :receiver_team, prefix: true
-
-  # def close_and_assign_system!
-  #   # TODO
-  #   true
-  # end
-
-  # private
-
-  # def no_other_open_assignment?
-  #   # TODO
-  #   true
-  # end
-
-  # def close_children_and_create_system_assignment
-  #   # TODO
-  #   true
-  # end
 end

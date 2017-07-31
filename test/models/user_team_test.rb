@@ -15,6 +15,7 @@ describe UserTeam do
   describe 'relations' do
     it { subject.must have_many :user_team_users }
     it { subject.must have_many(:users).through :user_team_users }
+    it { subject.must have_many(:observing_users).through :user_team_observing_users }
     it { subject.must belong_to :lead }
     it { subject.must belong_to :parent }
     it { subject.must have_many :children }
