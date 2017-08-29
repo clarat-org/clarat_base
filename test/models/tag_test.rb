@@ -25,17 +25,6 @@ describe Tag do
     it { subject.must_respond_to :explanations_fa }
   end
 
-  describe 'validations' do
-    describe 'always' do
-      it { subject.must validate_presence_of :name_de }
-      it { subject.must validate_presence_of :name_en }
-      it { subject.must validate_length_of(:explanations_de).is_at_most(500) }
-      it { subject.must validate_length_of(:explanations_en).is_at_most(500) }
-      it { subject.must validate_length_of(:explanations_ar).is_at_most(500) }
-      it { subject.must validate_length_of(:explanations_fa).is_at_most(500) }
-    end
-  end
-
   describe '::Base' do
     describe 'associations' do
       it { subject.must have_many :tags_offers }
