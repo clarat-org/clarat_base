@@ -4,7 +4,6 @@ basic:
   description: basicOfferDescription
   old_next_steps: basicOfferNextSteps
   encounter: personal
-  expires_at: 9999-01-01
   aasm_state: approved
   created_by: 1
   approved_by: 2

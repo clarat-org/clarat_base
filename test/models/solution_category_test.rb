@@ -14,6 +14,9 @@ describe SolutionCategory do
   end
 
   describe 'associations' do
-    it { subject.must have_many(:offers) }
+    it { subject.must have_many(:split_bases) }
+    it { subject.must have_many(:offers).through :split_bases }
+    it { subject.must have_many(:divisions_presumed_solution_categories) }
+    it { subject.must have_many(:presuming_divisions) }
   end
 end

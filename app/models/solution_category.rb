@@ -4,8 +4,9 @@ class SolutionCategory < ActiveRecord::Base
   has_closure_tree
 
   # Associations
-  has_many :offers, inverse_of: :solution_category
-  has_many :split_bases, inverse_of: :solution_category
+  has_many :split_bases, class_name: ::SplitBase,
+                         inverse_of: :solution_category
+  has_many :offers, through: :split_bases, inverse_of: :solution_category
 
   has_many :divisions_presumed_solution_categories,
            inverse_of: :solution_category

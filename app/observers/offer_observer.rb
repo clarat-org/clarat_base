@@ -1,7 +1,6 @@
 class OfferObserver < ActiveRecord::Observer
   def after_initialize offer
     if offer.new_record?
-      offer.expires_at ||= (Time.zone.now + 1.year)
       offer.logic_version_id = LogicVersion.last.id
     end
   end

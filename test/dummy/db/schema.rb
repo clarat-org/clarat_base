@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913114320) do
+ActiveRecord::Schema.define(version: 20170921090532) do
 
   create_table "absences", force: :cascade do |t|
     t.date    "starts_at",                null: false
@@ -397,7 +397,6 @@ ActiveRecord::Schema.define(version: 20170913114320) do
     t.datetime "approved_at"
     t.integer  "created_by"
     t.integer  "approved_by"
-    t.date     "expires_at",                                             null: false
     t.integer  "area_id"
     t.text     "description_html"
     t.text     "next_steps_html"
@@ -551,13 +550,14 @@ ActiveRecord::Schema.define(version: 20170913114320) do
   add_index "split_base_divisions", ["split_base_id"], name: "index_split_base_divisions_on_split_base_id"
 
   create_table "split_bases", force: :cascade do |t|
-    t.string   "title",                null: false
+    t.string   "title",                            null: false
     t.string   "clarat_addition"
     t.text     "comments"
     t.integer  "organization_id"
-    t.integer  "solution_category_id", null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "solution_category_id",             null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "code_word",            limit: 140
   end
 
   add_index "split_bases", ["organization_id"], name: "index_split_bases_on_organization_id"

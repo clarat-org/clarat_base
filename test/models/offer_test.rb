@@ -42,7 +42,7 @@ describe Offer do
     describe 'associations' do
       it { subject.must belong_to :location }
       it { subject.must belong_to :area }
-      it { subject.must belong_to :solution_category }
+      it { subject.must have_one(:solution_category).through :split_base }
       it { subject.must belong_to :logic_version }
       it { subject.must belong_to :split_base }
       it { subject.must have_many(:divisions).through :split_base }
