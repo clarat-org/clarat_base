@@ -397,6 +397,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.datetime "approved_at"
     t.integer  "created_by"
     t.integer  "approved_by"
+    t.date     "ends_at"
     t.integer  "area_id"
     t.text     "description_html"
     t.text     "next_steps_html"
