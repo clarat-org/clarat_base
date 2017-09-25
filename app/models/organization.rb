@@ -32,6 +32,9 @@ class Organization < ActiveRecord::Base
   has_many :offer_cities, -> { uniq }, through: :offers,
                                        class_name: 'City',
                                        source: 'city'
+  has_many :division_cities, -> { uniq }, through: :divisions,
+                                          class_name: 'City',
+                                          source: 'city'
 
   # Enumerization
   extend Enumerize
