@@ -17,8 +17,6 @@ FactoryGirl.define do
 
     transient do
       website_count { rand(0..3) }
-      category_count { rand(1..3) }
-      category nil # used to get a specific category, instead of category_count
       language_count { rand(1..2) }
       audience_count 1
       opening_count { rand(1..5) }
@@ -65,16 +63,6 @@ FactoryGirl.define do
 
       # ...
       create_list :hyperlink, evaluator.website_count, linkable: offer
-      if evaluator.category
-        offer.categories << FactoryGirl.create(:category,
-                                               name: evaluator.category)
-      else
-        evaluator.category_count.times do
-          # Category.select(:id).all.try(:sample) ||
-          offer.categories <<
-            FactoryGirl.create(:category, sections: [offer.section])
-        end
-      end
       evaluator.opening_count.times do
         offer.openings << (
           if Opening.count != 0 && rand(2).zero?

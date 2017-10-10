@@ -19,8 +19,8 @@ class Division < ApplicationRecord
 
   has_many :divisions_presumed_categories, inverse_of: :division
   has_many :presumed_categories,
-           through: :divisions_presumed_categories, source: :category,
-           class_name: 'Category', inverse_of: :presuming_divisions
+           through: :divisions_presumed_categories, source: :tag,
+           class_name: 'Tag', inverse_of: :presuming_divisions
   has_many :divisions_presumed_solution_categories, inverse_of: :division
   has_many :presumed_solution_categories,
            through: :divisions_presumed_solution_categories,
