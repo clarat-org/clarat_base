@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921090532) do
+ActiveRecord::Schema.define(version: 20171012135856) do
 
   create_table "absences", force: :cascade do |t|
     t.date "starts_at", null: false
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.string "size", default: "medium", null: false
     t.integer "city_id"
     t.integer "area_id"
+    t.string "label"
     t.index ["area_id"], name: "index_divisions_on_area_id"
     t.index ["city_id"], name: "index_divisions_on_city_id"
     t.index ["organization_id"], name: "index_divisions_on_organization_id"
@@ -281,7 +282,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "name"
-    t.string "display_name", null: false
+    t.string "label", null: false
     t.boolean "visible", default: true
     t.boolean "in_germany", default: true
     t.integer "city_id"
@@ -524,6 +525,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "code_word", limit: 140
+    t.string "label"
     t.index ["organization_id"], name: "index_split_bases_on_organization_id"
     t.index ["solution_category_id"], name: "index_split_bases_on_solution_category_id"
   end

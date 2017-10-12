@@ -11,6 +11,7 @@ describe SplitBase do
     it { subject.must_respond_to :comments }
     it { subject.must_respond_to :created_at }
     it { subject.must_respond_to :updated_at }
+    it { subject.must_respond_to :label }
   end
 
   describe 'associations' do
