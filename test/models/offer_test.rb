@@ -291,7 +291,6 @@ describe Offer do
         basicOffer.tags << tags(:basic)
         basicOffer.tag_names.must_include 'test'
         basicOffer.tag_keywords.must_include 'synonym'
-        basicOffer.tag_explanations.must_include 'en_xplanations'
       end
 
       it 'should correctly return definitions_string' do

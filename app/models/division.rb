@@ -17,9 +17,15 @@ class Division < ApplicationRecord
   belongs_to :city, inverse_of: :divisions
   belongs_to :area, inverse_of: :divisions
 
+  # delete after deploy
   has_many :divisions_presumed_categories, inverse_of: :division
   has_many :presumed_categories,
-           through: :divisions_presumed_categories, source: :tag,
+           through: :divisions_presumed_categories, source: :category,
+           class_name: 'Category', inverse_of: :presuming_divisions
+
+  has_many :divisions_presumed_tags, inverse_of: :division
+  has_many :presumed_tags,
+           through: :divisions_presumed_tags, source: :tag,
            class_name: 'Tag', inverse_of: :presuming_divisions
   has_many :divisions_presumed_solution_categories, inverse_of: :division
   has_many :presumed_solution_categories,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921090532) do
+ActiveRecord::Schema.define(version: 20171023093225) do
 
   create_table "absences", force: :cascade do |t|
     t.date "starts_at", null: false
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.string "size", default: "medium", null: false
     t.integer "city_id"
     t.integer "area_id"
+    t.string "label"
     t.index ["area_id"], name: "index_divisions_on_area_id"
     t.index ["city_id"], name: "index_divisions_on_city_id"
     t.index ["organization_id"], name: "index_divisions_on_organization_id"
@@ -214,6 +215,13 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.integer "solution_category_id", null: false
     t.index ["division_id"], name: "index_divisions_presumed_solution_categories_on_division_id"
     t.index ["solution_category_id"], name: "index_presumed_s_categories_on_s_category"
+  end
+
+  create_table "divisions_presumed_tags", id: false, force: :cascade do |t|
+    t.integer "division_id", null: false
+    t.integer "tag_id", null: false
+    t.index ["division_id"], name: "index_divisions_presumed_tags_on_division_id"
+    t.index ["tag_id"], name: "index_divisions_presumed_tags_on_tag_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -281,7 +289,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "name"
-    t.string "display_name", null: false
+    t.string "label", null: false
     t.boolean "visible", default: true
     t.boolean "in_germany", default: true
     t.integer "city_id"
@@ -410,12 +418,12 @@ ActiveRecord::Schema.define(version: 20170921090532) do
 
   create_table "openings", force: :cascade do |t|
     t.string "day", limit: 3, null: false
-    t.time "open"
-    t.time "close"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "sort_value"
     t.string "name", null: false
+    t.string "open"
+    t.string "close"
     t.index ["day"], name: "index_openings_on_day"
     t.index ["name"], name: "index_openings_on_name"
   end
@@ -524,6 +532,7 @@ ActiveRecord::Schema.define(version: 20170921090532) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "code_word", limit: 140
+    t.string "label"
     t.index ["organization_id"], name: "index_split_bases_on_organization_id"
     t.index ["solution_category_id"], name: "index_split_bases_on_solution_category_id"
   end

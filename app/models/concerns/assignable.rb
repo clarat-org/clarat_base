@@ -11,8 +11,8 @@ module Assignable
     # There must always be exactly one current_assignment for each assignable.
     has_one(
       :current_assignment,
-      lambda do |object|
-        where(assignable: object) if object.is_a?(ActiveRecord::Base)
+      lambda do # |object|
+        # where(assignable: object) if object.is_a?(ActiveRecord::Base)
         active.root.base.latest
       end,
       class_name: 'Assignment', as: :assignable

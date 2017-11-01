@@ -60,6 +60,18 @@ describe Assignable do
       )
       model.reload.current_assignment.must_equal correct_assignment
     end
+
+    it 'should be able to eager_load' do
+      assignment = Assignment.create!(
+        assignable_type: 'Division', assignable_id: Division.first.id,
+        message: 'whatever', topic: 'new', receiver_id: User.first.id,
+        creator_id: User.first.id
+      )
+      result = Division.eager_load(:current_assignment)
+                       .where('assignments.id = ?', assignment.id).first
+      result.class.must_equal Division
+      result.current_assignment.must_equal assignment
+    end
   end
 
   # describe 'methods' do
