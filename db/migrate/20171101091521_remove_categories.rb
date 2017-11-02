@@ -12,5 +12,8 @@ class RemoveCategories < ActiveRecord::Migration[5.1]
     if ActiveRecord::Base.connection.table_exists? 'category_hierarchies'
       drop_table :category_hierarchies
     end
+    if ActiveRecord::Base.connection.table_exists? 'divisions_presumed_categories'
+      drop_table :divisions_presumed_categories
+    end
   end
 end
