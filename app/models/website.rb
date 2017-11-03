@@ -1,5 +1,6 @@
 # The external web addresses of organizations and offers.
 class Website < ApplicationRecord
+  include Assignable
   UNREACHABLE_THRESHOLD = 2
 
   # Associations
