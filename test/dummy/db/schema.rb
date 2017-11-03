@@ -153,13 +153,6 @@ ActiveRecord::Schema.define(version: 20171101091521) do
     t.index ["section_id"], name: "index_divisions_on_section_id"
   end
 
-  create_table "divisions_presumed_categories", id: false, force: :cascade do |t|
-    t.integer "division_id", null: false
-    t.integer "category_id", null: false
-    t.index ["category_id"], name: "index_divisions_presumed_categories_on_category_id"
-    t.index ["division_id"], name: "index_divisions_presumed_categories_on_division_id"
-  end
-
   create_table "divisions_presumed_solution_categories", id: false, force: :cascade do |t|
     t.integer "division_id", null: false
     t.integer "solution_category_id", null: false
