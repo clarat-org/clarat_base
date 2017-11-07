@@ -20,7 +20,7 @@ describe Division do
       it { subject.must belong_to :organization }
       it { subject.must have_many(:split_base_divisions) }
       it { subject.must have_many(:split_bases).through :split_base_divisions }
-      it { subject.must have_many(:offers).through :split_bases }
+      it { subject.must have_many(:offers).through :offer_divisions }
     end
   end
 end

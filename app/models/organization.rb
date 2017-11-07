@@ -12,7 +12,6 @@ class Organization < ApplicationRecord
 
   # Associations
   has_many :divisions, inverse_of: :organization
-  has_many :split_bases, through: :divisions, inverse_of: :organizations
   has_many :offers, through: :divisions, inverse_of: :organizations
 
   has_many :locations, inverse_of: :organization

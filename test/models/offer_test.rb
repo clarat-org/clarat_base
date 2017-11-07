@@ -20,7 +20,6 @@ describe Offer do
     it { subject.must_respond_to :hide_contact_people }
     it { subject.must_respond_to :code_word }
     it { subject.must_respond_to :logic_version_id }
-    it { subject.must_respond_to :split_base_id }
     it { subject.must_respond_to :all_inclusive }
     it { subject.must_respond_to :starts_at }
     it { subject.must_respond_to :completed_at }
@@ -42,11 +41,10 @@ describe Offer do
     describe 'associations' do
       it { subject.must belong_to :location }
       it { subject.must belong_to :area }
-      it { subject.must have_one(:solution_category).through :split_base }
+      it { subject.must belong_to :solution_category }
       it { subject.must belong_to :logic_version }
-      it { subject.must belong_to :split_base }
-      it { subject.must have_many(:divisions).through :split_base }
-      it { subject.must have_many(:organizations).through :split_base }
+      it { subject.must have_many(:divisions).through :offer_divisions }
+      it { subject.must have_many(:organizations).through :divisions }
       it { subject.must have_and_belong_to_many :categories }
       it { subject.must have_many(:filters).through :filters_offers }
       it { subject.must belong_to :section }
@@ -146,7 +144,7 @@ describe Offer do
       end
 
       it 'should return 2 if there are two organizations' do
-        offers(:basic).split_base.divisions << FactoryGirl.create(:division)
+        offers(:basic).divisions << FactoryGirl.create(:division)
         offers(:basic).organization_count.must_equal(2)
       end
     end

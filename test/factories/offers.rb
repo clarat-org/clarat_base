@@ -17,18 +17,25 @@ FactoryGirl.define do
 
     transient do
       website_count { rand(0..3) }
-      category_count { rand(1..3) }
-      category nil # used to get a specific category, instead of category_count
       language_count { rand(1..2) }
       audience_count 1
       opening_count { rand(1..5) }
+      category_count { rand(1..3) }
+      category nil # used to get a specific category, instead of category_count
       fake_address false
+      section nil
+      organizations nil
+      divisions nil
     end
 
     after :build do |offer, evaluator|
       # SplitBase => Division(s) => Organization(s)
-      offer.split_base = FactoryGirl.create(:split_base)
-      organization = offer.organizations[0]
+      organizations = evaluator.organizations ||
+                      [FactoryGirl.create(:organization, :approved)]
+      organization = organizations.first
+      div = organization.divisions.first ||
+            FactoryGirl.create(:division, organization: organization)
+      offer.divisions << div
 
       # location
       if offer.personal?
