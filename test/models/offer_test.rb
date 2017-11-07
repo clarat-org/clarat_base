@@ -45,7 +45,6 @@ describe Offer do
       it { subject.must belong_to :logic_version }
       it { subject.must have_many(:divisions).through :offer_divisions }
       it { subject.must have_many(:organizations).through :divisions }
-      it { subject.must have_and_belong_to_many :categories }
       it { subject.must have_many(:filters).through :filters_offers }
       it { subject.must belong_to :section }
       it { subject.must have_many(:language_filters).through :filters_offers }
@@ -58,86 +57,6 @@ describe Offer do
   end
 
   describe 'methods' do
-    describe '#_categories' do
-      it 'should return unique categories with ancestors of an offer' do
-        offers(:basic).categories << categories(:sub1)
-        offers(:basic).categories << categories(:sub2)
-        tags = offers(:basic)._categories(:de)
-        tags.must_include 'sub1.1'
-        tags.must_include 'sub1.2'
-        tags.must_include 'main1'
-        tags.count('main1').must_equal 1
-        tags.wont_include 'main2'
-      end
-
-      it 'should return translated categories with ancestors when non-german' do
-        Category.find(1).update_column :name_en, 'enmain1'
-        Category.find(3).update_column :name_en, 'ensub1.1'
-
-        offers(:basic).categories << categories(:sub1)
-        tags = offers(:basic)._categories(:en)
-        tags.must_include 'ensub1.1'
-        tags.must_include 'enmain1'
-      end
-    end
-
-    describe '#_keywords' do
-      it 'should return unique keywords of offer categories' do
-        Category.find(1).update_column :keywords_de, 'foo, bar'
-        Category.find(3).update_column :keywords_de, 'bar, code me'
-        offers(:basic).categories << Category.find(1)
-        offers(:basic).categories << Category.find(3)
-        tags = offers(:basic)._keywords(:de)
-        tags.must_include 'foo'
-        tags.must_include 'bar'
-        tags.must_include 'code me'
-        tags.count('bar').must_equal 1
-        tags.count(' bar').must_equal 0
-      end
-    end
-
-    describe '#category_keywords' do
-      it 'should return unique keywords of offer categories' do
-        Category.find(1).update_column :keywords_de, 'foo, bar'
-        Category.find(3).update_column :keywords_de, 'bar, code me'
-        offers(:basic).categories << Category.find(1)
-        offers(:basic).categories << Category.find(3)
-        offers(:basic).category_keywords.must_equal 'foo bar code me'
-      end
-
-      it 'should return unique keywords of offer categories including parent' do
-        category = categories(:sub1)
-        offers(:basic).categories = [category]
-        offers(:basic).category_keywords.must_equal 'sub1kw main1kw'
-      end
-    end
-
-    describe '#category_explanations' do
-      it 'should return unique explanations of offer categories' do
-        Category.find(1).update_column :explanations_de, 'foo, bar'
-        Category.find(2).update_column :explanations_de, 'foo, bar'
-        Category.find(3).update_column :explanations_de, 'bar, code me'
-        offers(:basic).categories << Category.find(1)
-        offers(:basic).categories << Category.find(2)
-        offers(:basic).categories << Category.find(3)
-        offers(:basic).category_explanations.must_equal 'foo, bar, bar, code me'
-      end
-    end
-
-    describe '#category_names' do
-      it 'should refer to tags to gather category information' do
-        offer = offers(:basic)
-        offer.expect_chain(:_categories, :join).once
-        offer.category_names
-      end
-
-      it 'should concat category names' do
-        offer = offers(:basic)
-        offer.categories << categories(:sub1)
-        offer.category_names.must_equal 'main1 sub1.1'
-      end
-    end
-
     describe '#organization_count' do
       it 'should return 1 if there is only one' do
         offers(:basic).organization_count.must_equal(1)

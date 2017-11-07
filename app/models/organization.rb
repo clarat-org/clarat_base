@@ -8,7 +8,6 @@ class Organization < ApplicationRecord
   include Assignable
   include Translation
   include Notable
-  include CustomValidatable
 
   # Associations
   has_many :divisions, inverse_of: :organization

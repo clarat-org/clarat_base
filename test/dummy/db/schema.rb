@@ -54,56 +54,6 @@ ActiveRecord::Schema.define(version: 20171103135514) do
     t.index ["receiver_team_id"], name: "index_assignments_on_receiver_team_id"
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name_de", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "icon", limit: 12
-    t.integer "parent_id"
-    t.integer "sort_order"
-    t.boolean "visible", default: true
-    t.string "name_en"
-    t.string "name_ar"
-    t.string "name_fr"
-    t.string "name_pl"
-    t.string "name_tr"
-    t.string "name_ru"
-    t.string "name_fa"
-    t.text "keywords_de"
-    t.text "keywords_en"
-    t.text "keywords_ar"
-    t.text "keywords_fa"
-    t.text "explanations_de"
-    t.text "explanations_en"
-    t.text "explanations_ar"
-    t.text "explanations_fa"
-    t.index ["name_de"], name: "index_categories_on_name_de"
-  end
-
-  create_table "categories_offers", id: false, force: :cascade do |t|
-    t.integer "offer_id", null: false
-    t.integer "category_id", null: false
-    t.index ["category_id"], name: "index_categories_offers_on_category_id"
-    t.index ["offer_id"], name: "index_categories_offers_on_offer_id"
-  end
-
-  create_table "categories_sections", force: :cascade do |t|
-    t.integer "category_id"
-    t.integer "section_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_categories_sections_on_category_id"
-    t.index ["section_id"], name: "index_categories_sections_on_section_id"
-  end
-
-  create_table "category_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id", null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations", null: false
-    t.index ["ancestor_id", "descendant_id", "generations"], name: "category_anc_desc_idx", unique: true
-    t.index ["descendant_id"], name: "category_desc_idx"
-  end
-
   create_table "cities", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at"
@@ -201,13 +151,6 @@ ActiveRecord::Schema.define(version: 20171103135514) do
     t.index ["city_id"], name: "index_divisions_on_city_id"
     t.index ["organization_id"], name: "index_divisions_on_organization_id"
     t.index ["section_id"], name: "index_divisions_on_section_id"
-  end
-
-  create_table "divisions_presumed_categories", id: false, force: :cascade do |t|
-    t.integer "division_id", null: false
-    t.integer "category_id", null: false
-    t.index ["category_id"], name: "index_divisions_presumed_categories_on_category_id"
-    t.index ["division_id"], name: "index_divisions_presumed_categories_on_division_id"
   end
 
   create_table "divisions_presumed_solution_categories", id: false, force: :cascade do |t|

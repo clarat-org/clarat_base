@@ -10,7 +10,6 @@ class Offer < ApplicationRecord
   # Concerns
   include Translation
   include Notable
-  include CustomValidatable
 
   # Enumerization
   extend Enumerize

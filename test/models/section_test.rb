@@ -16,8 +16,6 @@ describe Section do
       it { subject.must have_many(:organizations).through :divisions }
       it { subject.must have_many(:target_audience_filters) }
       it { subject.must have_many(:divisions) }
-      it { subject.must have_many(:categories_sections) }
-      it { subject.must have_many(:categories).through :categories_sections }
     end
   end
 end
