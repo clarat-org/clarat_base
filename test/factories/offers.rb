@@ -20,8 +20,6 @@ FactoryGirl.define do
       language_count { rand(1..2) }
       audience_count 1
       opening_count { rand(1..5) }
-      category_count { rand(1..3) }
-      category nil # used to get a specific category, instead of category_count
       fake_address false
       section nil
       organizations nil
