@@ -5,7 +5,7 @@ class Email < ApplicationRecord
   attr_accessor :given_security_code
 
   # Associations
-  has_many :contact_people, inverse_of: :email
+  has_many :contact_people, inverse_of: :email, dependent: :nullify
   has_many :offers, -> { distinct },
            through: :contact_people,
            inverse_of: :emails

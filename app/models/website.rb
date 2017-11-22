@@ -5,7 +5,8 @@ class Website < ApplicationRecord
 
   # Associations
   has_many :hyperlinks, dependent: :destroy
-  has_many :organizations, inverse_of: :website
+  has_many :organizations, inverse_of: :website,
+                           dependent: :restrict_with_exception
   has_many :offers, through: :hyperlinks, inverse_of: :websites,
                     source: :linkable, source_type: 'Offer'
   has_many :divisions, through: :hyperlinks, inverse_of: :websites,

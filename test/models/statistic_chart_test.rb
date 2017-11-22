@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe StatisticChart do
-  let(:statistic_chart) { StatisticChart.new }
+  let(:statistic_chart) { statistic_charts(:basic) }
   subject { statistic_chart }
 
   describe 'attributes' do

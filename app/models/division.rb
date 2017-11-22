@@ -5,28 +5,22 @@ class Division < ApplicationRecord
 
   # Associations
   belongs_to :organization, inverse_of: :divisions
-  has_many :split_base_divisions, inverse_of: :division,
-                                  dependent: :destroy
-  has_many :split_bases, through: :split_base_divisions,
-                         inverse_of: :divisions,
-                         source: 'split_base'
   has_many :offer_divisions, inverse_of: :division,
                              dependent: :destroy
   has_many :offers, through: :offer_divisions,
                     inverse_of: :divisions,
                     source: 'offer'
-  # has_many :offers, through: :split_bases,
-  #                   inverse_of: :divisions
 
   belongs_to :section, inverse_of: :divisions
   belongs_to :city, inverse_of: :divisions
   belongs_to :area, inverse_of: :divisions
 
-  has_many :divisions_presumed_tags, inverse_of: :division
+  has_many :divisions_presumed_tags, inverse_of: :division, dependent: :destroy
   has_many :presumed_tags,
            through: :divisions_presumed_tags, source: :tag,
            class_name: 'Tag', inverse_of: :presuming_divisions
-  has_many :divisions_presumed_solution_categories, inverse_of: :division
+  has_many :divisions_presumed_solution_categories, inverse_of: :division,
+                                                    dependent: :destroy
   has_many :presumed_solution_categories,
            through: :divisions_presumed_solution_categories,
            source: :solution_category, class_name: 'SolutionCategory',

@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe NextStep do
-  let(:next_step) { NextStep.new }
+  let(:next_step) { next_steps(:basic) }
   subject { next_step }
 
   describe 'attributes' do
@@ -10,6 +10,25 @@ describe NextStep do
       I18n.available_locales.each do |locale|
         subject.must_respond_to "text_#{locale}"
       end
+    end
+  end
+
+  describe 'offers' do
+    before do
+      @offer = offers(:basic)
+      subject.offers << @offer
+      @next_step_offer = subject.next_steps_offers.first
+      subject.destroy
+    end
+
+    it 'will destroy definitions offers' do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        @next_step_offer.reload
+      end
+    end
+
+    it 'will not destroy offers' do
+      refute_nil @offer.reload
     end
   end
 

@@ -9,7 +9,8 @@ class ContactPerson < ApplicationRecord
   belongs_to :organization, inverse_of: :contact_people
   belongs_to :email, inverse_of: :contact_people
 
-  has_many :contact_person_offers, inverse_of: :contact_person
+  has_many :contact_person_offers, inverse_of: :contact_person,
+                                   dependent: :destroy
   has_many :offers, through: :contact_person_offers, inverse_of: :contact_people
 
   # Enumerization

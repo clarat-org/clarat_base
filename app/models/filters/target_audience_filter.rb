@@ -2,7 +2,7 @@ class TargetAudienceFilter < Filter
   # Associations
   # should always remain a single reference (no habtm or hmt)!!
   belongs_to :section, inverse_of: :target_audience_filters
-  has_many :target_audience_filters_offers
+  has_many :target_audience_filters_offers, dependent: :destroy
   has_many :offers, through: :target_audience_filters_offers, source: :offer
 
   FAMILY_IDENTIFIER = %w[family_children family_parents family_nuclear_family

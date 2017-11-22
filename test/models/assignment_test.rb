@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe Assignment do
-  let(:assignment) { Assignment.new }
+  let(:assignment) { assignments(:translation) }
   subject { assignment }
 
   describe 'attributes' do
@@ -20,52 +20,55 @@ describe Assignment do
   end
 
   describe 'Scopes' do
+    before do
+      FactoryGirl.create :organization
+      @assignments = Assignment.where(assignable_type: 'Organization')
+    end
     describe 'active' do
       it 'responds correctly to opened scope' do
-        Assignment.active.count.must_equal 0
-        FactoryGirl.create :organization
-        Assignment.active.count.must_equal 1
-        Assignment.first.update_column :aasm_state, 'closed'
-        Assignment.active.count.must_equal 0
+        @assignments.active.count.must_equal 1
+        @assignments.last.update_column :aasm_state, 'closed'
+        @assignments.active.count.must_equal 0
       end
     end
     describe 'closed' do
       it 'responds correctly to closed scope' do
-        Assignment.closed.count.must_equal 0
-        FactoryGirl.create :organization
-        Assignment.closed.count.must_equal 0
-        Assignment.first.update_column :aasm_state, 'closed'
-        Assignment.closed.count.must_equal 1
-      end
-    end
-    describe 'root' do
-      it 'responds correctly to root scope' do
-        Assignment.root.count.must_equal 0
-        FactoryGirl.create :organization
-        Assignment.root.count.must_equal 1
-        FactoryGirl.create :organization
-        Assignment.root.count.must_equal 2
-        Assignment.last.update_column :parent_id, Assignment.first.id
-        Assignment.root.count.must_equal 1
+        @assignments.closed.count.must_equal 0
+        @assignments.last.update_column :aasm_state, 'closed'
+        @assignments.closed.count.must_equal 1
       end
     end
     describe 'base' do
       it 'responds correctly to base scope' do
-        Assignment.base.count.must_equal 0
-        FactoryGirl.create :organization
-        Assignment.base.count.must_equal 1
-        Assignment.first.update_column :assignable_field_type, 'SomeField'
-        Assignment.base.count.must_equal 0
+        @assignments.base.count.must_equal 1
+        @assignments.last.update_column :assignable_field_type, 'SomeField'
+        @assignments.base.count.must_equal 0
       end
     end
     describe 'field' do
       it 'responds correctly to field scope' do
-        Assignment.field.count.must_equal 0
-        FactoryGirl.create :organization
-        Assignment.field.count.must_equal 0
-        Assignment.first.update_column :assignable_field_type, 'SomeField'
-        Assignment.field.count.must_equal 1
+        @assignments.field.count.must_equal 0
+        @assignments.last.update_column :assignable_field_type, 'SomeField'
+        @assignments.field.count.must_equal 1
       end
+    end
+  end
+
+  describe 'User' do
+    before do
+      @user = users(:researcher)
+    end
+
+    it 'nullifies creator id when user gets deleted' do
+      subject.creator_id = @user.id
+      @user.destroy
+      subject.reload.creator_id.must_equal nil
+    end
+
+    it 'nullifies receiver id when user gets deleted' do
+      subject.receiver_id = @user.id
+      @user.destroy
+      subject.reload.receiver_id.must_equal nil
     end
   end
 end

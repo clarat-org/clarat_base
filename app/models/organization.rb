@@ -10,12 +10,13 @@ class Organization < ApplicationRecord
   include Notable
 
   # Associations
-  has_many :divisions, inverse_of: :organization
+  has_many :divisions, inverse_of: :organization, dependent: :destroy
   has_many :offers, through: :divisions, inverse_of: :organizations
 
-  has_many :locations, inverse_of: :organization
+  has_many :locations, inverse_of: :organization,
+                       dependent: :restrict_with_exception
   belongs_to :website, inverse_of: :organizations
-  has_many :contact_people, inverse_of: :organization
+  has_many :contact_people, inverse_of: :organization, dependent: :destroy
   has_many :emails, through: :contact_people, inverse_of: :organizations
   has_many :sections, -> { distinct }, through: :divisions,
                                        inverse_of: :organizations
@@ -25,10 +26,10 @@ class Organization < ApplicationRecord
                           join_table: 'filters_organizations'
   has_many :cities, -> { distinct }, through: :locations,
                                      inverse_of: :organizations
-  has_many :definitions_organizations
+  has_many :definitions_organizations, dependent: :destroy
   has_many :definitions, through: :definitions_organizations,
                          inverse_of: :organizations
-  has_many :topics_organizations
+  has_many :topics_organizations, dependent: :destroy
   has_many :topics, through: :topics_organizations
   has_many :offer_cities, -> { distinct }, through: :offers,
                                            class_name: 'City',

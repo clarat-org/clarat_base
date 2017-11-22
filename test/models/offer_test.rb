@@ -299,7 +299,7 @@ describe Offer do
       end
 
       it 'should correctly return definitions_string' do
-        definition = Definition.new key: 'foo', explanation: 'bar'
+        definition = definitions(:basic)
         basicOffer.definitions << definition
         basicOffer.definitions_string.must_include 'bar'
       end

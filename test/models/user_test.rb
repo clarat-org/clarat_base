@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe User do
-  let(:user) { User.new }
+  let(:user) { users(:researcher) }
 
   subject { user }
 
@@ -29,6 +29,44 @@ describe User do
     it { subject.must have_many :time_allocations }
     it { subject.must have_many :created_assignments }
     it { subject.must have_many :received_assignments }
+  end
+
+  describe 'user teams' do
+    before do
+      @user_team = user_teams(:researcher)
+      subject.user_teams << @user_team
+      @user_team_user = subject.user_team_users.first
+      subject.destroy
+    end
+
+    it 'will destroy connecting table' do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        @user_team_user.reload
+      end
+    end
+
+    it 'will not user teams' do
+      refute_nil @user_team.reload
+    end
+  end
+
+  describe 'observed user teams' do
+    before do
+      @user_team = user_teams(:researcher)
+      subject.observed_user_teams << @user_team
+      @observing_user = subject.user_team_observing_users.first
+      subject.destroy
+    end
+
+    it 'will destroy connecting table' do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        @observing_user.reload
+      end
+    end
+
+    it 'will not destroy user teams' do
+      refute_nil @user_team.reload
+    end
   end
 
   # describe 'validations' do

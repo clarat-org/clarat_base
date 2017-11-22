@@ -2,10 +2,10 @@
 # infused into the texts of other models.
 class Definition < ApplicationRecord
   # Associations
-  has_many :definitions_organizations
+  has_many :definitions_organizations, dependent: :destroy
   has_many :organizations, through: :definitions_organizations,
                            inverse_of: :definitions
-  has_many :definitions_offers
+  has_many :definitions_offers, dependent: :destroy
   has_many :offers, through: :definitions_offers,
                     inverse_of: :definitions
 

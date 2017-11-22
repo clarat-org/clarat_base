@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe ContactPerson do
-  let(:contact_person) { ContactPerson.new }
+  let(:contact_person) { contact_people(:basic) }
 
   subject { contact_person }
 
@@ -34,6 +34,15 @@ describe ContactPerson do
     end
   end
 
+  describe 'contact people' do
+    it 'sets email_id to nil if email gets deleted' do
+      email = Email.new
+      contact_person.email_id = email.id
+      email.destroy
+      contact_person.email_id.must_equal nil
+    end
+  end
+
   describe 'methods' do
     describe '#telephone_#{n}' do
       it 'should return the concatenated area code and local number' do
@@ -48,6 +57,25 @@ describe ContactPerson do
       it 'should return the concatenated fax area code and fax number' do
         contact_person.assign_attributes fax_area_code: '4', fax_number: '5'
         contact_person.fax.must_equal '45'
+      end
+    end
+
+    describe 'offers' do
+      before do
+        @offer = offers(:basic)
+        contact_person.offers << @offer
+        @contact_person_offer = contact_person.contact_person_offers.first
+        contact_person.destroy
+      end
+
+      it 'will destroy contact person offers' do
+        assert_raises(ActiveRecord::RecordNotFound) do
+          @contact_person_offer.reload
+        end
+      end
+
+      it 'will not destroy offers' do
+        refute_nil @offer.reload
       end
     end
   end

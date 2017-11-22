@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 describe Tag do
-  let(:tag) { Tag.new }
+  let(:tag) { tags(:basic) }
 
   subject { tag }
 
@@ -29,6 +29,25 @@ describe Tag do
     describe 'associations' do
       it { subject.must have_many :tags_offers }
       it { subject.must have_many(:offers).through :tags_offers }
+    end
+  end
+
+  describe 'offers' do
+    before do
+      @offer = offers(:basic)
+      subject.offers << @offer
+      @tags_offer = subject.tags_offers.first
+      subject.destroy
+    end
+
+    it 'will destroy tags offers' do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        @tags_offer.reload
+      end
+    end
+
+    it 'will not destroy offers' do
+      refute_nil @offer.reload
     end
   end
 end

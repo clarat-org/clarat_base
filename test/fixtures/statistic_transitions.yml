@@ -1,0 +1,6 @@
+basic:
+  id: 1
+  klass_name: "Offer"
+  field_name: "aasm_state"
+  start_value: "approval_process"
+  end_value: "approved"
