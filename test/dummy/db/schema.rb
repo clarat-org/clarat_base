@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117161000) do
+ActiveRecord::Schema.define(version: 20171122142622) do
 
   create_table "absences", force: :cascade do |t|
     t.date "starts_at", null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20171117161000) do
     t.string "position"
     t.string "street", limit: 255
     t.string "zip_and_city", limit: 255
+    t.string "label"
     t.index ["email_id"], name: "index_contact_people_on_email_id"
     t.index ["organization_id"], name: "index_contact_people_on_organization_id"
   end

@@ -8,6 +8,7 @@ describe ContactPerson do
   describe 'attributes' do
     it { subject.must_respond_to :first_name }
     it { subject.must_respond_to :last_name }
+    it { subject.must_respond_to :label }
     it { subject.must_respond_to :operational_name }
     it { subject.must_respond_to :academic_title }
     it { subject.must_respond_to :gender }
