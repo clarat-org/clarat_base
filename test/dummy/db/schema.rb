@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122142622) do
+ActiveRecord::Schema.define(version: 20171128160611) do
 
   create_table "absences", force: :cascade do |t|
     t.date "starts_at", null: false
@@ -269,21 +269,6 @@ ActiveRecord::Schema.define(version: 20171122142622) do
     t.integer "sort_value", default: 0
     t.index ["next_step_id"], name: "index_next_steps_offers_on_next_step_id"
     t.index ["offer_id"], name: "index_organization_translations_on_offer_id"
-  end
-
-  create_table "notes", force: :cascade do |t|
-    t.text "text", null: false
-    t.string "topic", limit: 32
-    t.integer "user_id", null: false
-    t.integer "notable_id", null: false
-    t.string "notable_type", limit: 64, null: false
-    t.integer "referencable_id"
-    t.string "referencable_type", limit: 64
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["notable_id", "notable_type"], name: "index_notes_on_notable_id_and_notable_type"
-    t.index ["referencable_id", "referencable_type"], name: "index_notes_on_referencable_id_and_referencable_type"
-    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "offer_divisions", force: :cascade do |t|

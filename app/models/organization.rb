@@ -7,7 +7,6 @@ class Organization < ApplicationRecord
   # Concerns
   include Assignable
   include Translation
-  include Notable
 
   # Associations
   has_many :divisions, inverse_of: :organization, dependent: :destroy

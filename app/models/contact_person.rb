@@ -3,7 +3,6 @@
 class ContactPerson < ApplicationRecord
   # Concerns
   include Translation
-  include Notable
 
   # Associations
   belongs_to :organization, inverse_of: :contact_people

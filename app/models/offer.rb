@@ -9,7 +9,6 @@ class Offer < ApplicationRecord
 
   # Concerns
   include Translation
-  include Notable
 
   # Enumerization
   extend Enumerize
